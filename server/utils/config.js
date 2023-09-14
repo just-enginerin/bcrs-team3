@@ -1,5 +1,7 @@
 /**
- *
+ * Title: config.js
+ * Author: Professor Krasso
+ * Date: 9/12/2023
  */
 
 "use strict";
