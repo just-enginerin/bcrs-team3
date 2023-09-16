@@ -1,0 +1,37 @@
+/**
+  Title: home.component.css
+  Author: Erin Brady
+  Date: 9/15/23
+  Description: Landing page styling
+*/
+
+.container-fluid {
+  margin: 100px auto;
+}
+
+#main-img {
+  max-height: 85vh;
+  width: 100%;
+  max-width: max-content;
+  margin: 0 auto;
+}
+
+.row {
+  margin-top: 30px;
+}
+
+.call-to-action {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5%;
+  justify-content: center;
+  height: 100%;
+}
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

@@ -1,4 +1,23 @@
+/**
+  Title: styles.css
+  Author: Professor Krasso
+  Date: 9/15/23
+  Description: Navigation Bar component styling
+  Updated by: Erin Brady
+*/
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Primary/Action Button styles */
+.action-button {
+  background-color: #00BCD4 !important;
+  transition-duration: 800ms;
+}
+
+.action-button:hover {
+  background-color: #80DEEA !important;
+  transition-duration: 800ms;
+}
