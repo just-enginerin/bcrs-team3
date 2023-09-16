@@ -8,6 +8,11 @@
 
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+  --primary-color: #00BCD4;
+  --primary-highlight: #80DEEA
+}
+
 html, body { height: 100%; }
 body {
   margin: 0;
@@ -17,11 +22,11 @@ body {
 
 /* Primary/Action Button styles */
 .action-button {
-  background-color: #00BCD4 !important;
+  background-color: var(--primary-color) !important;
   transition-duration: 800ms;
 }
 
 .action-button:hover {
-  background-color: #80DEEA !important;
+  background-color: var(--primary-highlight) !important;
   transition-duration: 800ms;
 }
