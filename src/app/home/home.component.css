@@ -7,6 +7,7 @@
 
 .container-fluid {
   margin: 100px auto;
+  min-height: 90vh;
 }
 
 #main-img {
@@ -16,18 +17,21 @@
   margin: 0 auto;
 }
 
-.row {
-  margin-top: 30px;
-  --bs-gutter-y: 40px
-}
-
 .call-to-action {
   margin-left: 20px;
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 5%;
   justify-content: center;
   height: 100%;
+}
+
+.action-button {
+  width: 60%;
+  margin: 0 auto;
+  height: 2.5em;
+  font-weight: 500;
+  border-radius: 50px;
 }
 
 .banner {
@@ -35,4 +39,22 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.row {
+  margin-top: 30px;
+  --bs-gutter-y: 40px
+}
+
+.announcements-row {
+  margin: 0;
+}
+
+.card {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.row-title h2 {
+  padding-left: 50px;
 }
