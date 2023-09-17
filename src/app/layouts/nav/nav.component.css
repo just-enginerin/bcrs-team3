@@ -1,0 +1,24 @@
+/**
+  Title: nav.component.css
+  Author: Erin Brady
+  Date: 9/15/23
+  Description: Navigation Bar component styling
+*/
+
+
+nav {
+  background-color: var(--primary-color);
+}
+
+.navbar-brand {
+  margin-left: 20px;
+}
+
+.nav-link{
+  height: 100%;
+  margin: 0 10px;
+}
+
+.nav-link:hover {
+  background-color: var(--primary-highlight);
+}

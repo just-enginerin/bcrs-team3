@@ -1,11 +1,67 @@
+<!--
+  Title: home.component.html
+  Author: Erin Brady
+  Date: 9/15/23
+  Description: Landing page HTML
+-->
+
+<!-- Responsive layout -->
 <div class="container-fluid">
+
+  <!-- Call to Action and Banner image Row -->
   <div class="row">
-    <div class="col">
-      <h1>Home Component Works! <span class="material-icons">thumb_up</span></h1>
+    <div class="col-md-6">
+      <div class="call-to-action">
+        <h1>Welcome to Bob's Computer Repair Shop</h1>
+        <h4>Where Wizardry Meets Technology</h4>
+        <hr>
+        <h5>At Bob's Computer Repair Shop, we blend the wisdom of wizards with the precision of technology to provide a magical experience for our employees.</h5>
+        <h6>Harnessing the power of House Ravenclaw, our app empowers our talented repair wizards to create and print customer repair invoices effortlessly. We believe that knowledge is the key to excellence, and our app reflects this by streamlining your repair processes, making your job more efficient and effective.</h6>
+        <h6>So grab your wand (or keyboard) and get ready to experience the magic of Bob's Computer Repair Shop App!</h6>
+        <button mat-raised-button class="action-button" routerLink="/security/signin">Get Started</button>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="banner">
+        <img src="https://images.unsplash.com/photo-1549921296-bc643ead1e65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1365&q=80" alt="Desktop Computer image shot by Daniel Korpai on unsplash." id="main-img">
+      </div>
     </div>
   </div>
 
-  <a routerLink="/security">Test Security Module</a>
+  <!-- Announcements Row -->
+  <div class="row row-title"><h2>Announcements</h2></div>
+  <div class="row row-cols-1 row-cols-md-3 g-4 announcements-row">
+    <div class="col">
+      <div class="card h-100">
+        <img src="/assets/images/magic-computer.png" alt="Laptop balancing on finger." class="announcement-img card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">New Service Request Portal Launch:</h5>
+          <p class="card-text">Exciting News! Introducing our brand-new Service Request Portal. Seamlessly request and track computer repairs with just a few clicks. Say goodbye to hassles and welcome efficiency.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img src="/assets/images/employee.png" alt="" class="announcement-img card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">Employee of the Month:</h5>
+          <p class="card-text">Congratulations to our shining star! Our Employee of the Month award goes to someone who embodies dedication, expertise, and teamwork. Meet the heart and soul of our repair shop.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <img mat-card-image src="/assets/images/hogwarts.png" alt="White and gray castle overlooking griffon statues." class="announcement-img card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">Volunteer Opportunity at Hogwarts:</h5>
+          <p class="card-text">Calling all wizards and tech enthusiasts! Join our magical volunteer initiative to repair computers at Hogwarts. Make a difference in the wizarding world while honing your tech skills. Enchanting experiences await!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <a routerLink="/security">Test Security Module</a> -->
 </div>
 
 

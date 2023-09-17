@@ -1,1 +1,41 @@
-<nav></nav>
+<!--
+  Title: nav.component.html
+  Author: Erin Brady
+  Date: 9/15/23
+  Description: Navigation bar HTML
+-->
+<nav class="ps-3 navbar navbar-expand-sm navbar-light fixed-top">
+
+  <!-- Ravenclaw Logo -->
+  <img src="https://ageekygal.files.wordpress.com/2019/07/ravenclawcrest.png?w=60" alt="Ravenclaw house crest.">
+
+  <!-- Site name / Home link -->
+  <a routerLink="/" class="navbar-brand">Bob's Computer Repair Shop</a>
+
+  <!-- Mobile menu toggler button -->
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarResponsive"
+    aria-controls="navbarResponsive"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navigation links -->
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+  <ul class="navbar-nav ms-auto p-2">
+    <li class="nav-item">
+      <a routerLink="/faq" class="nav-link">FAQ</a>
+    </li>
+
+    <!-- <li *ngIf="!isSignedIn"> -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/security/signin">Sign In</a>
+    </li>
+  </ul>
+  </div>
+</nav>
