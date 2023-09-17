@@ -87,7 +87,7 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/UserUpdate"
                   }
                 }
               }
@@ -248,6 +248,59 @@
           "lastSignedIn"
         ],
         "additionalProperties": false
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "phoneNumber": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "isDisabled": {
+                "type": "boolean"
+              },
+              "language": {
+                "type": "string"
+              },
+              "selectedSecurityQuestions": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "questionText": {
+                      "type": "string"
+                    },
+                    "answerText": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "questionText",
+                    "answerText"
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
