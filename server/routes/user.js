@@ -64,8 +64,6 @@ const userSchema = {
   additionalProperties: false,
 };
 
-
-
 /**
  * getAllUsers
  */
