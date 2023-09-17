@@ -8,7 +8,7 @@
   "paths": {
     "/api/users": {
       "get": {
-        "summary": "Get all user",
+        "summary": "findAllUsers",
         "description": "Get all users",
         "tags": [
           "Users"
@@ -27,11 +27,43 @@
             "description": "Internal Server Error - Database connection issue"
           }
         }
+      },
+      "post": {
+        "summary": "createUser",
+        "description": "Create a new User.",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/NewUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User details successfully retrieved"
+          },
+          "400": {
+            "description": "Bad Request - Input must be a number"
+          },
+          "404": {
+            "description": "User with the specified userId not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
       }
     },
     "/api/users/{userId}": {
       "get": {
-        "summary": "Get user by ID",
+        "summary": "findUserById",
         "description": "Get all users",
         "tags": [
           "Users"
@@ -244,6 +276,72 @@
           "lastSignedIn"
         ],
         "additionalProperties": false
+      },
+      "NewUser": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "example": "Jon"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Doe"
+              },
+              "email": {
+                "type": "string",
+                "example": "jdoe@bcrs.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "s3cret"
+              },
+              "phoneNumber": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string",
+                "example": "standard"
+              },
+              "isDisabled": {
+                "type": "boolean",
+                "example": false
+              },
+              "language": {
+                "type": "string"
+              },
+              "selectedSecurityQuestions": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "questionText": {
+                      "type": "string"
+                    },
+                    "answerText": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "firstName",
+                    "LastName",
+                    "email",
+                    "password",
+                    "role",
+                    "isDisabled"
+                  ]
+                }
+              }
+            }
+          }
+        }
       },
       "UserUpdate": {
         "type": "object",
