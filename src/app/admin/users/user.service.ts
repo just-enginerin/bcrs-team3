@@ -22,8 +22,8 @@ export class UserService {
     return this.http.get('/api/users')
   }
 
-  getUser(empId: number) {
-    return this.http.get('/api/users/' + empId)
+  getUser(userId: string) {
+    return this.http.get('/api/users/' + userId)
   }
 
   createUser(user: User) {
@@ -32,13 +32,13 @@ export class UserService {
     })
   }
 
-  updateUser(empId: number, user: UserViewModel) {
-    return this.http.put('/api/users/' + empId, {
+  updateUser(userId: string, user: UserViewModel) {
+    return this.http.put('/api/users/' + userId, {
       user
     })
   }
 
-  deleteUser(empId: number) {
-    return this.http.delete('/api/users/' + empId)
+  deleteUser(userId: string) {
+    return this.http.delete('/api/users/' + userId)
   }
 }
