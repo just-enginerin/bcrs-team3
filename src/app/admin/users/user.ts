@@ -6,10 +6,13 @@
 
 // imports statements
 export interface User {
-  empId: number
+  userId: string
   firstName: string
   lastName: string
   email: string
-  password: string 
+  phoneNumber: string
+  isDisabled: string
+  address: string
+  password: string
   role: string
 }

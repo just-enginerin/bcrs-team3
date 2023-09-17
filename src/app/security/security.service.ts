@@ -15,9 +15,9 @@ export class SecurityService {
 
   constructor(private http: HttpClient) { }
 
-  // retrieve employee information by ID from the API
-  findEmployeeById(empId: number) {
-    return this.http.get('/api/employees/' + empId)
+  // retrieve user information by ID from the API
+  findUserById(userId: number) {
+    return this.http.get('/api/users/' + userId)
   }
 
   signin(email: string, password: string) {

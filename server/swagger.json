@@ -8,7 +8,7 @@
   "paths": {
     "/api/users": {
       "get": {
-        "summary": "Retrieve all user",
+        "summary": "Get all user",
         "description": "Get all users",
         "tags": [
           "Users"
@@ -41,11 +41,10 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "description": "User ID",
             "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+              "type": "string"
+            },
+            "description": "The ID of the user"
           }
         ],
         "responses": {
@@ -62,11 +61,90 @@
             "description": "Internal Server Error - Database connection issue"
           }
         }
+      },
+      "put": {
+        "summary": "Update User",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the user to update",
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete User",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "ObjectId"
+            },
+            "description": "The ID of the user"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/security/signin": {
       "post": {
-        "summary": "Sign in a user",
+        "summary": "Sign in as user",
         "tags": [
           "Signin API"
         ],
