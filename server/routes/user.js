@@ -91,6 +91,33 @@ const updateUserSchema = {
   additionalProperties: false,
 };
 
+
+// new userSchema
+const newUserSchema = {
+  type: "object",
+  properties: {
+    firstName: { type: "string" },
+    lastName: { type: "string" },
+    email: { type: "string" },
+    password: { type: "string" },
+    phoneNumber: { type: "string" },
+    address: { type: "string" },
+    isDisabled: { type: "boolean" },
+    role: { type: "string" },
+    language: { type: "string" },
+    selectedSecurityQuestions: selectedSecurityQuestionsSchema,
+  },
+  required: [
+    "firstName",
+    "lastName",
+    "email",
+    "password",
+    "isDisabled",
+    "role"
+  ],
+  additionalProperties: false,
+};
+
 /**
  * getAllUsers
  */
@@ -183,7 +210,7 @@ router.post("/", (req, res, next) => {
     const { user } = req.body;
     console.log("user", user);
 
-    const validator = ajv.compile(userSchema);
+    const validator = ajv.compile(newUserSchema);
     const valid = validator(user);
 
     if (!valid) {
@@ -274,7 +301,7 @@ router.put("/:userId", (req, res, next) => {
     }
 
     user.password = bcrypt.hashSync(user.password, saltRounds);
-    
+
     mongo(async (db) => {
       const result = await db.collection("users").updateOne(
         { _id: new ObjectId(userId) },
