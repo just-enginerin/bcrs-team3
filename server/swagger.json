@@ -85,11 +85,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  "user": {
-                    "$ref": "#/components/schemas/UserUpdate"
-                  }
-                }
+                "$ref": "#/components/schemas/UserUpdate"
               }
             }
           }
