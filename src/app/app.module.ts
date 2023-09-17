@@ -33,8 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
-  
- 
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
