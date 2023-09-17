@@ -57,6 +57,7 @@ router.post("/signin", (req, res, next) => {
         next(err);
         return;
       }
+      console.log(signin.password, user.password);
 
       let passwordIsValid = bcrypt.compareSync(signin.password, user.password);
 
