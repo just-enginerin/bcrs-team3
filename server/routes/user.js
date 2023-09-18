@@ -73,9 +73,9 @@ const updateUserSchema = {
     phoneNumber: { type: "string" },
     address: { type: "string" },
     isDisabled: { type: "boolean" },
+    language: { type: "boolean" },
     role: { type: "string" },
     language: { type: "string" },
-    selectedSecurityQuestions: selectedSecurityQuestionsSchema,
   },
   required: [
     "firstName",
@@ -86,11 +86,9 @@ const updateUserSchema = {
     "isDisabled",
     "language",
     "role",
-    "selectedSecurityQuestions",
   ],
   additionalProperties: false,
 };
-
 
 // new userSchema
 const newUserSchema = {
@@ -113,7 +111,7 @@ const newUserSchema = {
     "email",
     "password",
     "isDisabled",
-    "role"
+    "role",
   ],
   additionalProperties: false,
 };
@@ -315,14 +313,6 @@ router.put("/:userId", (req, res, next) => {
             language: user.language,
             isDisabled: user.isDisabled,
             role: user.role,
-            "selectedSecurityQuestions.0.questionText":
-              user.selectedSecurityQuestions[0].questionText,
-            "selectedSecurityQuestions.0.answerText":
-              user.selectedSecurityQuestions[0].answerText,
-            "selectedSecurityQuestions.1.questionText":
-              user.selectedSecurityQuestions[1].questionText,
-            "selectedSecurityQuestions.1.answerText":
-              user.selectedSecurityQuestions[1].answerText,
           },
         }
       );

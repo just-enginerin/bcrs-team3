@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 import { UserService } from './../user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../user';
+import { NewUser } from '../user';
 @Component({
   selector: 'app-user-new',
   templateUrl: './user-new.component.html',
@@ -19,11 +19,11 @@ export class UserNewComponent {
   errorMessage: string
 
   userForm: FormGroup = this.fb.group({
-    userId: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]*$')])],
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
     email: [null, Validators.compose([Validators.required, Validators.email])],
     password: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')])],
+    isDisabled: [false],
     role: [null, Validators.compose([Validators.required])]
   })
 
@@ -32,14 +32,11 @@ export class UserNewComponent {
   }
 
   createUser() {
-    const user: User = {
-      userId: this.userForm.controls['userId'].value,
+    const user: NewUser = {
       firstName: this.userForm.controls['firstName'].value,
       lastName: this.userForm.controls['lastName'].value,
       email: this.userForm.controls['email'].value,
-      phoneNumber: this.userForm.controls['phoneNumber'].value,
       isDisabled: this.userForm.controls['isDisabled'].value,
-      address: this.userForm.controls['address'].value,
       password: this.userForm.controls['password'].value,
       role: this.userForm.controls['role'].value
     }

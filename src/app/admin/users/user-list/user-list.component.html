@@ -78,11 +78,11 @@
                 </td>
                 <td>{{ user.role }}</td>
                 <td>
-                  <a routerLink="/admin/users/{{ user.userId }}/view">
+                  <a routerLink="/admin/users/{{ user._id }}/view">
                     <span class="material-icons text-secondary">edit</span>
                   </a>
 
-                  <a class="link" (click)="deleteUser(user.userId)">
+                  <a class="link" (click)="deleteUser(user._id)">
                     <span class="material-icons text-secondary">delete</span>
                   </a>
                 </td>
@@ -99,13 +99,13 @@
           <div class="card-body">
             <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Role: {{ user.role }}</h6>
-            <p class="card-text">Email: {{ user.email }}</p>
+            <p class="card-text">Email: {{ user.email }} </p>
             <a
-              routerLink="/admin/users/{{ user.userId }}/view"
+              routerLink="/admin/users/{{ user._id }}/view"
               class="card-link"
               >Edit</a
             >
-            <a (click)="deleteUser(user.userId)" class="card-link">Delete</a>
+            <a (click)="deleteUser(user._id)" class="card-link">Delete</a>
           </div>
         </div>
       </div>
