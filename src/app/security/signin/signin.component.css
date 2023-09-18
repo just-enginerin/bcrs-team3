@@ -1,3 +1,10 @@
+/*
+  Title: signin.component.css
+  Author: William Egge
+  Date: 9/15/23
+  Description: Sign In page styling
+*/
+
 .signin-page {
   display: flex;
   flex-direction: column;

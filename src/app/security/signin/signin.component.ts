@@ -1,8 +1,9 @@
 /**
- * Title: security-routing.module.ts
- * Author: Professor Krasso
- * Date: 8/5/23
- */
+ * Title: signin.component.ts
+ * Author: William Egge
+ * Date: 9/16/23
+ * Description: Sign In / User authentication logic
+*/
 
 // imports statements
 import { Component } from '@angular/core';

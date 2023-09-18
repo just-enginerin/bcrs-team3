@@ -1,14 +1,16 @@
+<!--
+  Title: signin.component.html
+  Author: William Egge
+  Date: 9/14/23
+  Description: Sign in page HTML
+-->
+
 <div class="signin-page">
   <div class="container" style="min-height: 600px">
     <div class="row justify-content-center mt-5 h-100">
       <!-- Left column for introductory text -->
       <div class="col-md-6 left-signin-txt p-5 d-none d-md-flex">
-        <!-- <h1>
-          <i>Bcrs-team3 <span>.</span></i>
-        </h1> -->
-        <!-- <p class="pb-5"></p> -->
 
-        <!-- link to upsplash image: https://unsplash.com/photos/AvqpdLRjABs -->
         <img src="./assets/welcome.jpg" class="img-fluid" alt="Welcome sign">
       </div>
 
@@ -28,7 +30,7 @@
           [formGroup]="signinForm"
           (ngSubmit)="signin(); signinForm.reset()"
         >
-          <!--  //////////////////---------------->
+
           <!-- email -->
           <div class="form-floating my-4">
             <input

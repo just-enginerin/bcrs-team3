@@ -2,7 +2,8 @@
  * Title: security-routing.module.ts
  * Author: Professor Krasso
  * Date: 8/5/23
- */
+ * Updated by: William Egge
+*/
 
 // imports statements
 import { NgModule } from '@angular/core';
@@ -18,7 +19,7 @@ const routes: Routes = [
       {
         path: 'signin',
         component: SigninComponent,
-        title: 'Bcrs-team3:  Sign In'
+        title: 'BCRS:  Sign In'
       }
     ]
   }
