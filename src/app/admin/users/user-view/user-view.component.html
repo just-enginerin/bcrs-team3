@@ -1,67 +1,398 @@
 <div class="container-fluid pt-2">
-    <h1 class="text-center">Welcome to the User View Page!</h1>
-  
-    <div class="row justify-content-center pt-4">
-      
-      <div class="col-sm-10 col-md-8 col-lg-6">
-        <div class="card">
-          <div class="card-body">
-            <form [formGroup]="userForm" (ngSubmit)="updateUser();">
-  
-              <fieldset class="form-group">
-                <legend>User Information</legend>
-  
-                <div class="mb-3">
-                  <label for="txtFirstName">First Name:</label>
-                  <input type="text" id="txtFirstName" class="form-control" formControlName="firstName" required>
+  <h1 class="text-center">Update User!</h1>
+
+  <div class="row justify-content-center pt-4">
+    <div class="col-sm-10 col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+            <fieldset class="form-group">
+              <legend>User Information</legend>
+
+              <div class="mb-3">
+                <label for="txtFirstName">First Name:</label>
+                <input
+                  type="text"
+                  id="txtFirstName"
+                  class="form-control"
+                  formControlName="firstName"
+                  required
+                />
+              </div>
+
+              <!-- first name error handling -->
+              <div
+                *ngIf="
+                  userForm.controls['firstName'].touched &&
+                  userForm.controls['firstName'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  First name is required.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
                 </div>
-  
-                <!-- first name error handling -->
-                <div *ngIf="userForm.controls['firstName'].touched && userForm.controls['firstName'].hasError('required')">
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    First name is required.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <!-- end first name error handling -->
+
+              <div class="mb-3">
+                <label for="txtLastName">Last Name:</label>
+                <input
+                  type="text"
+                  id="txtLastName"
+                  class="form-control"
+                  formControlName="lastName"
+                  required
+                />
+              </div>
+
+              <!-- last name error handling -->
+              <div
+                *ngIf="
+                  userForm.controls['lastName'].touched &&
+                  userForm.controls['lastName'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  Last name is required.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+              <!-- end last name error handling -->
+
+              <div class="mb-3">
+                <label for="txtpassword">password:</label>
+                <input
+                  type="text"
+                  id="txtpassword"
+                  class="form-control"
+                  formControlName="password"
+                  required
+                />
+              </div>
+
+              <!-- phone number error handling -->
+              <div
+                *ngIf="
+                  userForm.controls['password'].touched &&
+                  userForm.controls['password'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  password is required.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+              <!-- end password error handling -->
+
+              <div class="mb-3">
+                <label for="txtphoneNumber">phoneNumber:</label>
+                <input
+                  type="text"
+                  id="txtphoneNumber"
+                  class="form-control"
+                  formControlName="phoneNumber"
+                  required
+                />
+              </div>
+
+              <!-- phone number error handling -->
+              <div
+                *ngIf="
+                  userForm.controls['phoneNumber'].touched &&
+                  userForm.controls['phoneNumber'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  phoneNumber is required.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+              <!-- end phoneNumber error handling -->
+
+              <div class="mb-3">
+                <label for="txtaddress">Address:</label>
+                <input
+                  type="text"
+                  id="txtaddress"
+                  class="form-control"
+                  formControlName="address"
+                  required
+                />
+              </div>
+
+              <!-- address error handling -->
+              <div
+                *ngIf="
+                  userForm.controls['address'].touched &&
+                  userForm.controls['address'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  address is required.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+              <!-- end address error handling -->
+
+              <div class="mb-3">
+                <label for="txtlanguage">Language:</label>
+                <input
+                  type="text"
+                  id="txtlanguage"
+                  class="form-control"
+                  formControlName="language"
+                  required
+                />
+              </div>
+
+              <!-- language error handling -->
+              <div
+                *ngIf="
+                  userForm.controls['language'].touched &&
+                  userForm.controls['language'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  language is required.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+              <!-- end language error handling -->
+
+              <div class="d-md-flex gap-3">
+                <div class="mb-3">
+                  <label for="isDisabled">IsDisabled:</label><br />
+                  <select
+                    formControlName="isDisabled"
+                    name="isDisabled"
+                    id="isDisabled"
+                    class="form-select"
+                  >
+                    <option [value]="false">False</option>
+                    <option [value]="true">True</option>
+                  </select>
+                </div>
+
+                <!-- isDisabled error handling -->
+                <div
+                  *ngIf="
+                    userForm.controls['isDisabled'].touched &&
+                    userForm.controls['isDisabled'].hasError('required')
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    isDisabled="alert"
+                  >
+                    IsDisabled is required.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
                   </div>
                 </div>
-                <!-- end first name error handling -->
-  
-                <div class="mb-3">
-                  <label for="txtLastName">Last Name:</label>
-                  <input type="text" id="txtLastName" class="form-control" formControlName="lastName" required>
-                </div>
-  
-                 <!-- last name error handling -->
-                 <div *ngIf="userForm.controls['lastName'].touched && userForm.controls['lastName'].hasError('required')">
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Last name is required.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                </div>
-                <!-- end last name error handling -->
-  
+                <!-- end isDisabled error handling -->
+
                 <div class="mb-3">
                   <label for="role">Role:</label><br />
-                  <select formControlName="role" name="role" id="role" class="form-select-sm">
+                  <select
+                    formControlName="role"
+                    name="role"
+                    id="role"
+                    class="form-select form-select"
+                  >
                     <option value="standard">Standard</option>
                     <option value="admin">Admin</option>
                   </select>
                 </div>
-  
-                 <!-- role error handling -->
-                 <div *ngIf="userForm.controls['role'].touched && userForm.controls['role'].hasError('required')">
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+
+                <!-- role error handling -->
+                <div
+                  *ngIf="
+                    userForm.controls['role'].touched &&
+                    userForm.controls['role'].hasError('required')
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
                     Role is required.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
                   </div>
                 </div>
-                <!-- end role error handling -->
-              </fieldset>
-  
-              <input type="submit" id="submit" [disabled]="!userForm.valid" value="Submit" class="btn btn-lg bg-dark text-white mx-auto d-block">
-            </form>
-          </div>
+              </div>
+              <!-- end role error handling -->
+
+              <!-- Security Questions FormArray -->
+              <!-- <div formArrayName="selectedSecurityQuestions">
+                <div
+                  *ngFor="
+                    let questionGroup of selectedSecurityQuestionsFormArray.controls;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <div class="d-md-flex gap-3">
+                    <div class="mb-3 w-100">
+                      <label for="securityQuestion1"
+                        >Security Question 1:</label
+                      >
+                      <select
+                        formControlName="selectedSecurityQuestions.0.questionText"
+                        id="securityQuestion1"
+                        class="form-select"
+                        required
+                      >
+                        <option value="Question 1">Question 1</option>
+                        <option value="Question 2">Question 2</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3 w-100">
+                      <label for="securityAnswer1">Answer 1</label>
+                      <input
+                        type="text"
+                        formControlName="selectedSecurityQuestions.0.answerText"
+                        id="securityAnswer1"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="d-md-flex gap-3">
+                    <div class="mb-3 w-100">
+                      <label for="securityQuestion2">Security Question 2</label>
+                      <select
+                        formControlName="selectedSecurityQuestions.1.questionText"
+                        id="securityQuestion2"
+                        class="form-select"
+                        required
+                      >
+                        <option value="Question 1">Question 1</option>
+                        <option value="Question 2">Question 2</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3 w-100">
+                      <label for="securityAnswer2">Answer 2:</label>
+                      <input
+                        type="text"
+                        formControlName="selectedSecurityQuestions.1.answerText"
+                        id="securityAnswer2"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <!-- <div formArrayName="selectedSecurityQuestions">
+                <div *ngFor="let questionGroup of selectedSecurityQuestionsFormArray.controls; let i = index">
+                  <div [formGroupName]="i">
+                    <div class="d-md-flex gap-3">
+                      <div class="mb-3 w-100">
+                        <label [for]="'securityQuestion' + i">Security Question {{ i + 1 }}:</label>
+                        <select
+                          [formControlName]="'questionText'"
+                          [id]="'securityQuestion' + i"
+                          class="form-select"
+                          required
+                        >
+                          <option value="">Select a security question</option>
+                          <option value="Question 1">Question 1</option>
+                          <option value="Question 2">Question 2</option>
+                        </select>
+                      </div>
+              
+                      <div class="mb-3 w-100">
+                        <label [for]="'securityAnswer' + i">Answer {{ i + 1 }}</label>
+                        <input
+                          type="text"
+                          [formControlName]="'answerText'"
+                          [id]="'securityAnswer' + i"
+                          class="form-control"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              
+              
+            </fieldset>
+
+            <input
+              type="submit"
+              id="submit"
+              [disabled]="!userForm.valid"
+              value="Submit"
+              class="btn btn-lg bg-dark text-white mx-auto d-block"
+            />
+          </form>
         </div>
-        <a routerLink="/admin/users" class="text-underline-hover text-dark">Return to User List</a>
       </div>
+      <a routerLink="/admin/users" class="text-underline-hover text-dark"
+        >Return to User List</a
+      >
     </div>
   </div>
+</div>

@@ -18,7 +18,7 @@ import { UserViewModel } from '../user-view-model';
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent {
-  userId!: string // define the userId variable
+  _id!: string // define the _id variable
   user: User // define the user variable
 
   // define the userForm variable and assign it to the FormGroup
@@ -26,9 +26,11 @@ export class UserViewComponent {
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
     phoneNumber: [null, Validators.compose([Validators.required])],
-    isDisabled: [null, Validators.compose([Validators.required])],
+    password: [null, Validators.compose([Validators.required])],
+    language: [null, Validators.compose([Validators.required])],
     address: [null, Validators.compose([Validators.required])],
-    role: [null, Validators.compose([Validators.required])]
+    isDisabled: [null, Validators.compose([Validators.required])],
+    role: [null, Validators.compose([Validators.required])],
   })
 
   // inject the ActivatedRoute, UserService, Router, and FormBuilder into the constructor
@@ -36,21 +38,17 @@ export class UserViewComponent {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+  ) {
 
     this.user = {} as User // initialize the user model
-    let l_userId = this.route.snapshot.paramMap.get('userId') || '' // get the userId from the route
-    // this.userId = parseInt(l_userId, 10) // convert the userId to a number
+    let l__id = this.route.snapshot.paramMap.get('_id') || '' // get the _id from the route
+    this._id = l__id; // Keep _id as a string
 
-    console.log(this.userId) // log the userId to the console
-
-    // if the userId is not a number, redirect to the user list page
-    // if (isNaN(this.userId)) {
-    //   this.router.navigate(['/admin/users'])
-    // }
+    console.log(this._id) // log the _id to the console
 
     // call the userService findUserById() function and subscribe to the observable
-    this.userService.getUser(this.userId).subscribe({
+    this.userService.getUser(this._id).subscribe({
       next: (user: any) => {
         this.user = user // assign the results to the user model
         console.log(this.user) // log the results to the console
@@ -61,6 +59,11 @@ export class UserViewComponent {
       complete: () => {
         this.userForm.controls['firstName'].setValue(this.user.firstName)
         this.userForm.controls['lastName'].setValue(this.user.lastName)
+        this.userForm.controls['password'].setValue(this.user.password)
+        this.userForm.controls['phoneNumber'].setValue(this.user.phoneNumber)
+        this.userForm.controls['address'].setValue(this.user.address)
+        this.userForm.controls['language'].setValue(this.user.language)
+        this.userForm.controls['isDisabled'].setValue(this.user.isDisabled)
         this.userForm.controls['role'].setValue(this.user.role)
       }
     })
@@ -73,12 +76,18 @@ export class UserViewComponent {
     // assign the values from the form to the user view model
     user.firstName = this.userForm.controls['firstName'].value
     user.lastName = this.userForm.controls['lastName'].value
+    user.phoneNumber = this.userForm.controls['phoneNumber'].value
+    user.password = this.userForm.controls['password'].value
+    user.address = this.userForm.controls['address'].value
+    user.language = this.userForm.controls['language'].value
+    user.isDisabled = this.userForm.controls['isDisabled'].value
     user.role = this.userForm.controls['role'].value
+
 
     console.log('User ViewModel: ', user) // log user view model
 
     // call the userService updateUser() function and subscribe to the observable
-    this.userService.updateUser(this.userId, user).subscribe({
+    this.userService.updateUser(this._id, user).subscribe({
       next: (res) => {
         console.log(res)
         this.router.navigate(['/admin/users']) // redirect to the user list page
