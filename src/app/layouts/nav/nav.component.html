@@ -4,9 +4,9 @@
   Date: 9/15/23
   Description: Navigation bar HTML
 -->
-<nav class="mt-3 mx-2 ps-3 navbar navbar-expand-sm fixed-top">
+<nav class="navbar navbar-expand-sm">
   <a routerLink="/">
-    <img src="./assets/images/Logo.png" alt="nodebucket" class="logo"
+    <img src="/assets/images/Logo.png" alt="Bob's Computer Repair Shop logo" class="logo"
   /></a>
 
   <button
@@ -26,22 +26,26 @@
     <ul class="navbar-nav ms-auto p-2">
 
 
-      <li class="nav-item">
-        <a routerLink="/service-repair" class="nav-link"><strong>Service-repair</strong> </a>
+      <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'standard'">
+        <button mat-raised-button class="action-button" routerLink="/service-repair">Create a New Service Request</button>
+      </li>
+      <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'admin'">
+        <a routerLink="/admin/users" class="nav-link"><strong>Employee Configuration</strong> </a>
       </li>
       <li class="nav-item" *ngIf="isSignedIn">
-        <a routerLink="/about" class="nav-link"><strong>Invoice</strong> </a>
+        <a routerLink="/employees" class="nav-link"><strong>Employee Directory</strong></a>
+      </li>
+      <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'admin'">
+        <a routerLink="#" class="nav-link"><strong>Service Graph</strong> </a>
       </li>
       <li class="nav-item" >
-        <a routerLink="/contact" class="nav-link"
-          ><strong>Faq</strong>
+        <a routerLink="/faq" class="nav-link"
+          ><strong>FAQ</strong>
         </a>
       </li>
 
-      <li *ngIf="!isSignedIn" id="signinBtn">
-        <a routerLink="/security/signin" class="nav-link"
-          ><strong> Sign In</strong></a
-        >
+      <li *ngIf="!isSignedIn" class="nav-item">
+        <button mat-raised-button class="action-button" routerLink="/security/signin">Sign In</button>
       </li>
 
       <!--  user account -->
@@ -62,18 +66,18 @@
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="navbarDropdown"
         >
-          <li class="dropdown-item">Sign in as {{ sessionUser.fullName }}</li>
+          <li class="dropdown-item user-name">Hello, {{ sessionUser.fullName }}</li>
           <hr />
           <li>
-            <a routerLink="/task-management/my-tasks" class="dropdown-item">
-              MY Tasks</a
+            <a routerLink="#" class="dropdown-item link">
+              My Profile</a
             >
           </li>
           <li *ngIf="sessionUser.role === 'admin'">
-            <a routerLink="/admin/employees" class="dropdown-item">Employees</a>
+            <a routerLink="#" class="dropdown-item link">My Invoices</a>
           </li>
           <li>
-            <a (click)="signout()" class="dropdown-item link">Sign Out</a>
+            <a (click)="signout()" class="dropdown-item link">Log Out</a>
           </li>
         </ul>
       </li>

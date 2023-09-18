@@ -1,0 +1,20 @@
+/**
+  Title: user-list.component.css
+  Author: Yakut Ahmedin
+  Updated by: Erin Brady
+  Date: 9/16/23
+  Description: Employee Management page styling
+*/
+
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 80vh;
+}
+
+.col-sm-12 {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
