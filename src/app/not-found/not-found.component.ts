@@ -1,3 +1,9 @@
+/**
+ * Title: not-found.component.ts
+ * Author: Erin Brady
+ * Date: 9/17/23
+*/
+
 import { Component } from '@angular/core';
 
 @Component({

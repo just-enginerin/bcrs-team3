@@ -1,7 +1,7 @@
 /**
- * Title: security-routing.module.ts
- * Author: Professor Krasso
- * Date: 8/5/23
+ * Title: admin-routing.module.ts
+ * Author: Yakut Ahmedin
+ * Date: 9/17/23
  */
 
 // imports statements

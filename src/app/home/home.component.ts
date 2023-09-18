@@ -2,7 +2,7 @@
  * Title: home.component.ts
  * Author: Professor Krasso
  * Date: 8/5/23
- */
+*/
 
 // imports statements
 import { Component } from '@angular/core';

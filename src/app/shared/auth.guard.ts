@@ -2,7 +2,8 @@
  * Title: auth.guard.ts
  * Author: Professor Krasso
  * Date: 8/5/23
- */
+ * Updated by: Yakut Ahmedin
+*/
 
 // imports statements
 import { inject } from '@angular/core';

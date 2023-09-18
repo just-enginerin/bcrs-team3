@@ -1,7 +1,7 @@
 /**
- * Title: security-routing.module.ts
- * Author: Professor Krasso
- * Date: 8/5/23
+ * Title: user-list.compnent.ts
+ * Author: Yakut Ahmedin
+ * Date: 9/16/23
  */
 
 // imports statements

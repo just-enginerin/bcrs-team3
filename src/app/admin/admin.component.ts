@@ -1,8 +1,8 @@
 /**
- * Title: security-routing.module.ts
- * Author: Professor Krasso
- * Date: 8/5/23
- */
+ * Title: admin.component.ts
+ * Author: Yakut Ahmedin
+ * Date: 9/15/23
+*/
 
 // imports statements
 import { Component } from '@angular/core';

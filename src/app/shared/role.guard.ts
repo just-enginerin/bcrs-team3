@@ -1,7 +1,8 @@
 /**
- * Title: role.guard.ts
+ * Title: auth.guard.ts
  * Author: Professor Krasso
- * Date: 8/16/23
+ * Date: 8/5/23
+ * Updated by: Yakut Ahmedin
 */
 
 import { CanActivateFn, Router } from '@angular/router';
@@ -19,7 +20,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
     console.log('You must be logged in to access this page!')
     const router = inject(Router)
     router.navigate(['/security/signin'], { queryParams: {returnUrl: state.url }})
-    return false 
+    return false
   }
 
   if (sessionUser.role !== 'admin') {

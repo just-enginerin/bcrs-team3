@@ -2,7 +2,8 @@
  * Title: security-routing.module.ts
  * Author: Professor Krasso
  * Date: 8/5/23
- */
+ * Updated by: William Egge
+*/
 
 // imports statements
 import { HttpClient } from '@angular/common/http';

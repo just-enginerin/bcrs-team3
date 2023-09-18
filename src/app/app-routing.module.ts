@@ -2,7 +2,8 @@
  * Title: app-routing.module.ts
  * Author: Professor Krasso
  * Date: 8/5/23
- */
+ * Updated by: William Egge, Erin Brady
+*/
 
 // imports statements
 import { NgModule } from '@angular/core';

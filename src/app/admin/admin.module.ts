@@ -1,8 +1,8 @@
 /**
- * Title: security-routing.module.ts
- * Author: Professor Krasso
- * Date: 8/5/23
- */
+ * Title: admin.module.ts
+ * Author: Yakut Ahmedin
+ * Date: 9/15/23
+*/
 
 // imports statements
 import { NgModule } from '@angular/core';
@@ -36,4 +36,5 @@ import { UserListComponent } from './users/user-list/user-list.component';
     MatButtonModule
   ]
 })
+
 export class AdminModule { }
