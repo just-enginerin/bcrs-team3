@@ -1,5 +1,5 @@
-<div class="container-fluid pt-2">
-  <h1 class="text-center">Welcome to the User Creation Page!</h1>
+<div class="container-fluid pt-5">
+  <h1 class="text-center">Create New User!</h1>
 
   <div class="row justify-content-center pt-4">
     <div class="col-sm-10 col-md-8 col-lg-6">
@@ -91,28 +91,28 @@
               <!-- end last name error handling -->
 
               <div class="mb-3">
-                <label for="txtPhoneNumber">Phone Number:</label>
+                <label for="txtEmail">Email:</label>
                 <input
-                  type="phoneNumber"
-                  id="txtphoneNumber"
+                  type="text"
+                  id="txtEmail"
                   class="form-control"
-                  formControlName="phoneNumber"
+                  formControlName="email"
                   required
                 />
               </div>
 
-              <!-- phoneNumber error handling -->
+              <!-- email error handling -->
               <div
                 *ngIf="
-                  userForm.controls['phoneNumber'].touched &&
-                  userForm.controls['phoneNumber'].hasError('required')
+                  userForm.controls['email'].touched &&
+                  userForm.controls['email'].hasError('required')
                 "
               >
                 <div
                   class="alert alert-danger alert-dismissible fade show"
                   role="alert"
                 >
-                  PhoneNumber is required.
+                  Email is required.
                   <button
                     type="button"
                     class="btn-close"
@@ -124,17 +124,15 @@
 
               <div
                 *ngIf="
-                  userForm.controls['phoneNumber'].touched &&
-                  userForm.controls['phoneNumber'].hasError('pattern')
+                  userForm.controls['email'].touched &&
+                  userForm.controls['email'].hasError('email')
                 "
               >
                 <div
                   class="alert alert-danger alert-dismissible fade show"
                   role="alert"
                 >
-                  The phoneNumber must be at least 8 characters long and contain
-                  at least one uppercase letter, one lowercase letter, and one
-                  number.
+                  Please enter a valid email address.
                   <button
                     type="button"
                     class="btn-close"
@@ -143,117 +141,7 @@
                   ></button>
                 </div>
               </div>
-              <!-- end phoneNumber error handling -->
-
-              <div class="mb-3">
-                <label for="txtaddress">Address:</label>
-                <input
-                  type="phoneNumber"
-                  id="txtaddress"
-                  class="form-control"
-                  formControlName="address"
-                  required
-                />
-              </div>
-
-              <!-- address error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['address'].touched &&
-                  userForm.controls['address'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  Address is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-
-              <div
-                *ngIf="
-                  userForm.controls['address'].touched &&
-                  userForm.controls['address'].hasError('pattern')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  The address must be at least 8 characters long and contain at
-                  least one uppercase letter, one lowercase letter, and one
-                  number.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end address error handling -->
-
-              <div class="mb-3">
-                <label for="txtlanguage">Language:</label>
-                <input
-                  type="phoneNumber"
-                  id="txtlanguage"
-                  class="form-control"
-                  formControlName="language"
-                  required
-                />
-              </div>
-
-              <!-- language error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['language'].touched &&
-                  userForm.controls['language'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  Language is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-
-              <div
-                *ngIf="
-                  userForm.controls['language'].touched &&
-                  userForm.controls['language'].hasError('pattern')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  The language must be at least 8 characters long and contain at
-                  least one uppercase letter, one lowercase letter, and one
-                  number.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end language error handling -->
+              <!-- // end email error handling -->
 
               <div class="mb-3">
                 <label for="txtPassword">Password:</label>
@@ -310,7 +198,16 @@
               </div>
               <!-- end password error handling -->
 
-              
+              <!-- <div class="form-floating custom-form-floating form-group mb-3">
+                <input
+                  type="email"
+                  class="form-control is-valid"
+                  id="floatingInput"
+                  placeholder="Place Holder"
+                />
+                <label for="floatingInput">Regular</label>
+              </div> -->
+
               <div class="d-flex gap-3">
                 <div class="mb-3">
                   <label for="isDisabled">IsDisabled:</label><br />
@@ -320,8 +217,8 @@
                     id="isDisabled"
                     class="form-select-sm"
                   >
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
+                    <option [value]="false">Active</option>
+                    <option [value]="true">Inactive</option>
                   </select>
                 </div>
 
