@@ -26,7 +26,7 @@
     <ul class="navbar-nav ms-auto p-2">
 
 
-      <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'standard'">
+      <li class="nav-item" *ngIf="isSignedIn">
         <button mat-raised-button class="action-button" routerLink="/service-repair">Create a New Service Request</button>
       </li>
       <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'admin'">
