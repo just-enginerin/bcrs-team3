@@ -7,7 +7,7 @@
 // imports statements
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './user';
+import { NewUser } from './user';
 import { UserViewModel } from './user-view-model';
 
 @Injectable({
@@ -22,23 +22,23 @@ export class UserService {
     return this.http.get('/api/users')
   }
 
-  getUser(userId: string) {
-    return this.http.get('/api/users/' + userId)
+  getUser(_id: string) {
+    return this.http.get('/api/users/' + _id)
   }
 
-  createUser(user: User) {
+  createUser(user: NewUser) {
     return this.http.post('/api/users/', {
       user
     })
   }
 
-  updateUser(userId: string, user: UserViewModel) {
-    return this.http.put('/api/users/' + userId, {
+  updateUser(_id: string, user: UserViewModel) {
+    return this.http.put('/api/users/' + _id, {
       user
     })
   }
 
-  deleteUser(userId: string) {
-    return this.http.delete('/api/users/' + userId)
+  deleteUser(_id: string) {
+    return this.http.delete('/api/users/' + _id)
   }
 }

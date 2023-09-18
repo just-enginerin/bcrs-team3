@@ -18,7 +18,7 @@ export class UserListComponent {
   users: User[]
   successMessage: string
   errorMessage: string
-  isLoading: boolean 
+  isLoading: boolean
 
   constructor(private userService: UserService) {
     this.users = []
@@ -30,27 +30,27 @@ export class UserListComponent {
       next: (users: any) => {
         this.users = users
         console.log('User List:', this.users)
-        this.isLoading = false 
+        this.isLoading = false
       },
       error: (err) => {
         this.errorMessage = err.message
         console.log(err)
-        this.isLoading = false 
+        this.isLoading = false
       },
       complete: () => {
-        this.isLoading = false 
+        this.isLoading = false
       }
     })
   }
 
-  deleteUser(userId: string) {
-    if (!confirm('Are you sure you want to delete user record ' + userId + '?')) {
-      return 
+  deleteUser(_id: string) {
+    if (!confirm('Are you sure you want to delete user record ' + _id + '?')) {
+      return
     }
-    
-    this.userService.deleteUser(userId).subscribe({
+
+    this.userService.deleteUser(_id).subscribe({
       next: (res) => {
-        this.users = this.users.filter(user => user.userId !== userId)
+        this.users = this.users.filter(user => user._id !== _id)
 
         this.successMessage = 'User deleted successfully'
 
