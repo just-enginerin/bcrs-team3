@@ -23,9 +23,14 @@ body {
 .action-button {
   background-color: var(--primary-color) !important;
   transition-duration: 800ms;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  color: white !important;
 }
 
 .action-button:hover {
   background-color: var(--primary-highlight) !important;
   transition-duration: 800ms;
+  color: black !important;
 }

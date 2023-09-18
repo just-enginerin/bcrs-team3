@@ -1,8 +1,15 @@
+/**
+  Title: footer.component.css
+  Author: Yakut Ahmedin
+  Updated by: Erin Brady
+  Date: 9/16/23
+  Description:Footer component styling
+*/
+
 
 footer {
-  background: #b9d4e6;
-  border-bottom: 8px solid var(--primary-color);
-  padding-bottom: 40px;
+  background: var(--primary-highlight);
+  border-top: 3px solid var(--primary-color);
 }
 
 .email-input input {
@@ -28,6 +35,7 @@ footer {
   box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.11);
 }
 
+/* Mobile */
 @media only screen and (max-width: 768px) {
   .email-input {
       padding: 0px !important;

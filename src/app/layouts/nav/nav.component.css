@@ -5,19 +5,11 @@
   Description: Navigation Bar component styling
 */
 
-
-nav {
-  background-color: var(--primary-color);
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
 .navbar-brand {
   margin-left: 20px;
 }
 
-.nav-link{
+.nav-link, .nav-button-link {
   height: 100%;
   margin: 0 10px;
 }
@@ -26,19 +18,25 @@ nav {
   background-color: var(--primary-highlight);
 }
 
+.nav-button-link button {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
 nav {
   height: 74px;
   flex-shrink: 0;
-  border-radius: 20px;
   background: #FFF;
   box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.11);
-  border: 1px solid #00BCD4;
+  border-bottom: 3px solid var(--primary-color);
   z-index: 12;
+  padding-left: 30px;
 }
 
 #signinBtn {
   box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.11);
-  border: 1px solid #00BCD4;
+  border: 1px solid var(--primary-color);
   border-radius: 20px;
   padding: 0px 20px;
 }
@@ -73,17 +71,13 @@ nav {
   }
 }
 
-#dropdownMenu {
-  background: #00BCD4 !important;
-  color: #FFF !important;
+#dropdownMenu, .dropdown-item, .user-name, .user-name:hover {
+  background: var(--primary-color) !important;
+  color: white !important;
 }
 
-.dropdown-item {
-  color: #FFF !important;
-}
-
-.dropdown-item:hover {
+.link:hover {
   cursor: pointer;
-  background-color: rgba(68, 136, 66, 0.836) !important;
-  color: rgba(224, 253, 231, 0.938) !important;
+  background-color: var(--primary-highlight) !important;
+  color: black !important;
 }

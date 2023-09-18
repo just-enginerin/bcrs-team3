@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
 import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { authGuard } from './shared/auth.guard';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
@@ -28,9 +29,9 @@ const routes: Routes = [
         title: 'BCRS: Home'
       },
       {
-        path: 'faq',
-        component: HomeComponent,
-        title: 'BCRS: Home'
+        path: 'not-found',
+        component: NotFoundComponent,
+        title: 'BCRS: 404'
       },
       {
         path: 'admin',
@@ -57,4 +58,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true, enableTracing: false, scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
