@@ -42,6 +42,7 @@ const routes: Routes = [
   {
     // path for the security module (e.g. login, register, forgot password, etc.)
     path: 'security',
+    component: BaseLayoutComponent,
     loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
   },
   {
