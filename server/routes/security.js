@@ -13,7 +13,11 @@ const Ajv = require("ajv");
 
 const router = express.Router();
 const ajv = new Ajv();
+const saltRounds = 10;
 
+/**
+ * signinSchema
+ */
 const signinSchema = {
   type: "object",
   properties: {
@@ -24,6 +28,42 @@ const signinSchema = {
   additionalProperties: false,
 };
 
+/**
+ * securityQuestionSchema
+ */
+const securityQuestionSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      question: { type: "string" },
+      answer: { type: "string" },
+    },
+    required: ["question", "answer"],
+    additionalProperties: false,
+  },
+};
+
+/**
+ * registerSchema
+ */
+
+/**
+ * resetPasswordSchema
+ */
+const resetPasswordSchema = {
+  type: "object",
+  properties: {
+    password: { type: "string" },
+    selectedSecurityQuestion: securityQuestionSchema,
+  },
+  required: ["password"],
+  additionalProperties: false,
+};
+
+/**
+ * signin
+ */
 router.post("/signin", (req, res, next) => {
   try {
     const signin = req.body;
@@ -74,6 +114,62 @@ router.post("/signin", (req, res, next) => {
     }, next);
   } catch (err) {
     console.log("err");
+    next(err);
+  }
+});
+
+/**
+ * resetPassword
+ */
+router.delete("/users/:email/reset-password", (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const newPassword = req.body;
+
+    console.log(`user email: ${email}`);
+
+    const validate = ajv.compile(resetPasswordSchema);
+    const valid = validate(newPassword);
+
+    if (!valid) {
+      const err = new Error("Bad Request");
+      err.status = 400;
+      err.errors = validate.errors;
+      console.log("password validation errors", validate.errors);
+      next(err);
+      return;
+    }
+
+    mongo(async (db) => {
+      const user = await db.collection("users").findOne({ email: email });
+
+      if (!user) {
+        const err = new Error("not found");
+        err.status = 404;
+        console.log(`user not found: ${email}`);
+        next(err);
+        return;
+      }
+
+      console.log(`Selected user: ${user}`);
+
+      const hashedPassword = bcrypt.hashSync(newPassword.password, saltRounds);
+
+      const result = await db.collection("users").updateOne(
+        { email: email },
+        {
+          $set: {
+            password: hashedPassword,
+          },
+        }
+      );
+
+      console.log(`mongoDB result: ${result}`);
+
+      res.status(204).send();
+    }, next);
+  } catch (err) {
+    console.error(err);
     next(err);
   }
 });

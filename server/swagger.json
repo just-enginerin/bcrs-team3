@@ -170,6 +170,7 @@
         }
       }
     },
+    "/api/users/{email}/security-questions": {},
     "/api/security/signin": {
       "post": {
         "summary": "Sign in as user",
@@ -206,6 +207,52 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/security/register": {},
+    "/api/security/verify/users/{email}": {},
+    "/api/security/verify/users/{email}/security-questions": {},
+    "/api/security/users/{email}/reset-password": {
+      "delete": {
+        "summary": "Reset User Password",
+        "tags": ["Security"],
+        "description": "This API endpoint allows resetting a user's password. An email containing the reset instructions will be sent to the user.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "description": "The email address of the user whose password needs to be reset"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent successfully."
+          },
+          "400": {
+            "description": "Bad request. Invalid input."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal Server Error."
           }
         }
       }
@@ -395,6 +442,16 @@
             }
           }
         }
+      },
+      "PasswordResetRequest": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["password"],
+        "additionalProperties": false
       }
     }
   }
