@@ -25,10 +25,9 @@ export class UserViewComponent {
   userForm: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
-    phoneNumber: [null, Validators.compose([Validators.required])],
-    password: [null, Validators.compose([Validators.required])],
-    language: [null, Validators.compose([Validators.required])],
-    address: [null, Validators.compose([Validators.required])],
+    phoneNumber: [null],
+    language: [null],
+    address: [null],
     isDisabled: [null, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])],
   })
@@ -59,7 +58,6 @@ export class UserViewComponent {
       complete: () => {
         this.userForm.controls['firstName'].setValue(this.user.firstName)
         this.userForm.controls['lastName'].setValue(this.user.lastName)
-        this.userForm.controls['password'].setValue(this.user.password)
         this.userForm.controls['phoneNumber'].setValue(this.user.phoneNumber)
         this.userForm.controls['address'].setValue(this.user.address)
         this.userForm.controls['language'].setValue(this.user.language)
@@ -77,7 +75,6 @@ export class UserViewComponent {
     user.firstName = this.userForm.controls['firstName'].value
     user.lastName = this.userForm.controls['lastName'].value
     user.phoneNumber = this.userForm.controls['phoneNumber'].value
-    user.password = this.userForm.controls['password'].value
     user.address = this.userForm.controls['address'].value
     user.language = this.userForm.controls['language'].value
     user.isDisabled = this.userForm.controls['isDisabled'].value

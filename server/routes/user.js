@@ -27,7 +27,7 @@ const newUserSchema = {
     address: { type: "string" },
     isDisabled: { type: "boolean" },
     role: { type: "string" },
-    language: { type: "string" }
+    language: { type: "string" },
   },
   required: [
     "firstName",
@@ -46,14 +46,13 @@ const updateUserSchema = {
   properties: {
     firstName: { type: "string" },
     lastName: { type: "string" },
-    password: { type: "string" },
     phoneNumber: { type: "string" },
     address: { type: "string" },
     language: { type: "string" },
     isDisabled: { type: "boolean" },
     role: { type: "string" },
   },
-  required: ["firstName", "lastName", "password", "isDisabled", "role"],
+  required: ["firstName", "lastName", "isDisabled", "role"],
   additionalProperties: false,
 };
 
@@ -261,7 +260,6 @@ router.put("/:userId", (req, res, next) => {
     const validator = ajv.compile(updateUserSchema);
     const valid = validator(user);
 
-    
     if (!valid) {
       const err = new Error("Bad Request");
       err.status = 400;
@@ -271,8 +269,6 @@ router.put("/:userId", (req, res, next) => {
       return;
     }
 
-    user.password = bcrypt.hashSync(user.password, saltRounds);
-
     mongo(async (db) => {
       const result = await db.collection("users").updateOne(
         { userId: userId },
@@ -280,7 +276,6 @@ router.put("/:userId", (req, res, next) => {
           $set: {
             firstName: user.firstName,
             lastName: user.lastName,
-            password: user.password,
             phoneNumber: user.phoneNumber,
             address: user.address,
             language: user.language,

@@ -82,38 +82,7 @@
               </div>
               <!-- end last name error handling -->
 
-              <div class="mb-3">
-                <label for="txtpassword">password:</label>
-                <input
-                  type="text"
-                  id="txtpassword"
-                  class="form-control"
-                  formControlName="password"
-                  required
-                />
-              </div>
-
-              <!-- phone number error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['password'].touched &&
-                  userForm.controls['password'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  password is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end password error handling -->
+   
 
               <div class="mb-3">
                 <label for="txtphoneNumber">phoneNumber:</label>
@@ -122,31 +91,9 @@
                   id="txtphoneNumber"
                   class="form-control"
                   formControlName="phoneNumber"
-                  required
+
                 />
               </div>
-
-              <!-- phone number error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['phoneNumber'].touched &&
-                  userForm.controls['phoneNumber'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  phoneNumber is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end phoneNumber error handling -->
 
               <div class="mb-3">
                 <label for="txtaddress">Address:</label>
@@ -155,31 +102,9 @@
                   id="txtaddress"
                   class="form-control"
                   formControlName="address"
-                  required
                 />
               </div>
 
-              <!-- address error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['address'].touched &&
-                  userForm.controls['address'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  address is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end address error handling -->
 
               <div class="mb-3">
                 <label for="txtlanguage">Language:</label>
@@ -188,31 +113,10 @@
                   id="txtlanguage"
                   class="form-control"
                   formControlName="language"
-                  required
                 />
               </div>
 
-              <!-- language error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['language'].touched &&
-                  userForm.controls['language'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  language is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end language error handling -->
+          
 
               <div class="d-md-flex gap-3">
                 <div class="mb-3">
@@ -286,105 +190,6 @@
               </div>
               <!-- end role error handling -->
 
-              <!-- Security Questions FormArray -->
-              <!-- <div formArrayName="selectedSecurityQuestions">
-                <div
-                  *ngFor="
-                    let questionGroup of selectedSecurityQuestionsFormArray.controls;
-                    let i = index
-                  "
-                  [formGroupName]="i"
-                >
-                  <div class="d-md-flex gap-3">
-                    <div class="mb-3 w-100">
-                      <label for="securityQuestion1"
-                        >Security Question 1:</label
-                      >
-                      <select
-                        formControlName="selectedSecurityQuestions.0.questionText"
-                        id="securityQuestion1"
-                        class="form-select"
-                        required
-                      >
-                        <option value="Question 1">Question 1</option>
-                        <option value="Question 2">Question 2</option>
-                      </select>
-                    </div>
-
-                    <div class="mb-3 w-100">
-                      <label for="securityAnswer1">Answer 1</label>
-                      <input
-                        type="text"
-                        formControlName="selectedSecurityQuestions.0.answerText"
-                        id="securityAnswer1"
-                        class="form-control"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div class="d-md-flex gap-3">
-                    <div class="mb-3 w-100">
-                      <label for="securityQuestion2">Security Question 2</label>
-                      <select
-                        formControlName="selectedSecurityQuestions.1.questionText"
-                        id="securityQuestion2"
-                        class="form-select"
-                        required
-                      >
-                        <option value="Question 1">Question 1</option>
-                        <option value="Question 2">Question 2</option>
-                      </select>
-                    </div>
-
-                    <div class="mb-3 w-100">
-                      <label for="securityAnswer2">Answer 2:</label>
-                      <input
-                        type="text"
-                        formControlName="selectedSecurityQuestions.1.answerText"
-                        id="securityAnswer2"
-                        class="form-control"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- <div formArrayName="selectedSecurityQuestions">
-                <div *ngFor="let questionGroup of selectedSecurityQuestionsFormArray.controls; let i = index">
-                  <div [formGroupName]="i">
-                    <div class="d-md-flex gap-3">
-                      <div class="mb-3 w-100">
-                        <label [for]="'securityQuestion' + i">Security Question {{ i + 1 }}:</label>
-                        <select
-                          [formControlName]="'questionText'"
-                          [id]="'securityQuestion' + i"
-                          class="form-select"
-                          required
-                        >
-                          <option value="">Select a security question</option>
-                          <option value="Question 1">Question 1</option>
-                          <option value="Question 2">Question 2</option>
-                        </select>
-                      </div>
-
-                      <div class="mb-3 w-100">
-                        <label [for]="'securityAnswer' + i">Answer {{ i + 1 }}</label>
-                        <input
-                          type="text"
-                          [formControlName]="'answerText'"
-                          [id]="'securityAnswer' + i"
-                          class="form-control"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
-
             </fieldset>
 
             <input
@@ -400,6 +205,8 @@
       <a routerLink="/admin/users" class="text-underline-hover text-dark"
         >Return to User List</a
       >
+      <br />
+      <br />
     </div>
   </div>
 </div>
