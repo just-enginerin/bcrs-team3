@@ -11,84 +11,9 @@ const { mongo } = require("../utils/mongo");
 const router = express.Router();
 const Ajv = require("ajv");
 const bcrypt = require("bcryptjs");
-const { ObjectId } = require("mongodb");
 
 const saltRounds = 10;
 const ajv = new Ajv(); // create new instance of the ajv class
-
-// selected Security QuestionsSchema schema
-const selectedSecurityQuestionsSchema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      questionText: { type: "string" },
-      answerText: { type: "string" },
-    },
-    required: ["questionText", "answerText"],
-    additionalProperties: false,
-  },
-  minItems: 2,
-  maxItems: 2,
-};
-
-// user Schema
-const userSchema = {
-  type: "object",
-  properties: {
-    firstName: { type: "string" },
-    lastName: { type: "string" },
-    email: { type: "string" },
-    password: { type: "string" },
-    phoneNumber: { type: "string" },
-    address: { type: "string" },
-    role: { type: "string" },
-    isDisabled: { type: "boolean" },
-    language: { type: "string" },
-    lastSignedIn: { type: "string" },
-    selectedSecurityQuestions: selectedSecurityQuestionsSchema,
-  },
-  required: [
-    "firstName",
-    "lastName",
-    "email",
-    "password",
-    "phoneNumber",
-    "address",
-    "role",
-    "isDisabled",
-    "language",
-    "selectedSecurityQuestions",
-  ],
-  additionalProperties: false,
-};
-
-// update userSchema
-const updateUserSchema = {
-  type: "object",
-  properties: {
-    firstName: { type: "string" },
-    lastName: { type: "string" },
-    password: { type: "string" },
-    phoneNumber: { type: "string" },
-    address: { type: "string" },
-    isDisabled: { type: "boolean" },
-    language: { type: "boolean" },
-    role: { type: "string" },
-    language: { type: "string" },
-  },
-  required: [
-    "firstName",
-    "lastName",
-    "password",
-    "phoneNumber",
-    "address",
-    "isDisabled",
-    "language",
-    "role",
-  ],
-  additionalProperties: false,
-};
 
 // new userSchema
 const newUserSchema = {
@@ -102,8 +27,7 @@ const newUserSchema = {
     address: { type: "string" },
     isDisabled: { type: "boolean" },
     role: { type: "string" },
-    language: { type: "string" },
-    selectedSecurityQuestions: selectedSecurityQuestionsSchema,
+    language: { type: "string" }
   },
   required: [
     "firstName",
@@ -116,6 +40,23 @@ const newUserSchema = {
   additionalProperties: false,
 };
 
+// update userSchema
+const updateUserSchema = {
+  type: "object",
+  properties: {
+    firstName: { type: "string" },
+    lastName: { type: "string" },
+    password: { type: "string" },
+    phoneNumber: { type: "string" },
+    address: { type: "string" },
+    language: { type: "string" },
+    isDisabled: { type: "boolean" },
+    role: { type: "string" },
+  },
+  required: ["firstName", "lastName", "password", "isDisabled", "role"],
+  additionalProperties: false,
+};
+
 /**
  * getAllUsers
  */
@@ -124,22 +65,7 @@ router.get("/", (req, res, next) => {
     mongo(async (db) => {
       const users = await db
         .collection("users")
-        .find(
-          { isDisabled: false },
-          {
-            projection: {
-              userId: 1,
-              firstName: 1,
-              lastName: 1,
-              password: 1,
-              email: 1,
-              phoneNumber: 1,
-              address: 1,
-              isDisabled: 1,
-              role: 1,
-            },
-          }
-        )
+        .find()
         .sort({ userId: 1 })
         .toArray(); // return as an array
 
@@ -160,16 +86,20 @@ router.get("/:userId", (req, res, next) => {
   try {
     console.log("userId", req.params.userId);
 
-    let { userId } = req.params; // get the userId
+    let { userId } = req.params; // get the userId from the req.params object
+    userId = parseInt(userId, 10); // try determine if the userId is a numerical value
 
-    // Check if userId is a valid ObjectId
-    if (!ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "Invalid ObjectId" });
+    if (isNaN(userId)) {
+      const err = new Error("input must be a number");
+      err.status = 400;
+      console.log("err", err);
+      next(err);
+      return;
     }
 
     mongo(async (db) => {
       const user = await db.collection("users").findOne(
-        { _id: new ObjectId(userId), isDisabled: false },
+        { userId },
         {
           projection: {
             userId: 1,
@@ -180,6 +110,9 @@ router.get("/:userId", (req, res, next) => {
             address: 1,
             isDisabled: 1,
             role: 1,
+            lastSignedIn: 1,
+            language: 1,
+            selectedSecurityQuestions: 1,
           },
         }
       ); // find user by ID
@@ -226,11 +159,43 @@ router.post("/", (req, res, next) => {
     user.lastSignedIn = new Date().toISOString();
 
     mongo(async (db) => {
-      const result = await db.collection("users").insertOne(user);
+      const users = await db
+        .collection("users")
+        .find()
+        .sort({ userId: 1 }) // sort the record in ascending order
+        .toArray();
 
-      console.log("result", result);
+      console.log("User Lists", users);
 
-      res.json({ id: result.insertedId });
+      const userExists = users.find((use) => use.email === user.email);
+
+      if (userExists) {
+        const err = new Error("Bad Request");
+        err.satus = 400;
+        err.message = "User already exists";
+        console.log("User already exists", err);
+        next(err);
+        return;
+      }
+
+      const lastUser = users[users.length - 1];
+      const newUserId = lastUser.userId + 1;
+
+      const newUser = {
+        userId: newUserId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        isDisabled: user.isDisabled,
+        role: user.role,
+      };
+
+      console.log("User to be inseted into MongoDb: ", newUser);
+
+      const result = await db.collection("users").insertOne(newUser);
+      console.log("MongoDb result: ", result);
+      res.send({ id: result.insertedId });
     }, next);
   } catch (err) {
     console.log("err", err);
@@ -244,16 +209,18 @@ router.post("/", (req, res, next) => {
 router.delete("/:userId", (req, res, next) => {
   try {
     let { userId } = req.params;
+    userId = parseInt(userId, 10);
 
-    // Check if userId is a valid ObjectId
-    if (!ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "Invalid ObjectId" });
+    if (isNaN(userId)) {
+      const err = new Error("input must be a number");
+      err.status = 400;
+      console.log("err", err);
+      next(err);
+      return;
     }
 
     mongo(async (db) => {
-      const result = await db
-        .collection("users")
-        .deleteOne({ _id: new ObjectId(userId) });
+      const result = await db.collection("users").deleteOne({ userId: userId });
 
       console.log("result", result);
 
@@ -279,16 +246,22 @@ router.delete("/:userId", (req, res, next) => {
 router.put("/:userId", (req, res, next) => {
   try {
     let { userId } = req.params;
+    userId = parseInt(userId, 10);
 
-    // Check if userId is a valid ObjectId
-    if (!ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "Invalid ObjectId" });
+    if (isNaN(userId)) {
+      const err = new Error("input must be a number");
+      err.status = 400;
+      console.log("err", err);
+      next(err);
+      return;
     }
     const { user } = req.body;
+    console.log("UserId ", userId, "user data", user);
 
     const validator = ajv.compile(updateUserSchema);
     const valid = validator(user);
 
+    
     if (!valid) {
       const err = new Error("Bad Request");
       err.status = 400;
@@ -302,7 +275,7 @@ router.put("/:userId", (req, res, next) => {
 
     mongo(async (db) => {
       const result = await db.collection("users").updateOne(
-        { _id: new ObjectId(userId) },
+        { userId: userId },
         {
           $set: {
             firstName: user.firstName,
@@ -334,4 +307,42 @@ router.put("/:userId", (req, res, next) => {
     next(err);
   }
 });
+
+/**
+ * findSelectedSecurityQuestions
+ */
+router.get("/:email/security-questions", (req, res, next) => {
+  try {
+    const email = req.params.email;
+    console.log("Email address from req.params", email);
+
+    mongo(async (db) => {
+      const user = await db.collection("users").findOne(
+        { email: email },
+        {
+          projection: {
+            email: 1,
+            userId: 1,
+            selectedSecurityQuestions: 1,
+          },
+        }
+      );
+
+      console.log("Selected security questions", user);
+      if (!user) {
+        const err = new Error("Unable to find user with email ", email);
+        err.status = 404;
+        console.log("err", err);
+        next(err);
+        return;
+      }
+
+      res.send(user);
+    }, next);
+  } catch (error) {
+    console.log("err", error);
+    next(err);
+  }
+});
+
 module.exports = router;

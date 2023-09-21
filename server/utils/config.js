@@ -15,7 +15,8 @@ const {
 
 // create a config object
 const CONFIG = {
-  DB_URL: `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.sloy5er.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+  // DB_URL: `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.sloy5er.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+  DB_URL: `mongodb://localhost:27017`,
   DB_NAME: DB_NAME,
 };
 

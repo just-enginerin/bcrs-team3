@@ -18,7 +18,7 @@ import { UserViewModel } from '../user-view-model';
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent {
-  _id!: string // define the _id variable
+  userId!: string // define the userId variable
   user: User // define the user variable
 
   // define the userForm variable and assign it to the FormGroup
@@ -42,13 +42,13 @@ export class UserViewComponent {
   ) {
 
     this.user = {} as User // initialize the user model
-    let l__id = this.route.snapshot.paramMap.get('_id') || '' // get the _id from the route
-    this._id = l__id; // Keep _id as a string
+    let l__id = this.route.snapshot.paramMap.get('userId') || '' // get the userId from the route
+    this.userId = l__id; // Keep userId as a string
 
-    console.log(this._id) // log the _id to the console
+    console.log(this.userId) // log the userId to the console
 
     // call the userService findUserById() function and subscribe to the observable
-    this.userService.getUser(this._id).subscribe({
+    this.userService.getUser(this.userId).subscribe({
       next: (user: any) => {
         this.user = user // assign the results to the user model
         console.log(this.user) // log the results to the console
@@ -87,7 +87,7 @@ export class UserViewComponent {
     console.log('User ViewModel: ', user) // log user view model
 
     // call the userService updateUser() function and subscribe to the observable
-    this.userService.updateUser(this._id, user).subscribe({
+    this.userService.updateUser(this.userId, user).subscribe({
       next: (res) => {
         console.log(res)
         this.router.navigate(['/admin/users']) // redirect to the user list page

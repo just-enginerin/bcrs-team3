@@ -6,7 +6,7 @@
 
 // imports statements
 export interface UserViewModel {
-  _id: string
+  userId: string
   firstName: string
   lastName: string
   phoneNumber: string

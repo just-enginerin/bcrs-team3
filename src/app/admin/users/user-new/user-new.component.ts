@@ -44,7 +44,7 @@ export class UserNewComponent {
     this.userService.createUser(user).subscribe({
       next: (res) => {
         console.log(res)
-        this.router.navigate(['/admin/users'])
+        this.router.navigate(['/admin/users']) 
       },
       error: (err) => {
         if (err.error.message) {

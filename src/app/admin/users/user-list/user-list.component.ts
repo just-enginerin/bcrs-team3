@@ -43,14 +43,14 @@ export class UserListComponent {
     })
   }
 
-  deleteUser(_id: string) {
-    if (!confirm('Are you sure you want to delete user record ' + _id + '?')) {
+  deleteUser(userId: string) {
+    if (!confirm('Are you sure you want to delete user record ' + userId + '?')) {
       return
     }
 
-    this.userService.deleteUser(_id).subscribe({
+    this.userService.deleteUser(userId).subscribe({
       next: (res) => {
-        this.users = this.users.filter(user => user._id !== _id)
+        this.users = this.users.filter(user => user.userId !== userId)
 
         this.successMessage = 'User deleted successfully'
 
