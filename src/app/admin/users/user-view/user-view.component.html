@@ -8,7 +8,7 @@
 <div class="container-fluid pt-2">
   <h1 class="text-center">Update User!</h1>
 
-  <div class="row justify-content-center pt-4"> 
+  <div class="row justify-content-center pt-4">
     <div class="col-sm-10 col-md-8 col-lg-6">
       <div class="card">
         <div class="card-body">
@@ -82,16 +82,13 @@
               </div>
               <!-- end last name error handling -->
 
-   
-
               <div class="mb-3">
-                <label for="txtphoneNumber">phoneNumber:</label>
+                <label for="txtphoneNumber">Phone Number:</label>
                 <input
                   type="text"
                   id="txtphoneNumber"
                   class="form-control"
                   formControlName="phoneNumber"
-
                 />
               </div>
 
@@ -105,7 +102,6 @@
                 />
               </div>
 
-
               <div class="mb-3">
                 <label for="txtlanguage">Language:</label>
                 <input
@@ -116,8 +112,6 @@
                 />
               </div>
 
-          
-
               <div class="d-md-flex gap-3">
                 <div class="mb-3">
                   <label for="isDisabled">IsDisabled:</label><br />
@@ -127,8 +121,8 @@
                     id="isDisabled"
                     class="form-select"
                   >
-                    <option [value]="false">False</option>
-                    <option [value]="true">True</option>
+                    <option [value]="false">Active</option>
+                    <option [value]="true">Inactive</option>
                   </select>
                 </div>
 

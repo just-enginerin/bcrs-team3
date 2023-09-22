@@ -13,7 +13,7 @@ export interface UserViewModel {
   password: string
   address: string
   language: string
-  isDisabled: string
+  isDisabled: boolean
   role: string
   selectedSecurityQuestions: {
     questionText: string;

@@ -22,7 +22,6 @@ const newUserSchema = {
     firstName: { type: "string" },
     lastName: { type: "string" },
     email: { type: "string" },
-    password: { type: "string" },
     phoneNumber: { type: "string" },
     address: { type: "string" },
     isDisabled: { type: "boolean" },
@@ -33,7 +32,6 @@ const newUserSchema = {
     "firstName",
     "lastName",
     "email",
-    "password",
     "isDisabled",
     "role",
   ],
@@ -152,11 +150,6 @@ router.post("/", (req, res, next) => {
       return;
     }
 
-    user.password = bcrypt.hashSync(user.password, saltRounds);
-
-    // Set the lastSignedIn field to the current date and time
-    user.lastSignedIn = new Date().toISOString();
-
     mongo(async (db) => {
       const users = await db
         .collection("users")
@@ -170,7 +163,7 @@ router.post("/", (req, res, next) => {
 
       if (userExists) {
         const err = new Error("Bad Request");
-        err.satus = 400;
+        err.status = 400;
         err.message = "User already exists";
         console.log("User already exists", err);
         next(err);
@@ -185,12 +178,14 @@ router.post("/", (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        password: user.password,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        language: user.language,
         isDisabled: user.isDisabled,
         role: user.role,
       };
 
-      console.log("User to be inseted into MongoDb: ", newUser);
+      console.log("User to be inserted into MongoDb: ", newUser);
 
       const result = await db.collection("users").insertOne(newUser);
       console.log("MongoDb result: ", result);
@@ -288,8 +283,8 @@ router.put("/:userId", (req, res, next) => {
       console.log("update user result: ", result);
 
       if (result.modifiedCount === 0) {
-        const err = new Error("User not found");
-        err.status = 404;
+        const err = new Error("Bad request: No changes were made to this user.");
+        err.status = 400;
         console.log("err", err);
         next(err);
         return;
