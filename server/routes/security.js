@@ -15,6 +15,9 @@ const router = express.Router();
 const ajv = new Ajv();
 const saltRounds = 10;
 
+/**
+ * signinSchema
+ */
 const signinSchema = {
   type: "object",
   properties: {
@@ -25,7 +28,10 @@ const signinSchema = {
   additionalProperties: false,
 };
 
-const securityQuestionsSchema = {
+/**
+ * securityQuestionSchema
+ */
+const securityQuestionSchema = {
   type: "array",
   items: {
     type: "object",
@@ -38,6 +44,9 @@ const securityQuestionsSchema = {
   },
 };
 
+/**
+ * registerSchema
+ */
 const registerSchema = {
   type: "object",
   properties: {
@@ -60,15 +69,22 @@ const registerSchema = {
   additionalProperties: false,
 };
 
+/**
+ * resetPasswordSchema
+ */
 const resetPasswordSchema = {
   type: "object",
   properties: {
     password: { type: "string" },
+    selectedSecurityQuestion: securityQuestionSchema,
   },
   required: ["password"],
   additionalProperties: false,
 };
 
+/**
+ * signin
+ */
 router.post("/signin", (req, res, next) => {
   try {
     const signin = req.body;
@@ -223,7 +239,7 @@ router.post("/verify/users/:email", (req, res, next) => {
 });
 
 /**
- * verify secutiry questions
+ * verify security questions
  */
 router.post("/verify/users/:email/security-questions", (req, res, next) => {
   try {

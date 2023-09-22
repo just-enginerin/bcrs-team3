@@ -170,6 +170,7 @@
         }
       }
     },
+    "/api/users/{email}/security-questions": {},
     "/api/security/signin": {
       "post": {
         "summary": "Sign in as user",
@@ -378,6 +379,16 @@
             }
           }
         }
+      },
+      "PasswordResetRequest": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["password"],
+        "additionalProperties": false
       }
     }
   }
