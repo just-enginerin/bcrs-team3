@@ -18,17 +18,16 @@ import { UserViewModel } from '../user-view-model';
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent {
-  _id!: string // define the _id variable
+  userId!: string // define the userId variable
   user: User // define the user variable
 
   // define the userForm variable and assign it to the FormGroup
   userForm: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
-    phoneNumber: [null, Validators.compose([Validators.required])],
-    password: [null, Validators.compose([Validators.required])],
-    language: [null, Validators.compose([Validators.required])],
-    address: [null, Validators.compose([Validators.required])],
+    phoneNumber: [''],
+    language: [''],
+    address: [''],
     isDisabled: [null, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])],
   })
@@ -42,13 +41,13 @@ export class UserViewComponent {
   ) {
 
     this.user = {} as User // initialize the user model
-    let l__id = this.route.snapshot.paramMap.get('_id') || '' // get the _id from the route
-    this._id = l__id; // Keep _id as a string
+    let l__id = this.route.snapshot.paramMap.get('userId') || '' // get the userId from the route
+    this.userId = l__id; // Keep userId as a string
 
-    console.log(this._id) // log the _id to the console
+    console.log(this.userId) // log the userId to the console
 
     // call the userService findUserById() function and subscribe to the observable
-    this.userService.getUser(this._id).subscribe({
+    this.userService.getUser(this.userId).subscribe({
       next: (user: any) => {
         this.user = user // assign the results to the user model
         console.log(this.user) // log the results to the console
@@ -59,7 +58,6 @@ export class UserViewComponent {
       complete: () => {
         this.userForm.controls['firstName'].setValue(this.user.firstName)
         this.userForm.controls['lastName'].setValue(this.user.lastName)
-        this.userForm.controls['password'].setValue(this.user.password)
         this.userForm.controls['phoneNumber'].setValue(this.user.phoneNumber)
         this.userForm.controls['address'].setValue(this.user.address)
         this.userForm.controls['language'].setValue(this.user.language)
@@ -77,17 +75,16 @@ export class UserViewComponent {
     user.firstName = this.userForm.controls['firstName'].value
     user.lastName = this.userForm.controls['lastName'].value
     user.phoneNumber = this.userForm.controls['phoneNumber'].value
-    user.password = this.userForm.controls['password'].value
     user.address = this.userForm.controls['address'].value
     user.language = this.userForm.controls['language'].value
-    user.isDisabled = this.userForm.controls['isDisabled'].value
+    user.isDisabled = this.userForm.controls['isDisabled'].value === "true" ? true : false
     user.role = this.userForm.controls['role'].value
 
 
     console.log('User ViewModel: ', user) // log user view model
 
     // call the userService updateUser() function and subscribe to the observable
-    this.userService.updateUser(this._id, user).subscribe({
+    this.userService.updateUser(this.userId, user).subscribe({
       next: (res) => {
         console.log(res)
         this.router.navigate(['/admin/users']) // redirect to the user list page

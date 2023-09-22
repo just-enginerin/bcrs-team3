@@ -12,6 +12,7 @@ import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { authGuard } from './shared/auth.guard';
+import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)
 const routes: Routes = [
@@ -28,6 +29,11 @@ const routes: Routes = [
         path: 'home',
         component: HomeComponent,
         title: 'BCRS: Home'
+      },
+      {
+        path: 'employees-directory',
+        component: EmployeeDirectoryComponent,
+        title: 'BCRS: Employee-directory'
       },
       {
         path: 'not-found',

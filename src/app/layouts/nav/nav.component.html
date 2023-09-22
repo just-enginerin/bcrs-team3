@@ -7,7 +7,10 @@
 
 <nav class="navbar navbar-expand-sm">
   <a routerLink="/">
-    <img src="/assets/images/Logo.png" alt="Bob's Computer Repair Shop logo" class="logo"
+    <img
+      src="/assets/images/Logo.png"
+      alt="Bob's Computer Repair Shop logo"
+      class="logo"
   /></a>
 
   <button
@@ -25,28 +28,40 @@
   <!-- navbar links -->
   <div class="collapse navbar-collapse" id="navbarResponsive">
     <ul class="navbar-nav ms-auto p-2">
-
-
       <li class="nav-item" *ngIf="isSignedIn">
-        <button mat-raised-button class="action-button" routerLink="/service-repair">Create a New Service Request</button>
+        <button
+          mat-raised-button
+          class="action-button"
+          routerLink="/service-repair"
+        >
+          Create a New Service Request
+        </button>
       </li>
       <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'admin'">
-        <a routerLink="/admin/users" class="nav-link"><strong>Employee Configuration</strong> </a>
+        <a routerLink="/admin/users" class="nav-link"
+          ><strong>Employee Configuration</strong>
+        </a>
       </li>
       <li class="nav-item" *ngIf="isSignedIn">
-        <a routerLink="/employees" class="nav-link"><strong>Employee Directory</strong></a>
+        <a routerLink="/employees-directory" class="nav-link"
+          ><strong>Employee Directory</strong></a
+        >
       </li>
       <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'admin'">
         <a routerLink="#" class="nav-link"><strong>Service Graph</strong> </a>
       </li>
-      <li class="nav-item" >
-        <a routerLink="/faq" class="nav-link"
-          ><strong>FAQ</strong>
-        </a>
+      <li class="nav-item">
+        <a routerLink="/faq" class="nav-link"><strong>FAQ</strong> </a>
       </li>
 
       <li *ngIf="!isSignedIn" class="nav-item">
-        <button mat-raised-button class="action-button" routerLink="/security/signin">Sign In</button>
+        <button
+          mat-raised-button
+          class="action-button"
+          routerLink="/security/signin"
+        >
+          Sign In
+        </button>
       </li>
 
       <!--  user account -->
@@ -67,12 +82,12 @@
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="navbarDropdown"
         >
-          <li class="dropdown-item user-name">Hello, {{ sessionUser.fullName }}</li>
+          <li class="dropdown-item user-name">
+            Hello, {{ sessionUser.fullName }}
+          </li>
           <hr />
           <li>
-            <a routerLink="#" class="dropdown-item link">
-              My Profile</a
-            >
+            <a routerLink="#" class="dropdown-item link"> My Profile</a>
           </li>
           <li *ngIf="sessionUser.role === 'admin'">
             <a routerLink="#" class="dropdown-item link">My Invoices</a>

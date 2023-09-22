@@ -25,7 +25,7 @@ export interface SessaionUser {
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent {
+export class SigninComponent { 
   errorMessage: string
   isLoading: boolean = false
 

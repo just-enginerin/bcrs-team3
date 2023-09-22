@@ -22,7 +22,9 @@ export class UserNewComponent {
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
     email: [null, Validators.compose([Validators.required, Validators.email])],
-    password: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')])],
+    phoneNumber: [''],
+    address: [''],
+    language: [''],
     isDisabled: [false],
     role: [null, Validators.compose([Validators.required])]
   })
@@ -36,8 +38,10 @@ export class UserNewComponent {
       firstName: this.userForm.controls['firstName'].value,
       lastName: this.userForm.controls['lastName'].value,
       email: this.userForm.controls['email'].value,
-      isDisabled: this.userForm.controls['isDisabled'].value,
-      password: this.userForm.controls['password'].value,
+      phoneNumber: this.userForm.controls['phoneNumber'].value,
+      address: this.userForm.controls['address'].value,
+      language: this.userForm.controls['language'].value,
+      isDisabled: this.userForm.controls['isDisabled'].value === 'Active' ? true : false,
       role: this.userForm.controls['role'].value
     }
 

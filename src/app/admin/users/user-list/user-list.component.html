@@ -6,9 +6,8 @@
 -->
 
 <div class="container-fluid pt-2">
-
   <div class="row pt-4 justify-content-center">
-    <div class="col-sm-12 col-md-10 col-lg-8">
+    <div class="col-sm-12 col-md-12 col-lg-10">
       <div *ngIf="errorMessage">
         <div class="alert alert-danger" role="alert">
           {{ errorMessage }}
@@ -23,7 +22,13 @@
 
       <h2>Employee Configuration Portal</h2>
 
-      <button mat-raised-button class="action-button" routerLink="/admin/users/new">Add an Employee</button>
+      <button
+        mat-raised-button
+        class="action-button"
+        routerLink="/admin/users/new"
+      >
+        Add an Employee
+      </button>
 
       <div *ngIf="isLoading" class="d-flex justify-content-center mt-5">
         <div
@@ -40,54 +45,66 @@
       <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block">
         <div class="card">
           <div class="card-body">
+            <table
+              *ngIf="!isLoading"
+              class="table table-striped table-sm table-bordered"
+            >
+              <thead class="table-info">
+                <tr>
+                  <th>User Id</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>phoneNumber</th>
+                  <th>address</th>
+                  <th>Status</th>
+                  <th>Role</th>
+                  <th>Functions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let user of users">
+                <tr class="text-center">
+                  <td scope="row">{{ user.userId }}</td>
+                  <td>{{ user.firstName }}</td>
+                  <td>{{ user.lastName }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.phoneNumber }}</td>
+                  <td>{{ user.address }}</td>
+                  <td>
+                    <span
+                      [ngClass]="
+                        user.isDisabled
+                          ? 'badge rounded-pill bg-danger text-light'
+                          : 'badge rounded-pill bg-success text-light'
+                      "
+                    >
+                      {{ user.isDisabled ? "Inactive" : "Active" }}</span
+                    >
+                  </td>
+                  <td>{{ user.role }}</td>
+                  <td>
+                    <div class="functions-icons">
+                      <a
+                        class="link"
+                        routerLink="/admin/users/{{ user.userId }}/view"
+                      >
+                        <span class="material-icons text-secondary">edit</span>
+                      </a>
 
-          <table
-            *ngIf="!isLoading"
-            class="table table-striped table-sm table-bordered"
-          >
-            <thead class="table-info">
-              <tr>
-                <th>No</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>phoneNumber</th>
-                <th>address</th>
-                <th>Status</th>
-                <th>Role</th>
-                <th>Functions</th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let user of users">
-              <tr class="text-center">
-                <td scope="row">1</td>
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.lastName }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phoneNumber }}</td>
-                <td>{{ user.address }}</td>
-                <td>
-                  <span class="badge rounded-pill bg-info text-dark">{{
-                    user.isDisabled ? "Inactive" : "Active"
-                  }}</span>
-                </td>
-                <td>{{ user.role }}</td>
-                <td>
-                  <a routerLink="/admin/users/{{ user._id }}/view">
-                    <span class="material-icons text-secondary">edit</span>
-                  </a>
-
-                  <a class="link" (click)="deleteUser(user._id)">
-                    <span class="material-icons text-secondary">delete</span>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
+                      <a class="link" (click)="deleteUser(user.userId)">
+                        <span class="material-icons text-secondary"
+                          >delete</span
+                        >
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+        <!-- end of tablet viewport -->
       </div>
-      <!-- end of tablet viewport -->
 
       <!-- mobile viewports-->
       <div class="d-md-none d-lg-none d-xl-none">
@@ -95,13 +112,13 @@
           <div class="card-body">
             <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Role: {{ user.role }}</h6>
-            <p class="card-text">Email: {{ user.email }} </p>
+            <p class="card-text">Email: {{ user.email }}</p>
             <a
-              routerLink="/admin/users/{{ user._id }}/view"
+              routerLink="/admin/users/{{ user.userId }}/view"
               class="card-link"
               >Edit</a
             >
-            <a (click)="deleteUser(user._id)" class="card-link">Delete</a>
+            <a (click)="deleteUser(user.userId)" class="card-link">Delete</a>
           </div>
         </div>
       </div>
