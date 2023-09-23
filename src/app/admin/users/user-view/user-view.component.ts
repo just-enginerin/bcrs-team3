@@ -28,7 +28,7 @@ export class UserViewComponent {
     phoneNumber: [null],
     language: [null],
     address: [null],
-    isDisabled: [null, Validators.compose([Validators.required])],
+    isDisabled: [false, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])],
   })
 
