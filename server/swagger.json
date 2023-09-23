@@ -198,7 +198,6 @@
         }
       }
     },
-<<<<<<< HEAD
     "/api/security/register": {},
     "/api/security/verify/users/{email}": {},
     "/api/security/verify/users/{email}/security-questions": {
@@ -238,65 +237,16 @@
         "summary": "Reset User Password",
         "tags": ["Security"],
         "description": "This API endpoint allows resetting a user's password. An email containing the reset instructions will be sent to the user.",
-=======
-    "/api/users/{email}/security-questions": {
-      "get": {
-        "summary": "find Selected Security Questions",
-        "description": "Get all Security Questions",
-        "tags": [
-          "Users"
-        ],
->>>>>>> 50daef72c70e4a0e6f9f353099c64c1b957b664a
         "parameters": [
           {
             "name": "email",
             "in": "path",
             "required": true,
             "schema": {
-<<<<<<< HEAD
               "type": "string",
               "format": "email"
             },
             "description": "The email address of the user whose password needs to be reset"
-=======
-              "type": "string"
-            },
-            "description": "Enter user email"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User details successfully retrieved"
-          },
-          "400": {
-            "description": "Bad Request: Email address from req.params required"
-          },
-          "404": {
-            "description": "Not Found: Unable to find employee with email"
-          },
-          "500": {
-            "description": "Internal Server Error - Database connection issue"
-          }
-        }
-      }
-    },
-    "/api/security/users/{email}/reset-password": {
-      "delete": {
-        "summary": "resetPassword",
-        "description": "Change the user's password.",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The user's email address"
->>>>>>> 50daef72c70e4a0e6f9f353099c64c1b957b664a
           }
         ],
         "requestBody": {
@@ -310,19 +260,6 @@
           }
         },
         "responses": {
-<<<<<<< HEAD
-          "200": {
-            "description": "Password reset email sent successfully."
-          },
-          "400": {
-            "description": "Bad request. Invalid input."
-          },
-          "404": {
-            "description": "User not found."
-          },
-          "500": {
-            "description": "Internal Server Error."
-=======
           "204": {
             "description": "No Content"
           },
@@ -334,7 +271,6 @@
           },
           "500": {
             "description": "Internal Server Error"
->>>>>>> 50daef72c70e4a0e6f9f353099c64c1b957b664a
           }
         }
       }

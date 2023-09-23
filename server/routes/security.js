@@ -31,11 +31,7 @@ const signinSchema = {
 /**
  * securityQuestionSchema
  */
-<<<<<<< HEAD
 const securityQuestionsSchema = {
-=======
-const securityQuestionSchema = {
->>>>>>> 50daef72c70e4a0e6f9f353099c64c1b957b664a
   type: "array",
   items: {
     type: "object",
@@ -61,7 +57,7 @@ const registerSchema = {
     phoneNumber: { type: "string" },
     address: { type: "string" },
     language: { type: "string" },
-    selectedSecurityQuestions: securityQuestionSchema,
+    selectedSecurityQuestions: securityQuestionsSchema,
   },
   required: [
     "firstName",
@@ -80,10 +76,6 @@ const resetPasswordSchema = {
   type: "object",
   properties: {
     password: { type: "string" },
-<<<<<<< HEAD
-=======
-    selectedSecurityQuestion: securityQuestionSchema,
->>>>>>> 50daef72c70e4a0e6f9f353099c64c1b957b664a
   },
   required: ["password"],
   additionalProperties: false,
@@ -263,23 +255,21 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
 
       console.log("Selected user", user);
 
-<<<<<<< HEAD
-      const newUser = {
-        userId: newUserId,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-        phoneNumber: user.phoneNumber,
-        address: user.address,
-        language: user.language,
-        lastSignedIn: user.lastSignedIn,
-        role: "standard",
-        // selectedSecurityQuestions: user.selectedSecurityQuestions,
-      };
-=======
+      // const newUser = {
+      //   userId: newUserId,
+      //   firstName: user.firstName,
+      //   lastName: user.lastName,
+      //   email: user.email,
+      //   password: user.password,
+      //   phoneNumber: user.phoneNumber,
+      //   address: user.address,
+      //   language: user.language,
+      //   lastSignedIn: user.lastSignedIn,
+      //   role: "standard",
+      //   // selectedSecurityQuestions: user.selectedSecurityQuestions,
+      // };
+
       const hashedPassword = bcrypt.hashSync(userData.password, saltRounds);
->>>>>>> 50daef72c70e4a0e6f9f353099c64c1b957b664a
 
       const result = await db
         .collection("users")
@@ -379,7 +369,6 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
   }
 });
 
-<<<<<<< HEAD
 /**
  * resetPassword
  */
@@ -436,6 +425,4 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
   }
 });
 
-=======
->>>>>>> 50daef72c70e4a0e6f9f353099c64c1b957b664a
 module.exports = router;
