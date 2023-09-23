@@ -44,9 +44,9 @@ const updateUserSchema = {
   properties: {
     firstName: { type: "string" },
     lastName: { type: "string" },
-    phoneNumber: { type: "string" },
-    address: { type: "string" },
-    language: { type: "string" },
+    phoneNumber: {  type: ["string", "null"] },
+    address: {  type: ["string", "null"] },
+    language: {  type: ["string", "null"] },
     isDisabled: { type: "boolean" },
     role: { type: "string" },
   },
