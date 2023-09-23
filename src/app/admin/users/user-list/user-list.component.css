@@ -18,3 +18,19 @@
   flex-direction: column;
   row-gap: 20px;
 }
+
+.functions-icons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.link .material-icons {
+  cursor: pointer;
+  color: rgba(var(--bs-secondary-rgb), 1);
+  transition-duration: 300ms;
+}
+
+.link .material-icons:hover {
+  color: var(--primary-color) !important;
+  transition-duration: 300ms;
+}

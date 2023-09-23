@@ -10,9 +10,6 @@ const express = require("express");
 const { mongo } = require("../utils/mongo");
 const router = express.Router();
 const Ajv = require("ajv");
-const bcrypt = require("bcryptjs");
-
-const saltRounds = 10;
 const ajv = new Ajv(); // create new instance of the ajv class
 
 // new userSchema
@@ -29,14 +26,7 @@ const newUserSchema = {
     role: { type: "string" },
     language: { type: "string" },
   },
-  required: [
-    "firstName",
-    "lastName",
-    "email",
-    "password",
-    "isDisabled",
-    "role",
-  ],
+  required: ["firstName", "lastName", "email", "isDisabled", "role"],
   additionalProperties: false,
 };
 
@@ -46,9 +36,9 @@ const updateUserSchema = {
   properties: {
     firstName: { type: "string" },
     lastName: { type: "string" },
-    phoneNumber: { type: "string" },
-    address: { type: "string" },
-    language: { type: "string" },
+    phoneNumber: { type: ["string", "null"] },
+    address: { type: ["string", "null"] },
+    language: { type: ["string", "null"] },
     isDisabled: { type: "boolean" },
     role: { type: "string" },
   },
@@ -152,11 +142,6 @@ router.post("/", (req, res, next) => {
       return;
     }
 
-    user.password = bcrypt.hashSync(user.password, saltRounds);
-
-    // Set the lastSignedIn field to the current date and time
-    user.lastSignedIn = new Date().toISOString();
-
     mongo(async (db) => {
       const users = await db
         .collection("users")
@@ -170,7 +155,7 @@ router.post("/", (req, res, next) => {
 
       if (userExists) {
         const err = new Error("Bad Request");
-        err.satus = 400;
+        err.status = 400;
         err.message = "User already exists";
         console.log("User already exists", err);
         next(err);
@@ -186,11 +171,14 @@ router.post("/", (req, res, next) => {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        language: user.language,
         isDisabled: user.isDisabled,
         role: user.role,
       };
 
-      console.log("User to be inseted into MongoDb: ", newUser);
+      console.log("User to be inserted into MongoDb: ", newUser);
 
       const result = await db.collection("users").insertOne(newUser);
       console.log("MongoDb result: ", result);
@@ -288,8 +276,10 @@ router.put("/:userId", (req, res, next) => {
       console.log("update user result: ", result);
 
       if (result.modifiedCount === 0) {
-        const err = new Error("User not found");
-        err.status = 404;
+        const err = new Error(
+          "Bad request: No changes were made to this user."
+        );
+        err.status = 400;
         console.log("err", err);
         next(err);
         return;

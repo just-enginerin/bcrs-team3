@@ -71,19 +71,32 @@
                   <td>{{ user.phoneNumber }}</td>
                   <td>{{ user.address }}</td>
                   <td>
-                    <span [ngClass]="user.isDisabled ? 'badge rounded-pill bg-danger text-light' : 'badge rounded-pill bg-success text-light'">
+                    <span
+                      [ngClass]="
+                        user.isDisabled
+                          ? 'badge rounded-pill bg-danger text-light'
+                          : 'badge rounded-pill bg-success text-light'
+                      "
+                    >
                       {{ user.isDisabled ? "Inactive" : "Active" }}</span
                     >
                   </td>
                   <td>{{ user.role }}</td>
                   <td>
-                    <a routerLink="/admin/users/{{ user.userId }}/view">
-                      <span class="material-icons text-secondary">edit</span>
-                    </a>
+                    <div class="functions-icons">
+                      <a
+                        class="link"
+                        routerLink="/admin/users/{{ user.userId }}/view"
+                      >
+                        <span class="material-icons text-secondary">edit</span>
+                      </a>
 
-                    <a class="link" (click)="deleteUser(user.userId)">
-                      <span class="material-icons text-secondary">delete</span>
-                    </a>
+                      <a class="link" (click)="deleteUser(user.userId)">
+                        <span class="material-icons text-secondary"
+                          >delete</span
+                        >
+                      </a>
+                    </div>
                   </td>
                 </tr>
               </tbody>

@@ -5,10 +5,10 @@
   Description: Employee Config page: Update User HTML
 -->
 
-<div class="container-fluid pt-2">
+<div class="container-fluid pt-2" style="min-height: 72vh">
   <h1 class="text-center">Update User!</h1>
 
-  <div class="row justify-content-center pt-4"> 
+  <div class="row justify-content-center pt-4">
     <div class="col-sm-10 col-md-8 col-lg-6">
       <div class="card">
         <div class="card-body">
@@ -82,16 +82,13 @@
               </div>
               <!-- end last name error handling -->
 
-   
-
-              <div class="mb-3">
-                <label for="txtphoneNumber">phoneNumber:</label>
+              <!-- <div class="mb-3">
+                <label for="txtphoneNumber">Phone Number:</label>
                 <input
                   type="text"
                   id="txtphoneNumber"
                   class="form-control"
                   formControlName="phoneNumber"
-
                 />
               </div>
 
@@ -105,7 +102,6 @@
                 />
               </div>
 
-
               <div class="mb-3">
                 <label for="txtlanguage">Language:</label>
                 <input
@@ -114,9 +110,7 @@
                   class="form-control"
                   formControlName="language"
                 />
-              </div>
-
-          
+              </div> -->
 
               <div class="d-md-flex gap-3">
                 <div class="mb-3">
@@ -125,10 +119,11 @@
                     formControlName="isDisabled"
                     name="isDisabled"
                     id="isDisabled"
-                    class="form-select"
-                  >
-                  <option [ngValue]="false">False</option>
-                  <option [ngValue]="true">True</option>
+                    class="form-select">
+
+                    <option [value]="false">Active</option>
+                    <option [value]="true">Inactive</option>
+
                   </select>
                 </div>
 
@@ -202,6 +197,7 @@
           </form>
         </div>
       </div>
+      <br />
       <a routerLink="/admin/users" class="text-underline-hover text-dark"
         >Return to User List</a
       >

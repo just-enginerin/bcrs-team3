@@ -25,10 +25,10 @@ export class UserViewComponent {
   userForm: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
-    phoneNumber: [null],
-    language: [null],
-    address: [null],
-    isDisabled: [false, Validators.compose([Validators.required])],
+    phoneNumber: [''],
+    language: [''],
+    address: [''],
+    isDisabled: [null, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])],
   })
 
@@ -77,7 +77,7 @@ export class UserViewComponent {
     user.phoneNumber = this.userForm.controls['phoneNumber'].value
     user.address = this.userForm.controls['address'].value
     user.language = this.userForm.controls['language'].value
-    user.isDisabled = this.userForm.controls['isDisabled'].value
+    user.isDisabled = this.userForm.controls['isDisabled'].value === "true" ? true : false
     user.role = this.userForm.controls['role'].value
 
 

@@ -10,7 +10,7 @@
 
 :root {
   --primary-color: #00BCD4;
-  --primary-highlight: #80DEEA
+  --primary-highlight: #80DEEA;
 }
 
 html, body { height: 100%; }
