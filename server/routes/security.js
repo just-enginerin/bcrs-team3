@@ -227,68 +227,44 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
 router.delete("/users/:email/reset-password", (req, res, next) => {
   try {
     const email = req.params.email;
-    const user = req.body;
+    const userData = req.body;
 
-    console.log("User email", email, "\nUser", user);
+    console.log("User email", email, "\nUser", userData);
 
     const validate = ajv.compile(resetPasswordSchema);
-    const valid = validate(newPassword);
+    const valid = validate(userData);
 
     if (!valid) {
       const err = new Error("Bad Request");
       err.satus = 400;
       err.error = validate.errors;
-      console.log("user validation errors", validate.errors);
+      console.log("Password validation errors", validate.errors);
       next(err);
       return;
     }
 
-    user.password = bcrypt.hashSync(user.password, saltRounds);
-
     mongo(async (db) => {
-      const users = await db
-        .collection("users")
-        .find()
-        .sort({ userId: 1 }) // sort the record in ascending order
-        .toArray();
+      const user = await db.collection("users").findOne({ email: email });
 
-      console.log("User Lists:", users);
-
-      const userExists = users.find((user) => user.email === users.email);
-      // Set the lastSignedIn field to the current date and time
-      user.lastSignedIn = new Date().toISOString();
-
-      if (userExists) {
-        const err = new Error("Bad Request");
-        err.satus = 400;
-        err.message = "User already exists";
-        console.log("User already exists", err);
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
         next(err);
         return;
       }
 
-      const lastUser = users[users.length - 1];
-      const newUserId = lastUser.userId + 1;
+      console.log("Selected user", user);
 
-      const newUser = {
-        userId: newUserId,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-        phoneNumber: user.phoneNumber,
-        address: user.address,
-        language: user.language,
-        lastSignedIn: user.lastSignedIn,
-        role: "standard",
-        selectedSecurityQuestions: user.selectedSecurityQuestions,
-      };
+      const hashedPassword = bcrypt.hashSync(userData.password, saltRounds);
 
-      console.log("User to be inserted into MongoDb: ", newUser);
+      const result = await db
+        .collection("users")
+        .updateOne({ email: email }, { $set: { password: hashedPassword } });
 
-      const result = await db.collection("users").insertOne(newUser);
-      console.log("MongoDb result: ", result);
-      res.send({ id: result.insertedId });
+      console.log("MongoDb updated result", result);
+
+      res.status(204).send();
     }, next);
   } catch (err) {
     console.log("err", err);

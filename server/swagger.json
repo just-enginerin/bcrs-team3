@@ -244,7 +244,7 @@
         }
       }
     },
-    "/api/users/{email}/reset-password": {
+    "/api/security/users/{email}/reset-password": {
       "delete": {
         "summary": "resetPassword",
         "description": "Change the user's password.",
