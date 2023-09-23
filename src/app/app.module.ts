@@ -19,6 +19,7 @@ import { NavComponent } from './layouts/nav/nav.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     BaseLayoutComponent,
     NavComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EmployeeDirectoryComponent
   ],
   imports: [
     BrowserModule,

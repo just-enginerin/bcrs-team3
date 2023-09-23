@@ -1,0 +1,107 @@
+<!--
+  Title: verify-email.component.html
+  Author: William Egge
+  Date: 9/20/23
+  Description: Forgot password page HTML
+-->
+
+<div class="verify-email-page">
+  <div class="container" style="min-height: 600px">
+    <div class="row justify-content-center mt-5 h-100">
+      <div class="">
+        <!-- Email
+           Form -->
+        <form [formGroup]="emailForm" (ngSubmit)="verifyEmail()">
+
+          <!-- Display Error Message if Present -->
+          <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <fieldset class="mb-3 form-group">
+            <legend>Employee Information</legend>
+
+            <div class="row">
+              <div class="col-md-12">
+                <label class="form-label" for="email">Email:</label>
+                <input
+                  class="form-control"
+                  formControlName="email"
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                />
+
+                <!-- validation errors -->
+                <div
+                *ngIf="
+                  emailForm.controls['email'].touched &&
+                  emailForm.controls['email'].hasError('email')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  Please enter a valid email address.
+                  <input
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  />
+                </div>
+              </div>
+
+                <div
+                *ngIf="
+                  emailForm.controls['email'].touched &&
+                  emailForm.controls['email'].hasError('email')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  Please enter a valid email address.
+                  <input
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  />
+                </div>
+              </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="d-grid">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!emailForm.valid"
+            >
+              <span *ngIf="!isLoading">Sign in</span>
+
+              <div *ngIf="isLoading">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Loading...
+              </div>
+            </button>
+          </div>
+        </form>
+      </div>
+      <a
+        routerLink="/security/signin"
+        class="text-dark text-underline-hover pt-3"
+        >Return</a
+      >
+    </div>
+  </div>
+</div>

@@ -6,14 +6,14 @@
 
 // imports statements
 export interface UserViewModel {
-  _id: string
+  userId: string
   firstName: string
   lastName: string
   phoneNumber: string
   password: string
   address: string
   language: string
-  isDisabled: string
+  isDisabled: boolean
   role: string
   selectedSecurityQuestions: {
     questionText: string;

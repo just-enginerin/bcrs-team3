@@ -10,9 +10,7 @@
       "get": {
         "summary": "findAllUsers",
         "description": "Get all users",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "responses": {
           "200": {
             "description": "User details successfully retrieved"
@@ -31,9 +29,7 @@
       "post": {
         "summary": "createUser",
         "description": "Create a new User.",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "requestBody": {
           "required": true,
           "content": {
@@ -65,9 +61,7 @@
       "get": {
         "summary": "findUserById",
         "description": "Get all users",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -96,9 +90,7 @@
       },
       "put": {
         "summary": "Update User",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -139,9 +131,7 @@
       },
       "delete": {
         "summary": "Delete User",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -174,9 +164,7 @@
     "/api/security/signin": {
       "post": {
         "summary": "Sign in as user",
-        "tags": [
-          "Signin API"
-        ],
+        "tags": ["Signin API"],
         "description": "Sign in a user by providing their email and password.",
         "requestBody": {
           "required": true,
@@ -213,7 +201,38 @@
     },
     "/api/security/register": {},
     "/api/security/verify/users/{email}": {},
-    "/api/security/verify/users/{email}/security-questions": {},
+    "/api/security/verify/users/{email}/security-questions": {
+      "get": {
+        "summary": "find Selected Security Questions",
+        "description": "Get all Security Questions",
+        "tags": ["Security"],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Enter user email"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details successfully retrieved"
+          },
+          "400": {
+            "description": "Bad Request: Email address from req.params required"
+          },
+          "404": {
+            "description": "Not Found: Unable to find employee with email"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
+    },
     "/api/security/users/{email}/reset-password": {
       "delete": {
         "summary": "Reset User Password",
@@ -270,10 +289,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "additionalProperties": false
       },
       "User": {
@@ -346,12 +362,6 @@
                 "type": "string",
                 "example": "s3cret"
               },
-              "phoneNumber": {
-                "type": "string"
-              },
-              "address": {
-                "type": "string"
-              },
               "role": {
                 "type": "string",
                 "example": "standard"
@@ -359,32 +369,6 @@
               "isDisabled": {
                 "type": "boolean",
                 "example": false
-              },
-              "language": {
-                "type": "string"
-              },
-              "selectedSecurityQuestions": {
-                "type": "array",
-                "minItems": 2,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "questionText": {
-                      "type": "string"
-                    },
-                    "answerText": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "firstName",
-                    "LastName",
-                    "email",
-                    "password",
-                    "role",
-                    "isDisabled"
-                  ]
-                }
               }
             }
           }
@@ -433,10 +417,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "questionText",
-                    "answerText"
-                  ]
+                  "required": ["questionText", "answerText"]
                 }
               }
             }

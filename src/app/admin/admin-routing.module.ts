@@ -24,7 +24,7 @@ const routes: Routes = [
         title: 'Bcrs-team3: Users'
       },
       {
-        path: 'users/:_id/view',
+        path: 'users/:userId/view',
         component: UserViewComponent,
         title: 'Bcrs-team3: User'
       },

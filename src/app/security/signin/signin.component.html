@@ -10,8 +10,7 @@
     <div class="row justify-content-center mt-5 h-100">
       <!-- Left column for introductory text -->
       <div class="col-md-6 left-signin-txt p-5 d-none d-md-flex">
-
-        <img src="./assets/welcome.jpg" class="img-fluid" alt="Welcome sign">
+        <img src="./assets/welcome.jpg" class="img-fluid" alt="Welcome sign" />
       </div>
 
       <!-- Right column for sign-in form -->
@@ -30,15 +29,14 @@
           [formGroup]="signinForm"
           (ngSubmit)="signin(); signinForm.reset()"
         >
-
           <!-- email -->
           <div class="form-floating my-4">
             <input
-            type="text"
-            class="form-control"
-            id="email"
-            formControlName="email"
-            placeholder="name@example.com"
+              type="text"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              placeholder="name@example.com"
             />
             <label for="email" class="form-label">Email address</label>
           </div>
@@ -88,11 +86,11 @@
           <!-- password -->
           <div class="form-floating mb-4">
             <input
-            type="password"
-            class="form-control"
-            id="password"
-            formControlName="password"
-            placeholder="Password"
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              placeholder="Password"
             />
             <label for="password" class="form-label">Password</label>
           </div>
@@ -164,6 +162,12 @@
 
         <!-- Link to return to home page -->
         <a routerLink="/" class="text-dark text-underline-hover pt-3">Return</a>
+        <br />
+        <a
+          class="text-dark text-underline-hover"
+          routerLink="/security/forgot-password"
+          >Forgot Password?</a
+        >
       </div>
     </div>
   </div>
