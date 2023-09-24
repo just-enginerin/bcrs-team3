@@ -76,6 +76,7 @@ const resetPasswordSchema = {
   type: "object",
   properties: {
     password: { type: "string" },
+    selectedSecurityQuestion: securityQuestionsSchema,
   },
   required: ["password"],
   additionalProperties: false,
@@ -198,6 +199,79 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
       }
       console.log("Selected user", user);
 
+      const userExists = users.find((us) => us.email === users.email);
+
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
+        next(err);
+        return;
+      }
+
+      const lastUser = users[users.length - 1];
+      const newUserId = lastUser.userId + 1;
+
+      const newUser = {
+        userId: newUserId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        language: user.language,
+        isDisabled: false,
+        role: "standard",
+        selectedSecurityQuestions: user.selectedSecurityQuestions,
+      };
+
+      console.log("User to be inseted into MongoDb: ", newUser);
+
+      const result = await db.collection("users").insertOne(newUser);
+      console.log("MongoDb result: ", result);
+      res.send({ id: result.insertedId });
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+
+/**
+ * verify security questions
+*/
+router.post("/verify/users/:email/security-questions", (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const { securityQuestions } = req.body;
+
+    console.log(`Email:${email}\nSecurity Questions: ${securityQuestions}`);
+
+    const validate = ajv.compile(securityQuestionsSchema);
+    const valid = validate(securityQuestions);
+
+    if (!valid) {
+      const err = new Error("Bad Request");
+      err.satus = 400;
+      err.error = validate.errors;
+      console.log("security question validation errors", validate.errors);
+      next(err);
+      return;
+    }
+
+    mongo(async (db) => {
+      const user = await db.collection("users").findOne({ email: email });
+
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
+        next(err);
+        return;
+      }
+      console.log("Selected user", user);
+
       if (
         securityQuestions[0].answer !==
           user.selectedSecurityQuestions[0].answer ||
@@ -221,7 +295,7 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
 });
 
 /**
- * reset password
+ * resetPassword
  */
 router.delete("/users/:email/reset-password", (req, res, next) => {
   try {
@@ -235,9 +309,9 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
 
     if (!valid) {
       const err = new Error("Bad Request");
-      err.satus = 400;
-      err.error = validate.errors;
-      console.log("Password validation errors", validate.errors);
+      err.status = 400;
+      err.errors = validate.errors;
+      console.log("password validation errors", validate.errors);
       next(err);
       return;
     }
@@ -246,41 +320,32 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
       const user = await db.collection("users").findOne({ email: email });
 
       if (!user) {
-        const err = new Error("Not Found");
-        err.satus = 404;
-        console.log("User not found", err);
+        const err = new Error("not found");
+        err.status = 404;
+        console.log(`user not found: ${email}`);
         next(err);
         return;
       }
 
-      console.log("Selected user", user);
-
-      // const newUser = {
-      //   userId: newUserId,
-      //   firstName: user.firstName,
-      //   lastName: user.lastName,
-      //   email: user.email,
-      //   password: user.password,
-      //   phoneNumber: user.phoneNumber,
-      //   address: user.address,
-      //   language: user.language,
-      //   lastSignedIn: user.lastSignedIn,
-      //   role: "standard",
-      //   // selectedSecurityQuestions: user.selectedSecurityQuestions,
-      // };
+      console.log(`Selected user: ${user}`);
 
       const hashedPassword = bcrypt.hashSync(userData.password, saltRounds);
 
-      const result = await db
-        .collection("users")
-        .updateOne({ email: email }, { $set: { password: hashedPassword } });
+      const result = await db.collection("users").updateOne(
+        { email: email },
+        {
+          $set: {
+            password: hashedPassword,
+          },
+        }
+      );
 
-      console.log("MongoDb updated result", result);
+      console.log(`mongoDB result: ${result}`);
 
       res.status(204).send();
     }, next);
   } catch (err) {
-    console.log("err", err);
+    console.error(err);
     next(err);
   }
 });
@@ -365,62 +430,6 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
     }, next);
   } catch (err) {
     console.log("err", err);
-    next(err);
-  }
-});
-
-/**
- * resetPassword
- */
-router.delete("/users/:email/reset-password", (req, res, next) => {
-  try {
-    const email = req.params.email;
-    const newPassword = req.body;
-
-    console.log(`user email: ${email}`);
-
-    const validate = ajv.compile(resetPasswordSchema);
-    const valid = validate(newPassword);
-
-    if (!valid) {
-      const err = new Error("Bad Request");
-      err.status = 400;
-      err.errors = validate.errors;
-      console.log("password validation errors", validate.errors);
-      next(err);
-      return;
-    }
-
-    mongo(async (db) => {
-      const user = await db.collection("users").findOne({ email: email });
-
-      if (!user) {
-        const err = new Error("not found");
-        err.status = 404;
-        console.log(`user not found: ${email}`);
-        next(err);
-        return;
-      }
-
-      console.log(`Selected user: ${user}`);
-
-      const hashedPassword = bcrypt.hashSync(newPassword.password, saltRounds);
-
-      const result = await db.collection("users").updateOne(
-        { email: email },
-        {
-          $set: {
-            password: hashedPassword,
-          },
-        }
-      );
-
-      console.log(`mongoDB result: ${result}`);
-
-      res.status(204).send();
-    }, next);
-  } catch (err) {
-    console.error(err);
     next(err);
   }
 });

@@ -5,11 +5,12 @@
   Description: Employee Config page: Add New User HTML
 -->
 
-<div class="container-fluid pt-5">
+<div class="container-fluid pt-5" style="min-height: 72vh">
   <h1 class="text-center">Create New User!</h1>
 
   <div class="row justify-content-center pt-4">
     <div class="col-sm-10 col-md-8 col-lg-6">
+      <!-- Error Message -->
       <div *ngIf="errorMessage">
         <div
           class="alert alert-danger alert-dismissible fade show"
@@ -150,35 +151,61 @@
               </div>
               <!-- // end email error handling -->
 
+              <!-- password field -->
               <div class="mb-3">
-                <label for="txtphoneNumber">Phone Number:</label>
+                <label for="txtPassword">Password:</label>
                 <input
                   type="text"
-                  id="txtphoneNumber"
+                  id="txtPassword"
                   class="form-control"
-                  formControlName="phoneNumber"
+                  formControlName="password"
+                  required
                 />
               </div>
 
-              <div class="mb-3">
-                <label for="txtaddress">Address:</label>
-                <input
-                  type="text"
-                  id="txtaddress"
-                  class="form-control"
-                  formControlName="address"
-                />
+              <!-- password error handling -->
+              <div
+                *ngIf="
+                  userForm.controls['password'].touched &&
+                  userForm.controls['password'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  Password is required.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
               </div>
 
-              <div class="mb-3">
-                <label for="txtlanguage">Language:</label>
-                <input
-                  type="text"
-                  id="txtlanguage"
-                  class="form-control"
-                  formControlName="language"
-                />
+              <div
+                *ngIf="
+                  userForm.controls['password'].touched &&
+                  userForm.controls['password'].hasError('pattern')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  The password must be at least 8 characters long and contain at
+                  least one uppercase letter, one lowercase letter, and one
+                  number.
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
               </div>
+              <!-- end password error handling -->
 
               <div class="d-flex gap-3">
                 <div class="mb-3">
@@ -263,9 +290,12 @@
           </form>
         </div>
       </div>
+      <br />
       <a routerLink="/admin/users" class="text-underline-hover text-dark"
         >Return to User List</a
       >
+      <br />
+      <br />
     </div>
   </div>
 </div>

@@ -1,0 +1,18 @@
+/**
+  Title: employee-directory.component.css
+  Author: Yakut Ahmedin
+  Date: 9/23/23
+  Description: Employee directory page styling
+*/
+
+.area1 {
+	background-color: var(--primary-highlight);
+	border-top-left-radius: 14px !important;
+	border-top-right-radius: 14px !important;
+	padding-top: 83px !important
+}
+
+
+
+
+
