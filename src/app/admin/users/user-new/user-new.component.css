@@ -1,0 +1,12 @@
+/**
+  Title: user-new.component.css
+  Author: Erin Brady
+  Date: 9/23/23
+  Description: New User page styling
+*/
+
+#submit {
+  width: 100px;
+  height: 50px;
+  padding: 5px 0;
+}

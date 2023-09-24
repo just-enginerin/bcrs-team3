@@ -17,11 +17,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { VerifySecurityQuestionsComponent } from './verify-security-questions/verify-security-questions.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     SecurityComponent,
     SigninComponent,
+    RegisterComponent,
     VerifyEmailComponent,
     VerifySecurityQuestionsComponent,
     ResetPasswordComponent

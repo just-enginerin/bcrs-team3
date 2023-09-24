@@ -1,1 +1,410 @@
-<p>register works!</p>
+<!--
+  Title: register.component.html
+  Author: Erin Brady
+  Date: 9/22/23
+  Description: Registration component HTML
+  Stepper code implemented from https://codepen.io/Aricati/pen/xxVdxGa
+-->
+
+<form class="container" [formGroup]="registerForm" (ngSubmit)="register()">
+  <div *ngIf="errorMessage" class="row">
+    <div class="class col-32">
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Form 1 -->
+  <div #Form1 id="Form1" class="registerForm">
+    <h3>CREATE ACCOUNT</h3>
+
+    <!-- Email field -->
+    <input
+      type="text"
+      placeholder="Email *"
+      [formGroup]="registerForm"
+      formControlName="email"
+      required
+      id="email"
+    />
+
+    <!-- Email validation errors -->
+    <div
+      class="warning"
+      *ngIf="
+        registerForm.get('email')?.invalid &&
+        (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)
+      "
+    >
+      <div *ngIf="registerForm.get('email')?.hasError('required')">
+        Email is required.
+      </div>
+      <div *ngIf="registerForm.get('email')?.hasError('email')">
+        Email must be a valid email address.
+      </div>
+    </div>
+    <!-- End of email validation -->
+
+    <!-- Password field -->
+    <input
+      type="password"
+      placeholder="Password *"
+      formControlName="password"
+      required
+    />
+
+    <!-- Password validation -->
+    <div
+      class="warning"
+      *ngIf="
+        registerForm.get('password')?.touched &&
+        registerForm.get('password')?.hasError('required')
+      "
+    >
+      Password is required.
+    </div>
+
+    <div
+      class="warning"
+      *ngIf="
+        registerForm.get('password')?.touched &&
+        registerForm.get('password')?.hasError('pattern')
+      "
+    >
+      Password must be at least 8 characters long, contain at least one
+      uppercase letter, one lowercase letter, and one number.
+    </div>
+    <!-- End password validation -->
+
+    <!-- Confirm Password Field -->
+    <input
+      type="password"
+      placeholder="Confirm Password *"
+      formControlName="confirmPassword"
+      required
+    />
+
+    <!-- Confirm Password validation -->
+    <div
+      class="warning"
+      *ngIf="
+        registerForm.get('password')?.touched &&
+        registerForm.get('password')?.hasError('required')
+      "
+    >
+      You must confirm your password.
+    </div>
+
+    <div
+      class="warning"
+      *ngIf="
+        registerForm.get('confirmPassword')?.touched &&
+        registerForm.get('password')?.value !==
+          registerForm.get('confirmPassword')?.value
+      "
+    >
+      Your passwords must match.
+    </div>
+    <!-- End Confirm Password validation -->
+
+    <!-- Form 1 Stepper buttons -->
+    <div class="btn-box">
+      <button
+        mat-raised-button
+        #Next1
+        type="button"
+        id="Next1"
+        class="action-button"
+        (click)="onNext1Click()"
+        [disabled]="
+          registerForm.get('password')?.hasError('required') ||
+          registerForm.get('confirmPassword')?.hasError('required') ||
+          registerForm.get('password')?.value !==
+            registerForm.get('confirmPassword')?.value
+        "
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- Form 2 -->
+  <div #Form2 id="Form2" class="registerForm">
+    <h3>EMPLOYEE INFORMATION</h3>
+
+    <!-- First Name field -->
+    <input
+      type="text"
+      placeholder="First Name *"
+      formControlName="firstName"
+      required
+    />
+
+    <!-- First Name validation -->
+    <div
+      class="warning"
+      *ngIf="
+        registerForm.get('firstName')?.touched &&
+        registerForm.get('firstName')?.hasError('required')
+      "
+    >
+      First Name is required.
+    </div>
+
+    <!-- Last Name field -->
+    <input
+      type="text"
+      placeholder="Last Name *"
+      formControlName="lastName"
+      required
+    />
+
+    <!-- Last Name validation -->
+    <div
+      class="warning"
+      *ngIf="
+        registerForm.get('lastName')?.touched &&
+        registerForm.get('lastName')?.hasError('required')
+      "
+    >
+      Last Name is required.
+    </div>
+
+    <!-- Optional Fields -->
+    <input
+      type="text"
+      placeholder="Phone Number"
+      formControlName="phoneNumber"
+    />
+
+    <input type="text" placeholder="Address" formControlName="address" />
+
+    <input type="text" placeholder="Language" formControlName="language" />
+
+    <!-- Form 2 Stepper buttons -->
+    <div class="btn-box">
+      <button
+        mat-raised-button
+        class="secondary-button"
+        #Back1
+        type="button"
+        id="Back1"
+        (click)="onBack1Click()"
+      >
+        Back
+      </button>
+
+      <button
+        mat-raised-button
+        class="action-button"
+        #Next2
+        type="button"
+        id="Next2"
+        (click)="onNext2Click()"
+        [disabled]="
+          registerForm.get('firstName')?.hasError('required') ||
+          registerForm.get('lastName')?.hasError('required')
+        "
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- Form 3 -->
+  <div #Form3 id="Form3" class="registerForm">
+    <h3>SET SECURITY QUESTIONS</h3>
+
+    <!-- Security Questions -->
+
+    <!-- Question 1 -->
+    <div class="qa-box">
+      <select
+        name="q1"
+        formControlName="question1"
+        id="q1"
+        class="qa"
+        aria-label="Select Security Question #3"
+      >
+        <option value="" disabled selected hidden>Question 1 *</option>
+        <option *ngFor="let question of qArr1" [value]="question">
+          {{ question }}
+        </option>
+      </select>
+
+      <!-- Question 1 Validation -->
+      <div
+        class="warning"
+        *ngIf="
+          (registerForm.get('question1')?.invalid &&
+            registerForm.get('question1')?.dirty) ||
+          registerForm.get('question1')?.touched
+        "
+      >
+        <div *ngIf="registerForm.get('question1')?.hasError('required')">
+          Question is required.
+        </div>
+      </div>
+
+      <!-- Answer 1 -->
+      <input
+        type="text"
+        placeholder="Answer 1 *"
+        formControlName="answer1"
+        id="a1"
+        required
+        class="qa"
+      />
+
+      <!-- Answer 1 Validation -->
+      <div
+        class="warning"
+        *ngIf="
+          registerForm.get('answer1')?.invalid &&
+          (registerForm.get('answer1')?.dirty ||
+            registerForm.get('answer1')?.touched)
+        "
+      >
+        Answer is required.
+      </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="qa-box">
+      <select name="q2" formControlName="question2" id="q2" class="qa">
+        <option value="" disabled selected>Question 2 *</option>
+        <option *ngFor="let question of qArr2" [value]="question">
+          {{ question }}
+        </option>
+      </select>
+
+      <!-- Question 2 Validation -->
+      <div
+        class="warning"
+        *ngIf="
+          (registerForm.get('question2')?.invalid &&
+            registerForm.get('question2')?.dirty) ||
+          registerForm.get('question2')?.touched
+        "
+      >
+        <div *ngIf="registerForm.get('question2')?.hasError('required')">
+          Question is required.
+        </div>
+      </div>
+
+      <!-- Answer 2 -->
+      <input
+        type="text"
+        placeholder="Answer 2 *"
+        formControlName="answer2"
+        id="a2"
+        required
+        class="qa"
+      />
+
+      <!-- Answer 2 Validation -->
+      <div
+        class="warning"
+        *ngIf="
+          registerForm.get('answer2')?.invalid &&
+          (registerForm.get('answer2')?.dirty ||
+            registerForm.get('answer2')?.touched)
+        "
+      >
+        Answer is required.
+      </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="qa-box">
+      <select
+        name="q3"
+        formControlName="question3"
+        id="q3"
+        placeholder="Question 3 *"
+        required
+        class="qa"
+        aria-label="Select Security Question #3"
+      >
+        <option value="" disabled selected hidden>Question 3 *</option>
+        <option *ngFor="let question of qArr3" [value]="question">
+          {{ question }}
+        </option>
+      </select>
+
+      <!-- Question 3 Validation -->
+      <div
+        class="warning"
+        *ngIf="
+          (registerForm.get('question3')?.invalid &&
+            registerForm.get('question3')?.dirty) ||
+          registerForm.get('question3')?.touched
+        "
+      >
+        <div *ngIf="registerForm.get('question3')?.hasError('required')">
+          Question is required.
+        </div>
+      </div>
+
+      <!-- Answer 3 -->
+      <input
+        type="text"
+        placeholder="Answer 3 *"
+        formControlName="answer3"
+        id="a3"
+        required
+        class="qa"
+      />
+
+      <!-- Answer 3 Validation -->
+      <div
+        class="warning"
+        *ngIf="
+          registerForm.get('answer3')?.invalid &&
+          (registerForm.get('answer3')?.dirty ||
+            registerForm.get('answer3')?.touched)
+        "
+      >
+        Answer is required.
+      </div>
+    </div>
+
+    <!-- Form 3 Stepper & submit buttons -->
+    <div class="btn-box">
+      <button
+        mat-raised-button
+        class="secondary-button"
+        #Back2
+        type="button"
+        id="Back2"
+        (click)="onBack2Click()"
+      >
+        Back
+      </button>
+      <button
+        mat-raised-button
+        class="action-button submit-button"
+        type="submit"
+        id="submit"
+        [disabled]="!registerForm.valid"
+      >
+        Create Account
+      </button>
+    </div>
+  </div>
+
+  <!-- Stepper Progress Bar -->
+  <div class="step-row">
+    <div #progress id="progress"></div>
+    <div class="step-col">
+      <small id="Text1" #Text1>Create</small>
+    </div>
+    <div class="step-col">
+      <small id="Text2" #Text2>Information</small>
+    </div>
+    <div class="step-col">
+      <small id="Text3" #Text3>Security</small>
+    </div>
+  </div>
+</form>

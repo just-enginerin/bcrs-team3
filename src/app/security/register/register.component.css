@@ -1,0 +1,150 @@
+/*
+  Title: register.component.css
+  Author: Erin Brady
+  Date: 9/22/23
+  Description: Register page styling
+  Stepper code implemented from https: //codepen.io/Aricati/pen/xxVdxGa
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(https://images.unsplash.com/photo-1598449806566-e70345f92b8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80);
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 360px;
+  height: 80vh;
+  margin: 20px auto 0;
+  position: relative;
+  background: #fff;
+  border-radius: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #777;
+}
+
+.registerForm {
+  width: 280px;
+  min-height: 300px;
+  position: absolute;
+  top: 100px;
+  left: 40px;
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 20px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px 5px;
+  margin: 5px 0;
+  border: 0;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
+}
+
+.qa {
+  min-width: 300px;
+}
+
+.warning {
+  color: red;
+  font-weight: 500;
+}
+
+::placeholder {
+  color: #777;
+}
+
+.btn-box {
+  width: 100%;
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  column-gap: 20%;
+}
+
+.registerForm button {
+  width: 45%;
+  padding: 8px;
+}
+
+.submit-button {
+  width: 80% !important;
+}
+
+#Form2,
+#Form3 {
+  left: 450px;
+}
+
+#Form3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.step-row {
+  width: 360px;
+  height: 40px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 -1px 5px -1px #000;
+  position: relative;
+}
+
+.step-col {
+  width: 120px;
+  text-align: center;
+  position: relative;
+}
+
+#progress {
+  position: absolute;
+  height: 100%;
+  width: 120px;
+  background: linear-gradient(to right, var(--primary-color), var(--primary-highlight));
+  transition: 0.5s;
+}
+
+#progress::after {
+  content: '';
+  height: 0;
+  width: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  position: absolute;
+  right: -20px;
+  top: 0;
+  border-left: 20px solid var(--primary-highlight);
+}
+
+#Text1,
+#Text2,
+#Text3 {
+  color: #333;
+  transition: 0.5s;
+  font-weight: 500;
+}
