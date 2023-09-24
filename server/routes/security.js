@@ -145,19 +145,62 @@ router.post("/register", (req, res, next) => {
     const { user } = req.body;
     console.log("user", user);
 
-    mongo(async (db) => {
-      const user = await db.collection("users").findOne({ email: email });
+    const validate = ajv.compile(registerSchema);
+    const valid = validate(user);
 
-      if (!user) {
-        const err = new Error("Not Found");
-        err.satus = 404;
-        console.log("User not found", err);
+    if (!valid) {
+      const err = new Error("Bad Request");
+      err.satus = 400;
+      err.error = validate.errors;
+      console.log("user validation errors", validate.errors);
+      next(err);
+      return;
+    }
+
+    user.password = bcrypt.hashSync(user.password, saltRounds);
+
+    mongo(async (db) => {
+      const users = await db
+        .collection("users")
+        .find()
+        .sort({ userId: 1 }) // sort the record in ascending order
+        .toArray();
+
+      console.log("User Lists:", users);
+
+      const userExists = users.find((us) => us.email === users.email);
+
+      if (userExists) {
+        const err = new Error("Bad Request");
+        err.satus = 400;
+        err.message = "User already exists";
+        console.log("User already exists", err);
         next(err);
         return;
       }
-      console.log("Selected user", user);
 
-      res.send(user);
+      const lastUser = users[users.length - 1];
+      const newUserId = lastUser.userId + 1;
+
+      const newUser = {
+        userId: newUserId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        language: user.language,
+        isDisabled: false,
+        role: "standard",
+        selectedSecurityQuestions: user.selectedSecurityQuestions,
+      };
+
+      console.log("User to be inseted into MongoDb: ", newUser);
+
+      const result = await db.collection("users").insertOne(newUser);
+      console.log("MongoDb result: ", result);
+      res.send({ id: result.insertedId });
     }, next);
   } catch (err) {
     console.log("err", err);
@@ -166,7 +209,7 @@ router.post("/register", (req, res, next) => {
 });
 
 /**
- * resetPassword
+ * reset password
  */
 router.delete("/users/:email/reset-password", (req, res, next) => {
   try {
@@ -180,9 +223,9 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
 
     if (!valid) {
       const err = new Error("Bad Request");
-      err.status = 400;
-      err.errors = validate.errors;
-      console.log("password validation errors", validate.errors);
+      err.satus = 400;
+      err.error = validate.errors;
+      console.log("Password validation errors", validate.errors);
       next(err);
       return;
     }
@@ -191,32 +234,27 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
       const user = await db.collection("users").findOne({ email: email });
 
       if (!user) {
-        const err = new Error("not found");
-        err.status = 404;
-        console.log(`user not found: ${email}`);
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
         next(err);
         return;
       }
 
-      console.log(`Selected user: ${user}`);
+      console.log("Selected user", user);
 
       const hashedPassword = bcrypt.hashSync(userData.password, saltRounds);
 
-      const result = await db.collection("users").updateOne(
-        { email: email },
-        {
-          $set: {
-            password: hashedPassword,
-          },
-        }
-      );
+      const result = await db
+        .collection("users")
+        .updateOne({ email: email }, { $set: { password: hashedPassword } });
 
-      console.log(`mongoDB result: ${result}`);
+      console.log("MongoDb updated result", result);
 
       res.status(204).send();
     }, next);
   } catch (err) {
-    console.error(err);
+    console.log("err", err);
     next(err);
   }
 });
