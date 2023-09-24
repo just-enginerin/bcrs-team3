@@ -170,6 +170,40 @@
         }
       }
     },
+    "/api/users/{email}/security-questions": {
+      "get": {
+        "summary": "find Users security questions",
+        "description": "find Selected Security Questions",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The email of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details successfully retrieved"
+          },
+          "400": {
+            "description": "Bad Request - Input must be a number"
+          },
+          "404": {
+            "description": "User with the specified userId not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
+    },
     "/api/security/signin": {
       "post": {
         "summary": "Sign in as user",
@@ -236,11 +270,44 @@
         }
       }
     },
-    "/api/security/verify/users/{email}": {},
+    "/api/security/verify/users/{email}": {
+      "post": {
+        "summary": "Verifiy User",
+        "description": "Verifiy User",
+        "tags": [
+          "Security"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The email of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details successfully retrieved"
+          },
+          "400": {
+            "description": "Bad Request - Input must be a email"
+          },
+          "404": {
+            "description": "User with the specified email not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
+    },
     "/api/security/verify/users/{email}/security-questions": {
       "get": {
-        "summary": "find Selected Security Questions",
-        "description": "Get all Security Questions",
+        "summary": "Verifiy user Security Questions",
+        "description": "Verifiy user Security Questions",
         "tags": [
           "Security"
         ],
