@@ -137,26 +137,70 @@ router.post("/signin", (req, res, next) => {
 });
 
 /**
- * registerUser
+ * register
  */
 router.post("/register", (req, res, next) => {
   try {
     const { user } = req.body;
     console.log("user", user);
 
-    mongo(async (db) => {
-      const user = await db.collection("users").findOne({ email: email });
+    const validate = ajv.compile(registerSchema);
+    const valid = validate(user);
 
-      if (!user) {
-        const err = new Error("Not Found");
-        err.satus = 404;
-        console.log("User not found", err);
+    if (!valid) {
+      const err = new Error("Bad Request");
+      err.status = 400;
+      err.errors = validate.errors;
+      console.log("employee validation errors: ", validate.errors);
+      next(err);
+      return;
+    }
+
+    user.password = bcrypt.hashSync(user.password, saltRounds);
+
+    mongo(async (db) => {
+      const users = await db
+        .collection("users")
+        .find()
+        .sort({ userId: 1 })
+        .toArray();
+
+      console.log("Users list: ", users);
+
+      const userExists = users.find((usr) => usr.email === user.email);
+
+      if (!userExists) {
+        const err = new Error("Bad Request");
+        err.status = 400;
+        err.message = "User already has an account.";
+        console.log("User already has an account.", err);
         next(err);
         return;
       }
-      console.log("Selected user", user);
 
-      res.send(user);
+      const lastUser = users[users.length - 1];
+      const newUserId = lastUser.userId + 1;
+
+      const newUser = {
+        userId: newUserId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        language: user.language,
+        role: "standard",
+        selectedSecurityQuestions: user.selectedSecurityQuestions,
+      };
+
+      console.log("User to be inserted into MongoDB: ", newUser);
+
+      const result = await db.collection("users").insertOne(newUser);
+
+      console.log("MongoDB result: ", result);
+
+      res.send({ id: result.insertedId });
     }, next);
   } catch (err) {
     console.log("err", err);

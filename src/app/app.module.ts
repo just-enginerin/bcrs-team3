@@ -20,6 +20,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
+import { FaqComponent } from './faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { EmployeeDirectoryComponent } from './employee-directory/employee-direct
     NavComponent,
     FooterComponent,
     NotFoundComponent,
-    EmployeeDirectoryComponent
+    EmployeeDirectoryComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,

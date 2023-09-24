@@ -22,15 +22,24 @@ body {
 
 .action-button {
   background-color: var(--primary-color) !important;
-  transition-duration: 800ms;
+  transition-duration: 500ms;
   font-weight: 500;
   border: none;
   border-radius: 50px;
   color: white !important;
 }
 
-.action-button:hover {
+.secondary-button {
+  background-color: white !important;
+  border: 2px solid var(--primary-highlight);
+  transition-duration: 500ms;
+  color: var(--primary-color) !important;
+  font-weight: 500;
+  border-radius: 50px;
+}
+
+.action-button:hover, .secondary-button:hover {
   background-color: var(--primary-highlight) !important;
-  transition-duration: 800ms;
+  transition-duration: 500ms;
   color: black !important;
 }

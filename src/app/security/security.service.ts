@@ -10,10 +10,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { selectedSecurityQuestionsViewModel } from './selected-security-questions-view-model';
 import { Observable } from 'rxjs';
+import { RegisterViewModel } from './register-view-model';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class SecurityService {
   constructor(private http: HttpClient) {}
 
@@ -21,6 +23,13 @@ export class SecurityService {
   findUserById(userId: number) {
     return this.http.get('/api/users/' + userId);
   }
+
+  /**
+   * @description Returns the register method
+   */
+  register(user: RegisterViewModel) {
+    return this.http.post('/api/security/register', { user })
+    }
 
   /**
    * @description Returns the signin method

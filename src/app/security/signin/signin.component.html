@@ -93,6 +93,13 @@
               placeholder="Password"
             />
             <label for="password" class="form-label">Password</label>
+
+            <a
+              routerLink="/security/forgot-password"
+              class="text-dark text-underline-hover"
+            >
+              Forgot your password? Reset it here.
+            </a>
           </div>
 
           <!-- password validation -->
@@ -162,19 +169,13 @@
 
         <!-- Link to return to home page -->
         <div class="pt-3" style="display: flex; justify-content: space-between">
-          <a routerLink="/" class="text-dark text-underline-hover">Return</a>
           <a
             routerLink="/security/register"
             class="text-dark text-underline-hover"
           >
             Don't have an account? Register here.
           </a>
-          <a
-            routerLink="/security/forgot-password"
-            class="text-dark text-underline-hover"
-          >
-            Forgot your password? Reset it here.
-          </a>
+          <a routerLink="/" class="text-dark text-underline-hover">Return</a>
         </div>
       </div>
     </div>
