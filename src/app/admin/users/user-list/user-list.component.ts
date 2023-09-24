@@ -4,7 +4,7 @@
  * Date: 9/16/23
  */
 
-// imports statements
+// imports modules and components
 import { Component } from '@angular/core';
 import { UserService } from '../user.service'
 import { User } from '../user'
@@ -15,17 +15,21 @@ import { User } from '../user'
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
+
+  // Initialize component properties
   users: User[]
   successMessage: string
   errorMessage: string
   isLoading: boolean
 
+  // Constructor with dependency injection
   constructor(private userService: UserService) {
     this.users = []
     this.successMessage = ''
     this.errorMessage = ''
     this.isLoading = true
 
+    // Fetch user data from the service when the component is created
     this.userService.getUsers().subscribe({
       next: (users: any) => {
         this.users = users
@@ -43,27 +47,39 @@ export class UserListComponent {
     })
   }
 
+  // delete a user by ID
   deleteUser(userId: string) {
-    if (!confirm('Are you sure you want to delete user record ' + userId + '?')) {
+    if (!confirm('Are you sure you want to deactivate user record ' + userId + '?')) {
       return
     }
 
     this.userService.deleteUser(userId).subscribe({
       next: (res) => {
-        this.users = this.users.filter(user => user.userId !== userId)
 
-        this.successMessage = 'User deleted successfully'
+        // update the user status
+        this.users = this.users.map(user => {
+          if (user.userId === userId) {
+            // Update the user's status
+            user.isDisabled = true;
+          }
+          return user;
+        })
+
+        this.successMessage = 'User status changed successfully'
 
         this.hideAlert()
       },
       error: (err) => {
         this.errorMessage = err.message
         console.error(err)
-        this.hideAlert()
+        this.hideAlert() // Hide the error message after a delay
       }
     })
   }
 
+
+
+  //  hide success and error messages after a delay
   hideAlert() {
     setTimeout(() => {
       this.successMessage = ''

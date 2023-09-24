@@ -31,7 +31,7 @@ const signinSchema = {
 /**
  * securityQuestionSchema
  */
-const securityQuestionSchema = {
+const securityQuestionsSchema = {
   type: "array",
   items: {
     type: "object",
@@ -57,7 +57,7 @@ const registerSchema = {
     phoneNumber: { type: "string" },
     address: { type: "string" },
     language: { type: "string" },
-    selectedSecurityQuestions: securityQuestionSchema,
+    selectedSecurityQuestions: securityQuestionsSchema,
   },
   required: [
     "firstName",
@@ -76,7 +76,7 @@ const resetPasswordSchema = {
   type: "object",
   properties: {
     password: { type: "string" },
-    selectedSecurityQuestion: securityQuestionSchema,
+    selectedSecurityQuestion: securityQuestionsSchema,
   },
   required: ["password"],
   additionalProperties: false,
@@ -145,75 +145,62 @@ router.post("/register", (req, res, next) => {
     const { user } = req.body;
     console.log("user", user);
 
-    mongo(async (db) => {
-      const user = await db.collection("users").findOne({ email: email });
-
-      if (!user) {
-        const err = new Error("Not Found");
-        err.satus = 404;
-        console.log("User not found", err);
-        next(err);
-        return;
-      }
-      console.log("Selected user", user);
-
-      res.send(user);
-    }, next);
-  } catch (err) {
-    console.log("err", err);
-    next(err);
-  }
-});
-
-/**
- * verify security questions
- */
-router.post("/verify/users/:email/security-questions", (req, res, next) => {
-  try {
-    const email = req.params.email;
-    const { securityQuestions } = req.body;
-
-    console.log(`Email:${email}\nSecurity Questions: ${securityQuestions}`);
-
-    const validate = ajv.compile(securityQuestionsSchema);
-    const valid = validate(securityQuestions);
+    const validate = ajv.compile(registerSchema);
+    const valid = validate(user);
 
     if (!valid) {
       const err = new Error("Bad Request");
       err.satus = 400;
       err.error = validate.errors;
-      console.log("security question validation errors", validate.errors);
+      console.log("user validation errors", validate.errors);
       next(err);
       return;
     }
 
+    user.password = bcrypt.hashSync(user.password, saltRounds);
+
     mongo(async (db) => {
-      const user = await db.collection("users").findOne({ email: email });
+      const users = await db
+        .collection("users")
+        .find()
+        .sort({ userId: 1 }) // sort the record in ascending order
+        .toArray();
 
-      if (!user) {
-        const err = new Error("Not Found");
-        err.satus = 404;
-        console.log("User not found", err);
+      console.log("User Lists:", users);
+
+      const userExists = users.find((us) => us.email === users.email);
+
+      if (userExists) {
+        const err = new Error("Bad Request");
+        err.satus = 400;
+        err.message = "User already exists";
+        console.log("User already exists", err);
         next(err);
         return;
       }
-      console.log("Selected user", user);
 
-      if (
-        securityQuestions[0].answer !==
-          user.selectedSecurityQuestions[0].answer ||
-        securityQuestions[1].answer !==
-          user.selectedSecurityQuestions[1].answer ||
-        securityQuestions[2].answer !== user.selectedSecurityQuestions[2].answer
-      ) {
-        const err = new Error("Unauthorized");
-        err.status = 401;
-        err.message = "Unauthorized: Security questions do not match";
-        console.log("Unauthorized: Security questions do not match", err);
-        next(err);
-        return;
-      }
-      res.send(user);
+      const lastUser = users[users.length - 1];
+      const newUserId = lastUser.userId + 1;
+
+      const newUser = {
+        userId: newUserId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+        language: user.language,
+        isDisabled: false,
+        role: "standard",
+        selectedSecurityQuestions: user.selectedSecurityQuestions,
+      };
+
+      console.log("User to be inseted into MongoDb: ", newUser);
+
+      const result = await db.collection("users").insertOne(newUser);
+      console.log("MongoDb result: ", result);
+      res.send({ id: result.insertedId });
     }, next);
   } catch (err) {
     console.log("err", err);
@@ -306,19 +293,26 @@ router.post("/verify/users/:email", (req, res, next) => {
 router.post("/verify/users/:email/security-questions", (req, res, next) => {
   try {
     const email = req.params.email;
+
     const { securityQuestions } = req.body;
 
     console.log(`Email:${email}\nSecurity Questions: ${securityQuestions}`);
 
     const validate = ajv.compile(securityQuestionsSchema);
+
     const valid = validate(securityQuestions);
 
     if (!valid) {
       const err = new Error("Bad Request");
+
       err.satus = 400;
+
       err.error = validate.errors;
+
       console.log("security question validation errors", validate.errors);
+
       next(err);
+
       return;
     }
 
@@ -327,11 +321,16 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
 
       if (!user) {
         const err = new Error("Not Found");
+
         err.satus = 404;
+
         console.log("User not found", err);
+
         next(err);
+
         return;
       }
+
       console.log("Selected user", user);
 
       if (
@@ -341,17 +340,24 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
           user.selectedSecurityQuestions[1].answer ||
         securityQuestions[2].answer !== user.selectedSecurityQuestions[2].answer
       ) {
-        const err = new Error("Unautorized");
+        const err = new Error("Unauthorized");
+
         err.status = 401;
-        err.message = "Unautorized: Security questions do not match";
-        console.log("Unautorized: Security questions do not match", err);
+
+        err.message = "Unauthorized: Security questions do not match";
+
+        console.log("Unauthorized: Security questions do not match", err);
+
         next(err);
+
         return;
       }
+
       res.send(user);
     }, next);
   } catch (err) {
     console.log("err", err);
+
     next(err);
   }
 });

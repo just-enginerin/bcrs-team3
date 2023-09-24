@@ -10,9 +10,7 @@
       "get": {
         "summary": "findAllUsers",
         "description": "Get all users",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "responses": {
           "200": {
             "description": "User details successfully retrieved"
@@ -31,9 +29,7 @@
       "post": {
         "summary": "createUser",
         "description": "Create a new User.",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "requestBody": {
           "required": true,
           "content": {
@@ -65,9 +61,7 @@
       "get": {
         "summary": "findUserById",
         "description": "Get all users",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -96,9 +90,7 @@
       },
       "put": {
         "summary": "Update User",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -139,9 +131,7 @@
       },
       "delete": {
         "summary": "Delete User",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -173,9 +163,7 @@
     "/api/security/signin": {
       "post": {
         "summary": "Sign in as user",
-        "tags": [
-          "Signin API"
-        ],
+        "tags": ["Signin API"],
         "description": "Sign in a user by providing their email and password.",
         "requestBody": {
           "required": true,
@@ -189,14 +177,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful signin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "Successful signin"
           },
           "400": {
             "description": "Bad Request"
@@ -210,13 +191,13 @@
         }
       }
     },
-    "/api/users/{email}/security-questions": {
+    "/api/security/register": {},
+    "/api/security/verify/users/{email}": {},
+    "/api/security/verify/users/{email}/security-questions": {
       "get": {
         "summary": "find Selected Security Questions",
         "description": "Get all Security Questions",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Security"],
         "parameters": [
           {
             "name": "email",
@@ -249,7 +230,7 @@
         "summary": "resetPassword",
         "description": "Change the user's password.",
         "tags": [
-          "Users"
+          "Security"
         ],
         "parameters": [
           {
@@ -257,9 +238,10 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "email"
             },
-            "description": "The user's email address"
+            "description": "The email address of the user whose password needs to be reset"
           }
         ],
         "requestBody": {
@@ -301,10 +283,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "additionalProperties": false
       },
       "User": {
@@ -375,7 +354,8 @@
               },
               "password": {
                 "type": "string",
-                "example": "s3cret"
+                "example": "Password01",
+                "description": "The password must be at least 8 characters in long and contain at least one uppercase letter, one lowercase letter, and one number."
               },
               "role": {
                 "type": "string",
@@ -401,9 +381,6 @@
               "lastName": {
                 "type": "string"
               },
-              "password": {
-                "type": "string"
-              },
               "phoneNumber": {
                 "type": "string"
               },
@@ -418,6 +395,22 @@
               },
               "language": {
                 "type": "string"
+              },
+              "selectedSecurityQuestions": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "questionText": {
+                      "type": "string"
+                    },
+                    "answerText": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["questionText", "answerText"]
+                }
               }
             }
           }

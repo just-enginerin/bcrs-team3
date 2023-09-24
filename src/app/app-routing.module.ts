@@ -28,7 +28,7 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
-        title: 'BCRS: Home'
+        title: 'BCRS: Home' 
       },
       {
         path: 'employees-directory',
