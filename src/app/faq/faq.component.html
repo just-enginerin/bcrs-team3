@@ -1,0 +1,387 @@
+<!--
+  Title: faq.component.html
+  Author: Erin Brady
+  Date: 9/23/23
+  Description: FAQ page HTML
+-->
+
+<div class="faq-container">
+  <h1>Frequently Asked Questions</h1>
+
+  <div class="accordion">
+    <!-- FAQ #1 -->
+    <div class="accordion-item">
+      <!-- Question #1 Header -->
+      <h2 class="accordion-header" id="headingOne">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="false"
+          aria-controls="collapseOne"
+        >
+          How do I create a new account?
+        </button>
+      </h2>
+
+      <!-- Collapsible Answer #1 Body -->
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body container">
+          <div class="row">
+            <div class="col-sm">
+              From the Home screen, click the bright "Sign In" button in the
+              navigation bar.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/createAccount/step1.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Click on the "Register Here" link at the bottom of the Sign In
+              page.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/createAccount/step2.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Enter your email address and set a password. Then, proceed onto
+              the next screen.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/createAccount/step3.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Enter your name, and any additional details you would like. Then,
+              proceed to the next screen.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/createAccount/step4.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Set your security questions, then click the "Create Account"
+              button. Welcome!
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/createAccount/step5.PNG" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ #2 -->
+    <div class="accordion-item">
+      <!-- Question #2 Header -->
+      <h2 class="accordion-header" id="headingTwo">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo"
+          aria-expanded="false"
+          aria-controls="collapseTwo"
+        >
+          How do I reset my password?
+        </button>
+      </h2>
+      <!-- Collapsible Answer #2 Body -->
+      <div
+        id="collapseTwo"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingTwo"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body container">
+          <div class="row">
+            <div class="col-sm">
+              <p>
+                The ability to reset your password is only available if you
+                already have an account with Bob's Computer Repair Shop. If you
+                do not currently have an account, be sure to
+                <a routerLink="/register">Create an Account</a> instead. From
+                the Home screen, click the bright "Sign In" button in the
+                navigation bar.
+              </p>
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/createAccount/step1.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Click on the "Reset Password" link at the bottom of the Sign In
+              page.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/resetPassword/step2.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Enter your email address. Then, proceed onto the next screen.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/resetPassword/step3.png" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Answer your security questions. Then, proceed onto the next
+              screen.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/resetPassword/step4.png" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Finally, enter your password and click "Change Password". Well
+              done! Now you can sign in with your new user credentials.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/resetPassword/step5.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ #3 -->
+    <div class="accordion-item">
+      <!-- Question #3 Header -->
+      <h2 class="accordion-header" id="headingThree">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseThree"
+          aria-expanded="false"
+          aria-controls="collapseThree"
+        >
+          As an Administrator, how do I configure users?
+        </button>
+      </h2>
+
+      <!-- Collapsible Answer #3 Body -->
+      <div
+        id="collapseThree"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingThree"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body container">
+          <div class="row">
+            <div class="col-sm">
+              <p>
+                The ability to configure employees is only available if you are
+                signed in as an Administrator. If you do not currently have an
+                Administrator account, be sure to connect with your
+                administrator to request higher access privileges. From the Home
+                screen, click the "Employee Configuration" link in the
+                navigation bar.
+              </p>
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step1.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              This is the Employee Configuration portal. To Add a New Employee,
+              click the "Add an Employee" button above the list of employees.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step2.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Enter the new employee's information. Then, click the "Submit"
+              button to return to the Configuration portal and view your updated
+              list of employees.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step3.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              On the Employee Configuration Portal, you also have the ability to
+              edit existing employee records. Click on the Pen icon to the right
+              side of a listed employee to edit their information.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step4.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Change whichever employee data needs to be updated. Then, click
+              "Submit" to return to the Portal and view the updated records. If
+              you have no changes to make, click the "Return to User List" link
+              at the bottom of the page.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step5.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              You also have the ability to deactivate an employee record. To do
+              this, click on the Trash Can icon next to an employee.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step6.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              You will see a pop-up message that asks for confirmation. Click
+              "OK" to deactivate that employee's account. Click "Cancel" to
+              change your mind and close the pop-up.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step7.PNG" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              Deactivated employees will have a red "Inactive" status on their
+              record.
+            </div>
+            <div class="col-sm">
+              <img src="/assets/images/faq/employeeConfig/step8.PNG" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO: Sprint 3 -->
+    <!--
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFour"
+            aria-expanded="false"
+            aria-controls="collapseFour"
+          >
+            How do I submit a Service Repair Request?
+          </button>
+        </h2>
+        <div
+          id="collapseFour"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingFour"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden
+            by default, until the collapse plugin adds the appropriate classes
+            that we use to style each element. These classes control the overall
+            appearance, as well as the showing and hiding via CSS transitions. You
+            can modify any of this with custom CSS or overriding our default
+            variables. It's also worth noting that just about any HTML can go
+            within the <code>.accordion-body</code>, though the transition does
+            limit overflow.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFive">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFive"
+            aria-expanded="false"
+            aria-controls="collapseFive"
+          >
+            How do I view an Invoice Summary?
+          </button>
+        </h2>
+        <div
+          id="collapseFive"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingFive"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden
+            by default, until the collapse plugin adds the appropriate classes
+            that we use to style each element. These classes control the overall
+            appearance, as well as the showing and hiding via CSS transitions. You
+            can modify any of this with custom CSS or overriding our default
+            variables. It's also worth noting that just about any HTML can go
+            within the <code>.accordion-body</code>, though the transition does
+            limit overflow.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSix">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseSix"
+            aria-expanded="false"
+            aria-controls="collapseSix"
+          >
+            How do I view Purchases by Invoice?
+          </button>
+        </h2>
+        <div
+          id="collapseSix"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingSix"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden
+            by default, until the collapse plugin adds the appropriate classes
+            that we use to style each element. These classes control the overall
+            appearance, as well as the showing and hiding via CSS transitions. You
+            can modify any of this with custom CSS or overriding our default
+            variables. It's also worth noting that just about any HTML can go
+            within the <code>.accordion-body</code>, though the transition does
+            limit overflow.
+          </div>
+        </div>
+      </div>
+    -->
+  </div>
+</div>

@@ -8,12 +8,12 @@
 // imports statements
 import { Component } from '@angular/core';
 import { SecurityService } from "./../security.service";
-import { FormBuilder, Validators } from "@angular/forms"
+import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 // the session user
-export interface SessaionUser {
+export interface SessionUser {
   empId: number;
   firstName: string;
   lastName: string;
@@ -25,7 +25,7 @@ export interface SessaionUser {
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent { 
+export class SigninComponent {
   errorMessage: string
   isLoading: boolean = false
 

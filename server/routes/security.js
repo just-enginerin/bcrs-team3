@@ -138,7 +138,7 @@ router.post("/signin", (req, res, next) => {
 });
 
 /**
- * registerUser
+ * register
  */
 router.post("/register", (req, res, next) => {
   try {
@@ -172,7 +172,7 @@ router.post("/register", (req, res, next) => {
 
       if (userExists) {
         const err = new Error("Bad Request");
-        err.satus = 400;
+        err.status = 400;
         err.message = "User already exists";
         console.log("User already exists", err);
         next(err);
