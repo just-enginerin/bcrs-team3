@@ -23,53 +23,65 @@ export class RegisterComponent {
   // Stepper functionality
 
   // Stepper form stages
-  @ViewChild('Form1') form1!: ElementRef;
-  @ViewChild('Form2') form2!: ElementRef;
-  @ViewChild('Form3') form3!: ElementRef;
+  @ViewChild('Form1', { static: false }) form1?: ElementRef;
+  @ViewChild('Form2', { static: false }) form2?: ElementRef;
+  @ViewChild('Form3', { static: false }) form3?: ElementRef;
 
   // Stepper Next Buttons
-  @ViewChild('Next1') next1!: ElementRef;
-  @ViewChild('Next2') next2!: ElementRef;
+  @ViewChild('Next1', { static: false }) next1?: ElementRef;
+  @ViewChild('Next2', { static: false }) next2?: ElementRef;
 
   // Stepper Back Buttons
-  @ViewChild('Back1') back1!: ElementRef;
-  @ViewChild('Back2') back2!: ElementRef;
+  @ViewChild('Back1', { static: false }) back1?: ElementRef;
+  @ViewChild('Back2', { static: false }) back2?: ElementRef;
 
   // Stepper dynamic text
-  @ViewChild('Text1') text1!: ElementRef;
-  @ViewChild('Text2') text2!: ElementRef;
-  @ViewChild('Text3') text3!: ElementRef;
+  @ViewChild('Text1', { static: false }) text1?: ElementRef;
+  @ViewChild('Text2', { static: false }) text2?: ElementRef;
+  @ViewChild('Text3', { static: false }) text3?: ElementRef;
 
   //Stepper Progress bar
-  @ViewChild('progress') progress!: ElementRef;
+  @ViewChild('progress', { static: false }) progress?: ElementRef;
 
   // Stepper event handlers
   onNext1Click() {
-    this.form1.nativeElement.style.left = '-450px';
-    this.form2.nativeElement.style.left = '40px';
-    this.progress.nativeElement.style.width = '240px';
-    this.text2.nativeElement.style.color = 'white !important';
+    console.log("form 1: ", this.form1)
+    console.log("form 2: ", this.form2)
+    console.log("progress: ", this.progress)
+    console.log("text 2: ", this.text2)
+    if (this.form1 && this.form2 && this.progress && this.text2) {
+      this.form1.nativeElement.style.left = '-450px';
+      this.form2.nativeElement.style.left = '40px';
+      this.progress.nativeElement.style.width = '240px';
+      this.text2.nativeElement.style.color = 'white !important';
+    }
   }
 
   onNext2Click() {
-    this.form2.nativeElement.style.left = '-450px';
-    this.form3.nativeElement.style.left = '40px';
-    this.progress.nativeElement.style.width = '360px';
-    this.text3.nativeElement.style.color = 'white !important';
+    if (this.form2 && this.form3 && this.progress && this.text3) {
+      this.form2.nativeElement.style.left = '-450px';
+      this.form3.nativeElement.style.left = '40px';
+      this.progress.nativeElement.style.width = '360px';
+      this.text3.nativeElement.style.color = 'white !important';
+    }
   }
 
   onBack1Click() {
-    this.form2.nativeElement.style.left = '450px';
-    this.form1.nativeElement.style.left = '40px';
-    this.progress.nativeElement.style.width = '120px';
-    this.text2.nativeElement.style.color = '#333';
+    if (this.form1 && this.form2 && this.progress && this.text2) {
+      this.form2.nativeElement.style.left = '450px';
+      this.form1.nativeElement.style.left = '40px';
+      this.progress.nativeElement.style.width = '120px';
+      this.text2.nativeElement.style.color = '#333';
+    }
   }
 
   onBack2Click() {
-    this.form3.nativeElement.style.left = '450px';
-    this.form2.nativeElement.style.left = '40px';
-    this.progress.nativeElement.style.width = '240px';
-    this.text3.nativeElement.style.color = '#333';
+    if (this.form2 && this.form3 && this.progress && this.text3) {
+      this.form3.nativeElement.style.left = '450px';
+      this.form2.nativeElement.style.left = '40px';
+      this.progress.nativeElement.style.width = '240px';
+      this.text3.nativeElement.style.color = '#333';
+    }
   }
 
   // End of Stepper functionality
@@ -163,8 +175,8 @@ export class RegisterComponent {
           answer: this.registerForm.get('answer2')?.value || ''
         },
         {
-          question: this.registerForm.get('question2')?.value || '',
-          answer: this.registerForm.get('answer2')?.value || ''
+          question: this.registerForm.get('question3')?.value || '',
+          answer: this.registerForm.get('answer3')?.value || ''
         }
       ]
     }

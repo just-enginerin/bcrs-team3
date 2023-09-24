@@ -16,7 +16,7 @@
   </div>
 
   <!-- Form 1 -->
-  <div #Form1 id="Form1">
+  <div #Form1 id="Form1" class="registerForm">
     <h3>CREATE ACCOUNT</h3>
 
     <!-- Email field -->
@@ -26,27 +26,27 @@
       [formGroup]="registerForm"
       formControlName="email"
       required
+      id="email"
     />
 
     <!-- Email validation errors -->
     <div
       class="alert alert-danger"
       *ngIf="
-        registerForm.controls['email'].invalid &&
-        (registerForm.controls['email'].dirty ||
-          registerForm.controls['email'].touched)
+        registerForm.get('email')?.invalid &&
+        (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)
       "
     >
       <div
         *ngIf="
-          registerForm.controls['email'].invalid &&
-          (registerForm['email'].dirty ||
-            registerForm.controls['email'].touched)
+          registerForm.get('email')?.invalid &&
+          (registerForm.get('email')?.dirty ||
+            registerForm.get('email')?.touched)
         "
       >
         Email is required.
       </div>
-      <div *ngIf="registerForm.controls['email'].hasError('required')">
+      <div *ngIf="registerForm.get('email')?.hasError('required')">
         Email must be a valid email address.
       </div>
     </div>
@@ -64,12 +64,12 @@
     <!-- Password validation -->
     <div
       class="alert alert-danger"
-      *ngIf="registerForm.controls['password'].hasError('required')"
+      *ngIf="registerForm.get('password')?.hasError('required')"
     >
       Password is required.
     </div>
 
-    <div *ngIf="registerForm.controls['password'].hasError('pattern')">
+    <div *ngIf="registerForm.get('password')?.hasError('pattern')">
       Password must be at least 8 characters long, contain at least one
       uppercase letter, one lowercase letter, and one number.
     </div>
@@ -92,7 +92,7 @@
   </div>
 
   <!-- Form 2 -->
-  <div #Form2 id="Form2">
+  <div #Form2 id="Form2" class="registerForm">
     <h3>EMPLOYEE INFORMATION</h3>
 
     <!-- First Name field -->
@@ -106,7 +106,7 @@
     <!-- First Name validation -->
     <div
       class="alert alert-danger"
-      *ngIf="registerForm.controls['firstName'].hasError('required')"
+      *ngIf="registerForm.get('firstName')?.hasError('required')"
     >
       First Name is required.
     </div>
@@ -122,7 +122,7 @@
     <!-- Last Name validation -->
     <div
       class="alert alert-danger"
-      *ngIf="registerForm.controls['lastName'].hasError('required')"
+      *ngIf="registerForm.get('lastName')?.hasError('required')"
     >
       Last Name is required.
     </div>
@@ -165,7 +165,7 @@
   </div>
 
   <!-- Form 3 -->
-  <div #Form3 id="Form3">
+  <div #Form3 id="Form3" class="registerForm">
     <h3>SET SECURITY QUESTIONS</h3>
 
     <!-- Security Questions -->
@@ -187,12 +187,12 @@
       <div
         class="alert-alert-danger"
         *ngIf="
-          (registerForm.controls['question1'].invalid &&
-            registerForm.controls['question1'].dirty) ||
-          registerForm.controls['question1'].touched
+          (registerForm.get('question1')?.invalid &&
+            registerForm.get('question1')?.dirty) ||
+          registerForm.get('question1')?.touched
         "
       >
-        <div *ngIf="registerForm.controls['question1'].hasError['required']">
+        <div *ngIf="registerForm.get('question1')?.hasError('required')">
           Question is required.
         </div>
       </div>
@@ -210,9 +210,9 @@
       <div
         class="alert alert-danger"
         *ngIf="
-          registerForm.controls['answer1'].invalid &&
-          (registerForm.controls['answer1'].dirty ||
-            registerForm.controls['answer1'].touched)
+          registerForm.get('answer1')?.invalid &&
+          (registerForm.get('answer1')?.dirty ||
+            registerForm.get('answer1')?.touched)
         "
       >
         Answer is required.
@@ -236,12 +236,12 @@
       <div
         class="alert-alert-danger"
         *ngIf="
-          (registerForm.controls['question2'].invalid &&
-            registerForm.controls['question2'].dirty) ||
-          registerForm.controls['question2'].touched
+          (registerForm.get('question2')?.invalid &&
+            registerForm.get('question2')?.dirty) ||
+          registerForm.get('question2')?.touched
         "
       >
-        <div *ngIf="registerForm.controls['question2'].hasError['required']">
+        <div *ngIf="registerForm.get('question2')?.hasError('required')">
           Question is required.
         </div>
       </div>
@@ -259,9 +259,9 @@
       <div
         class="alert alert-danger"
         *ngIf="
-          registerForm.controls['answer2'].invalid &&
-          (registerForm.controls['answer2'].dirty ||
-            registerForm.controls['answer2'].touched)
+          registerForm.get('answer2')?.invalid &&
+          (registerForm.get('answer2')?.dirty ||
+            registerForm.get('answer2')?.touched)
         "
       >
         Answer is required.
@@ -286,12 +286,12 @@
       <div
         class="alert-alert-danger"
         *ngIf="
-          (registerForm.controls['question3'].invalid &&
-            registerForm.controls['question3'].dirty) ||
-          registerForm.controls['question3'].touched
+          (registerForm.get('question3')?.invalid &&
+            registerForm.get('question3')?.dirty) ||
+          registerForm.get('question3')?.touched
         "
       >
-        <div *ngIf="registerForm.controls['question3'].hasError['required']">
+        <div *ngIf="registerForm.get('question3')?.hasError('required')">
           Question is required.
         </div>
       </div>
@@ -309,9 +309,9 @@
       <div
         class="alert alert-danger"
         *ngIf="
-          registerForm.controls['answer3'].invalid &&
-          (registerForm.controls['answer3'].dirty ||
-            registerForm.controls['answer3'].touched)
+          registerForm.get('answer3')?.invalid &&
+          (registerForm.get('answer3')?.dirty ||
+            registerForm.get('answer3')?.touched)
         "
       >
         Answer is required.
@@ -347,13 +347,13 @@
   <div class="step-row">
     <div #progress id="progress"></div>
     <div class="step-col">
-      <small id="Text1">Create</small>
+      <small id="Text1" #Text1>Create</small>
     </div>
     <div class="step-col">
-      <small id="Text2">Information</small>
+      <small id="Text2" #Text2>Information</small>
     </div>
     <div class="step-col">
-      <small id="Text3">Security</small>
+      <small id="Text3" #Text3>Security</small>
     </div>
   </div>
 </form>
