@@ -5,17 +5,10 @@
   Description: Navigation Bar component styling
 */
 
-.navbar-brand {
-  margin-left: 20px;
-}
-
-.nav-link, .nav-button-link {
-  height: 100%;
-  margin: 0 10px;
-}
-
 .nav-link:hover {
   background-color: var(--primary-highlight);
+  border-radius: 8px;
+  animation: .1s ease-in-out;
 }
 
 .nav-button-link button {
@@ -25,14 +18,10 @@
 }
 
 nav {
-  height: 74px;
-  flex-shrink: 0;
-  background: #FFF;
-  box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.11);
+  box-shadow: 0px 4px 2px 0px #0000001c; 
   border-bottom: 3px solid var(--primary-color);
-  z-index: 12;
-  padding-left: 30px;
 }
+
 
 #signinBtn {
   box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.11);
@@ -53,25 +42,30 @@ nav {
 
 @media only screen and (max-width: 576px) {
   nav {
-      height: 54px;
+    height: 54px;
   }
+
   .logo {
-      height: 34px;
+    height: 34px;
   }
+
   #navbarResponsive {
-      top: 54px;
-      position: absolute;
-      right: -1px;
-      margin: 0px;
-      left: 0px;
-      background: #fffffffb;
-      border-left: 1px solid #00BCD4;
-      border-bottom: 1px solid #00BCD4;
-      border-right: 1px solid #00BCD4;
+    top: 54px;
+    position: absolute;
+    right: -1px;
+    margin: 0px;
+    left: 0px;
+    background: #fffffffb;
+    border-left: 1px solid #00BCD4;
+    border-bottom: 1px solid #00BCD4;
+    border-right: 1px solid #00BCD4;
   }
 }
 
-#dropdownMenu, .dropdown-item, .user-name, .user-name:hover {
+#dropdownMenu,
+.dropdown-item,
+.user-name,
+.user-name:hover {
   background: var(--primary-color) !important;
   color: white !important;
 }

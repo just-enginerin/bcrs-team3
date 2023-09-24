@@ -15,6 +15,9 @@ const router = express.Router();
 const ajv = new Ajv();
 const saltRounds = 10;
 
+/**
+ * signinSchema
+ */
 const signinSchema = {
   type: "object",
   properties: {
@@ -25,6 +28,9 @@ const signinSchema = {
   additionalProperties: false,
 };
 
+/**
+ * securityQuestionSchema
+ */
 const securityQuestionsSchema = {
   type: "array",
   items: {
@@ -38,6 +44,9 @@ const securityQuestionsSchema = {
   },
 };
 
+/**
+ * registerSchema
+ */
 const registerSchema = {
   type: "object",
   properties: {
@@ -60,15 +69,22 @@ const registerSchema = {
   additionalProperties: false,
 };
 
+/**
+ * resetPasswordSchema
+ */
 const resetPasswordSchema = {
   type: "object",
   properties: {
     password: { type: "string" },
+    selectedSecurityQuestion: securityQuestionsSchema,
   },
   required: ["password"],
   additionalProperties: false,
 };
 
+/**
+ * signin
+ */
 router.post("/signin", (req, res, next) => {
   try {
     const signin = req.body;
@@ -152,9 +168,7 @@ router.post("/register", (req, res, next) => {
 
       console.log("User Lists:", users);
 
-      const userExists = users.find((user) => user.email === users.email);
-      // Set the lastSignedIn field to the current date and time
-      user.lastSignedIn = new Date().toISOString();
+      const userExists = users.find((us) => us.email === users.email);
 
       if (userExists) {
         const err = new Error("Bad Request");
@@ -177,7 +191,7 @@ router.post("/register", (req, res, next) => {
         phoneNumber: user.phoneNumber,
         address: user.address,
         language: user.language,
-        lastSignedIn: user.lastSignedIn,
+        isDisabled: false,
         role: "standard",
         selectedSecurityQuestions: user.selectedSecurityQuestions,
       };
@@ -187,6 +201,113 @@ router.post("/register", (req, res, next) => {
       const result = await db.collection("users").insertOne(newUser);
       console.log("MongoDb result: ", result);
       res.send({ id: result.insertedId });
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+
+/**
+ * verify security questions
+ */
+router.post("/verify/users/:email/security-questions", (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const { securityQuestions } = req.body;
+
+    console.log(`Email:${email}\nSecurity Questions: ${securityQuestions}`);
+
+    const validate = ajv.compile(securityQuestionsSchema);
+    const valid = validate(securityQuestions);
+
+    if (!valid) {
+      const err = new Error("Bad Request");
+      err.satus = 400;
+      err.error = validate.errors;
+      console.log("security question validation errors", validate.errors);
+      next(err);
+      return;
+    }
+
+    mongo(async (db) => {
+      const user = await db.collection("users").findOne({ email: email });
+
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
+        next(err);
+        return;
+      }
+      console.log("Selected user", user);
+
+      if (
+        securityQuestions[0].answer !==
+          user.selectedSecurityQuestions[0].answer ||
+        securityQuestions[1].answer !==
+          user.selectedSecurityQuestions[1].answer ||
+        securityQuestions[2].answer !== user.selectedSecurityQuestions[2].answer
+      ) {
+        const err = new Error("Unauthorized");
+        err.status = 401;
+        err.message = "Unauthorized: Security questions do not match";
+        console.log("Unauthorized: Security questions do not match", err);
+        next(err);
+        return;
+      }
+      res.send(user);
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+
+/**
+ * reset password
+ */
+router.delete("/users/:email/reset-password", (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const userData = req.body;
+
+    console.log("User email", email, "\nUser", userData);
+
+    const validate = ajv.compile(resetPasswordSchema);
+    const valid = validate(userData);
+
+    if (!valid) {
+      const err = new Error("Bad Request");
+      err.satus = 400;
+      err.error = validate.errors;
+      console.log("Password validation errors", validate.errors);
+      next(err);
+      return;
+    }
+
+    mongo(async (db) => {
+      const user = await db.collection("users").findOne({ email: email });
+
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
+        next(err);
+        return;
+      }
+
+      console.log("Selected user", user);
+
+      const hashedPassword = bcrypt.hashSync(userData.password, saltRounds);
+
+      const result = await db
+        .collection("users")
+        .updateOne({ email: email }, { $set: { password: hashedPassword } });
+
+      console.log("MongoDb updated result", result);
+
+      res.status(204).send();
     }, next);
   } catch (err) {
     console.log("err", err);
@@ -223,7 +344,7 @@ router.post("/verify/users/:email", (req, res, next) => {
 });
 
 /**
- * verify secutiry questions
+ * verify security questions
  */
 router.post("/verify/users/:email/security-questions", (req, res, next) => {
   try {
@@ -271,57 +392,6 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
         return;
       }
       res.send(user);
-    }, next);
-  } catch (err) {
-    console.log("err", err);
-    next(err);
-  }
-});
-
-/**
- * reset password
- */
-router.delete("/users/:email/reset-pasword", (req, res, next) => {
-  try {
-    const email = req.params.email;
-    const user = req.body;
-
-    console.log("User email", email, "\nUser", user);
-
-    const validate = ajv.compile(resetPasswordSchema);
-    const valid = validate(user);
-
-    if (!valid) {
-      const err = new Error("Bad Request");
-      err.satus = 400;
-      err.error = validate.errors;
-      console.log("Password validation errors", validate.errors);
-      next(err);
-      return;
-    }
-
-    mongo(async (db) => {
-      const user = await db.collection("users").findOne({ email: email });
-
-      if (!user) {
-        const err = new Error("Not Found");
-        err.satus = 404;
-        console.log("User not found", err);
-        next(err);
-        return;
-      }
-
-      console.log("Selected user", user);
-
-      const hashedPassword = bcrypt.hashSync(user.password, saltRounds);
-
-      const result = await db
-        .collection("users")
-        .updateOne({ email: email }, { $set: { password: hashedPassword } });
-
-      console.log("MongoDb updated result", result);
-
-      res.status(204).send();
     }, next);
   } catch (err) {
     console.log("err", err);

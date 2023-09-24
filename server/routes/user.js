@@ -10,9 +10,6 @@ const express = require("express");
 const { mongo } = require("../utils/mongo");
 const router = express.Router();
 const Ajv = require("ajv");
-const bcrypt = require("bcryptjs");
-
-const saltRounds = 10;
 const ajv = new Ajv(); // create new instance of the ajv class
 
 // new userSchema
@@ -28,13 +25,7 @@ const newUserSchema = {
     role: { type: "string" },
     language: { type: "string" },
   },
-  required: [
-    "firstName",
-    "lastName",
-    "email",
-    "isDisabled",
-    "role",
-  ],
+  required: ["firstName", "lastName", "email", "isDisabled", "role"],
   additionalProperties: false,
 };
 
@@ -44,9 +35,9 @@ const updateUserSchema = {
   properties: {
     firstName: { type: "string" },
     lastName: { type: "string" },
-    phoneNumber: { type: "string" },
-    address: { type: "string" },
-    language: { type: "string" },
+    phoneNumber: { type: ["string", "null"] },
+    address: { type: ["string", "null"] },
+    language: { type: ["string", "null"] },
     isDisabled: { type: "boolean" },
     role: { type: "string" },
   },
@@ -178,6 +169,7 @@ router.post("/", (req, res, next) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        password: user.password,
         phoneNumber: user.phoneNumber,
         address: user.address,
         language: user.language,
@@ -198,35 +190,39 @@ router.post("/", (req, res, next) => {
 });
 
 /**
- * deleteUser
+ * deleteUser set “isDisabled” to true
  */
 router.delete("/:userId", (req, res, next) => {
   try {
-    let { userId } = req.params;
-    userId = parseInt(userId, 10);
+    const { userId } = req.params;
+    const parsedUserId = parseInt(userId, 10);
 
-    if (isNaN(userId)) {
-      const err = new Error("input must be a number");
+    if (isNaN(parsedUserId)) {
+      const err = new Error("Input must be a number");
       err.status = 400;
       console.log("err", err);
       next(err);
       return;
     }
 
+    console.log("che", userId, parsedUserId);
     mongo(async (db) => {
-      const result = await db.collection("users").deleteOne({ userId: userId });
+      const result = await db.collection("users").updateOne(
+        { userId: parsedUserId },
+        { $set: { isDisabled: true } } // Set isDisabled to true
+      );
 
       console.log("result", result);
 
-      if (result.deletedCount !== 1) {
-        const err = new Error("Not Found");
+      if (result.matchedCount !== 1) {
+        const err = new Error("User not found");
         err.status = 404;
         console.log("err", err);
         next(err);
         return;
       }
 
-      res.status(204).send();
+      res.status(200).json({ message: "User is disabled" });
     }, next);
   } catch (err) {
     console.log("err", err);
@@ -283,7 +279,9 @@ router.put("/:userId", (req, res, next) => {
       console.log("update user result: ", result);
 
       if (result.modifiedCount === 0) {
-        const err = new Error("Bad request: No changes were made to this user.");
+        const err = new Error(
+          "Bad request: No changes were made to this user."
+        );
         err.status = 400;
         console.log("err", err);
         next(err);

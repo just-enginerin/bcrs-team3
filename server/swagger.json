@@ -189,14 +189,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful signin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "Successful signin"
           },
           "400": {
             "description": "Bad Request"
@@ -240,6 +233,50 @@
           },
           "500": {
             "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
+    },
+    "/api/security/users/{email}/reset-password": {
+      "delete": {
+        "summary": "resetPassword",
+        "description": "Change the user's password.",
+        "tags": [
+          "Security"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user's email address"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -331,7 +368,8 @@
               },
               "password": {
                 "type": "string",
-                "example": "s3cret"
+                "example": "Password01",
+                "description": "The password must be at least 8 characters in long and contain at least one uppercase letter, one lowercase letter, and one number."
               },
               "role": {
                 "type": "string",
@@ -357,9 +395,6 @@
               "lastName": {
                 "type": "string"
               },
-              "password": {
-                "type": "string"
-              },
               "phoneNumber": {
                 "type": "string"
               },
@@ -378,6 +413,16 @@
             }
           }
         }
+      },
+      "PasswordResetRequest": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": ["password"],
+        "additionalProperties": false
       }
     }
   }
