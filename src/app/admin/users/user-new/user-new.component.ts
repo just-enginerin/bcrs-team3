@@ -4,20 +4,23 @@
  * Date: 9/16/23
  */
 
-// imports statements
+// imports modules and components
 import { Component } from '@angular/core';
 import { UserService } from './../user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NewUser } from '../user';
+
 @Component({
   selector: 'app-user-new',
   templateUrl: './user-new.component.html',
   styleUrls: ['./user-new.component.css']
 })
+
 export class UserNewComponent {
   errorMessage: string
 
+  // Initialize the userForm FormGroup with form controls and validators
   userForm: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
@@ -34,6 +37,7 @@ export class UserNewComponent {
     this.errorMessage = ''
   }
 
+  // Function to create a new user
   createUser() {
     const user: NewUser = {
       firstName: this.userForm.controls['firstName'].value,
@@ -47,8 +51,11 @@ export class UserNewComponent {
       role: this.userForm.controls['role'].value
     }
 
+    // Call the userService to create the user and handle responses
     this.userService.createUser(user).subscribe({
       next: (res) => {
+        
+        // Log the response and navigate to the user list page
         console.log(res)
         this.router.navigate(['/admin/users'])
       },

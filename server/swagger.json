@@ -242,7 +242,7 @@
         "summary": "resetPassword",
         "description": "Change the user's password.",
         "tags": [
-          "Users"
+          "Security"
         ],
         "parameters": [
           {

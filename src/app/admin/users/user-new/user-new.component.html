@@ -5,11 +5,12 @@
   Description: Employee Config page: Add New User HTML
 -->
 
-<div class="container-fluid pt-5"  style="min-height: 72vh">
+<div class="container-fluid pt-5" style="min-height: 72vh">
   <h1 class="text-center">Create New User!</h1>
 
   <div class="row justify-content-center pt-4">
     <div class="col-sm-10 col-md-8 col-lg-6">
+      <!-- Error Message -->
       <div *ngIf="errorMessage">
         <div
           class="alert alert-danger alert-dismissible fade show"
@@ -205,7 +206,6 @@
               </div>
               <!-- end password error handling -->
 
-              
               <div class="d-flex gap-3">
                 <div class="mb-3">
                   <label for="isDisabled">IsDisabled:</label><br />
@@ -289,9 +289,12 @@
           </form>
         </div>
       </div>
+      <br />
       <a routerLink="/admin/users" class="text-underline-hover text-dark"
-        >Return to User List</a
+      >Return to User List</a
       >
+      <br />
+      <br />
     </div>
   </div>
 </div>

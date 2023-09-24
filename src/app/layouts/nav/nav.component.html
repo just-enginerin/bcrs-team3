@@ -5,98 +5,129 @@
   Description: Navigation bar HTML
 -->
 
-<nav class="navbar navbar-expand-sm">
-  <a routerLink="/">
-    <img
-      src="/assets/images/Logo.png"
-      alt="Bob's Computer Repair Shop logo"
-      class="logo"
-  /></a>
+<!-- Navbar -->
+<nav
+  class="navbar navbar-expand-lg navbar-light bg-light position-fixed vw-100 px-2"
+  style="z-index: 999; top: 0"
+>
+  <!-- Container wrapper -->
+  <div class="container" style="max-width: 1800px">
+    <!-- Navbar brand -->
+    <a class="navbar-brand me-2" href="/">
+      <img
+        src="/assets/images/Logo.png"
+        alt="Bob's Computer Repair Shop logo"
+        height="42"
+        alt=""
+        loading="lazy"
+        style="margin-top: -1px"
+        class="logo"
+      />
+    </a>
 
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarResponsive"
-    aria-controls="navbarResponsive"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <!-- navbar links -->
-  <div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav ms-auto p-2">
-      <li class="nav-item" *ngIf="isSignedIn">
-        <button
-          mat-raised-button
-          class="action-button"
-          routerLink="/service-repair"
-        >
-          Create a New Service Request
-        </button>
-      </li>
-      <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'admin'">
-        <a routerLink="/admin/users" class="nav-link"
-          ><strong>Employee Configuration</strong>
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="isSignedIn">
-        <a routerLink="/employees-directory" class="nav-link"
-          ><strong>Employee Directory</strong></a
-        >
-      </li>
-      <li class="nav-item" *ngIf="isSignedIn && sessionUser.role === 'admin'">
-        <a routerLink="#" class="nav-link"><strong>Service Graph</strong> </a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/faq" class="nav-link"><strong>FAQ</strong> </a>
-      </li>
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"></li>
+      </ul>
+      <!-- Left links -->
 
-      <li *ngIf="!isSignedIn" class="nav-item">
-        <button
-          mat-raised-button
-          class="action-button"
-          routerLink="/security/signin"
-        >
-          Sign In
-        </button>
-      </li>
-
-      <!--  user account -->
-      <li *ngIf="isSignedIn" class="nav-item dropdown">
-        <a
-          href="#"
-          class="nav-link pe-3"
-          id="navbarDropdown"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <span class="material-icons">person</span>
-        </a>
-
-        <ul
-          id="dropdownMenu"
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdown"
-        >
-          <li class="dropdown-item user-name">
-            Hello, {{ sessionUser.fullName }}
+      <div class="d-block d-md-flex align-items-center">
+        <ul class="navbar-nav p-2">
+          <li
+            class="nav-item"
+            *ngIf="isSignedIn && sessionUser.role === 'admin'"
+          >
+            <a routerLink="/admin/users" class="nav-link"
+              ><strong>Employee-Configration</strong>
+            </a>
           </li>
-          <hr />
-          <li>
-            <a routerLink="#" class="dropdown-item link"> My Profile</a>
+          <li class="nav-item" *ngIf="isSignedIn">
+            <a routerLink="/employees-directory" class="nav-link"
+              ><strong>Employee-Directory</strong></a
+            >
           </li>
-          <li *ngIf="sessionUser.role === 'admin'">
-            <a routerLink="#" class="dropdown-item link">My Invoices</a>
+          <li
+            class="nav-item"
+            *ngIf="isSignedIn && sessionUser.role === 'admin'"
+          >
+            <a routerLink="#" class="nav-link"
+              ><strong>Service-Graph</strong>
+            </a>
           </li>
-          <li>
-            <a (click)="signout()" class="dropdown-item link">Log Out</a>
+          <li class="nav-item">
+            <a routerLink="/faq" class="nav-link mx-2"><strong>FAQ</strong> </a>
+          </li>
+
+          <li class="nav-item  me-2" *ngIf="isSignedIn">
+            <a
+              class="nav-link action-button btn px-3"
+              routerLink="/service-repair"
+            >
+              New Service Request
+            </a>
+          </li>
+
+          <li *ngIf="!isSignedIn" class="nav-item">
+            <button
+              mat-raised-button
+              class="action-button"
+              routerLink="/security/signin"
+            >
+              Sign In
+            </button>
+          </li>
+
+          <!--  user account -->
+          <li *ngIf="isSignedIn" class="nav-item dropdown">
+            <a
+              href="#"
+              class="nav-link d-flex align-items-center rounded mt-2 mt-lg-0 w-100"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style="border: 1px solid #00BCD4; width: 20px;"
+            >
+              <span class="material-icons text-dark">person</span>
+            </a>
+            
+            <ul
+              id="dropdownMenu"
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdown"
+            >
+              <li class="dropdown-item user-name">
+                Hello, {{ sessionUser.fullName }}
+              </li>
+              <hr />
+              <li>
+                <a routerLink="#" class="dropdown-item link"> My Profile</a>
+              </li>
+              <li *ngIf="sessionUser.role === 'admin'">
+                <a routerLink="#" class="dropdown-item link">My Invoices</a>
+              </li>
+              <li>
+                <a (click)="signout()" class="dropdown-item link">Log Out</a>
+              </li>
+            </ul>
           </li>
         </ul>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </nav>

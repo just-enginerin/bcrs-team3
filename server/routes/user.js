@@ -191,35 +191,39 @@ router.post("/", (req, res, next) => {
 });
 
 /**
- * deleteUser
+ * deleteUser set “isDisabled” to true
  */
 router.delete("/:userId", (req, res, next) => {
   try {
-    let { userId } = req.params;
-    userId = parseInt(userId, 10);
+    const { userId } = req.params;
+    const parsedUserId = parseInt(userId, 10);
 
-    if (isNaN(userId)) {
-      const err = new Error("input must be a number");
+    if (isNaN(parsedUserId)) {
+      const err = new Error("Input must be a number");
       err.status = 400;
       console.log("err", err);
       next(err);
       return;
     }
 
+    console.log("che", userId, parsedUserId);
     mongo(async (db) => {
-      const result = await db.collection("users").deleteOne({ userId: userId });
+      const result = await db.collection("users").updateOne(
+        { userId: parsedUserId },
+        { $set: { isDisabled: true } } // Set isDisabled to true
+      );
 
       console.log("result", result);
 
-      if (result.deletedCount !== 1) {
-        const err = new Error("Not Found");
+      if (result.matchedCount !== 1) {
+        const err = new Error("User not found");
         err.status = 404;
         console.log("err", err);
         next(err);
         return;
       }
 
-      res.status(204).send();
+      res.status(200).json({ message: "User is disabled" });
     }, next);
   } catch (err) {
     console.log("err", err);
