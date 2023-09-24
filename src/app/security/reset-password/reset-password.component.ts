@@ -32,7 +32,7 @@ export class ResetPasswordComponent {
         Validators.required,
         // Regex pattern for strong password validation
         Validators.pattern(
-          '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{8,}$'
+          '^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'
         ),
       ]),
     ],

@@ -54,7 +54,7 @@ export class VerifySecurityQuestionsComponent {
     this.isLoadingSubmit = false;
 
     // Get the email from the route parameters
-    this.email = this.route.snapshot.queryParams.get['email'] ?? '';
+    this.email = this.route.snapshot.queryParams['email'] ?? '';//check later to make sure it is working correctly
     console.log(this.email);
 
     // If no email is provided, redirect to forgot password page
