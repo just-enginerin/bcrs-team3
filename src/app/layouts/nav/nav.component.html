@@ -53,12 +53,12 @@
             *ngIf="isSignedIn && sessionUser.role === 'admin'"
           >
             <a routerLink="/admin/users" class="nav-link"
-              ><strong>Employee-Configration</strong>
+              ><strong>Employee Configuration</strong>
             </a>
           </li>
           <li class="nav-item" *ngIf="isSignedIn">
             <a routerLink="/employees-directory" class="nav-link"
-              ><strong>Employee-Directory</strong></a
+              ><strong>Employee Directory</strong></a
             >
           </li>
           <li
@@ -66,14 +66,14 @@
             *ngIf="isSignedIn && sessionUser.role === 'admin'"
           >
             <a routerLink="#" class="nav-link"
-              ><strong>Service-Graph</strong>
+              ><strong>Service Graph</strong>
             </a>
           </li>
           <li class="nav-item">
             <a routerLink="/faq" class="nav-link mx-2"><strong>FAQ</strong> </a>
           </li>
 
-          <li class="nav-item  me-2" *ngIf="isSignedIn">
+          <li class="nav-item me-2" *ngIf="isSignedIn">
             <a
               class="nav-link action-button btn px-3"
               routerLink="/service-repair"
@@ -101,11 +101,11 @@
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              style="border: 1px solid #00BCD4; width: 20px;"
+              style="border: 1px solid #00bcd4; width: 20px"
             >
               <span class="material-icons text-dark">person</span>
             </a>
-            
+
             <ul
               id="dropdownMenu"
               class="dropdown-menu dropdown-menu-end"
