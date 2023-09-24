@@ -145,36 +145,66 @@ router.post("/register", (req, res, next) => {
     const { user } = req.body;
     console.log("user", user);
 
-    const validate = ajv.compile(registerSchema);
-    const valid = validate(user);
+    mongo(async (db) => {
+      const user = await db.collection("users").findOne({ email: email });
+
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
+        next(err);
+        return;
+      }
+      console.log("Selected user", user);
+
+      res.send(user);
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+
+/**
+ * verify security questions
+ */
+router.post("/verify/users/:email/security-questions", (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const { securityQuestions } = req.body;
+
+    console.log(`Email:${email}\nSecurity Questions: ${securityQuestions}`);
+
+    const validate = ajv.compile(securityQuestionsSchema);
+    const valid = validate(securityQuestions);
 
     if (!valid) {
       const err = new Error("Bad Request");
       err.satus = 400;
       err.error = validate.errors;
-      console.log("user validation errors", validate.errors);
+      console.log("security question validation errors", validate.errors);
       next(err);
       return;
     }
 
-    user.password = bcrypt.hashSync(user.password, saltRounds);
-
     mongo(async (db) => {
-      const users = await db
-        .collection("users")
-        .find()
-        .sort({ userId: 1 }) // sort the record in ascending order
-        .toArray();
+      const user = await db.collection("users").findOne({ email: email });
 
-      console.log("User Lists:", users);
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
+        next(err);
+        return;
+      }
+      console.log("Selected user", user);
 
       const userExists = users.find((us) => us.email === users.email);
 
-      if (userExists) {
-        const err = new Error("Bad Request");
-        err.satus = 400;
-        err.message = "User already exists";
-        console.log("User already exists", err);
+      if (!user) {
+        const err = new Error("Not Found");
+        err.satus = 404;
+        console.log("User not found", err);
         next(err);
         return;
       }
@@ -210,7 +240,7 @@ router.post("/register", (req, res, next) => {
 
 /**
  * verify security questions
- */
+*/
 router.post("/verify/users/:email/security-questions", (req, res, next) => {
   try {
     const email = req.params.email;
@@ -265,7 +295,7 @@ router.post("/verify/users/:email/security-questions", (req, res, next) => {
 });
 
 /**
- * reset password
+ * resetPassword
  */
 router.delete("/users/:email/reset-password", (req, res, next) => {
   try {
@@ -279,9 +309,9 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
 
     if (!valid) {
       const err = new Error("Bad Request");
-      err.satus = 400;
-      err.error = validate.errors;
-      console.log("Password validation errors", validate.errors);
+      err.status = 400;
+      err.errors = validate.errors;
+      console.log("password validation errors", validate.errors);
       next(err);
       return;
     }
@@ -290,27 +320,32 @@ router.delete("/users/:email/reset-password", (req, res, next) => {
       const user = await db.collection("users").findOne({ email: email });
 
       if (!user) {
-        const err = new Error("Not Found");
-        err.satus = 404;
-        console.log("User not found", err);
+        const err = new Error("not found");
+        err.status = 404;
+        console.log(`user not found: ${email}`);
         next(err);
         return;
       }
 
-      console.log("Selected user", user);
+      console.log(`Selected user: ${user}`);
 
       const hashedPassword = bcrypt.hashSync(userData.password, saltRounds);
 
-      const result = await db
-        .collection("users")
-        .updateOne({ email: email }, { $set: { password: hashedPassword } });
+      const result = await db.collection("users").updateOne(
+        { email: email },
+        {
+          $set: {
+            password: hashedPassword,
+          },
+        }
+      );
 
-      console.log("MongoDb updated result", result);
+      console.log(`mongoDB result: ${result}`);
 
       res.status(204).send();
     }, next);
   } catch (err) {
-    console.log("err", err);
+    console.error(err);
     next(err);
   }
 });
