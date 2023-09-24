@@ -5,178 +5,203 @@
   Description: Sign in page HTML
 -->
 
-<div class="signin-page">
-  <div class="container" style="min-height: 600px">
-    <div class="row justify-content-center mt-5 h-100">
-      <!-- Left column for introductory text -->
-      <div class="col-md-6 left-signin-txt p-5 d-none d-md-flex">
-        <img src="./assets/welcome.jpg" class="img-fluid" alt="Welcome sign" />
+<section
+  class="background-radial-gradient overflow-hidden"
+  style="min-height: 600px"
+>
+  <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+    <div class="row gx-lg-5 align-items-center mb-5">
+      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+        <h1
+          class="my-5 display-5 fw-bold ls-tight"
+          style="color: hsl(220, 83%, 66%)"
+        >
+          The Bob <br />
+          <span style="color: hsl(197, 88%, 53%)">Computer Repair Shop</span>
+        </h1>
+        <p class="mb-4 opacity-70" style="color: hsl(197, 66%, 77%)">
+          Welcome to Bob's Computer Repair Shop sign-in page. Access your
+          account to request repairs, track service progress, and stay updated
+          on your repair status. Sign in now for a seamless repair experience.?
+        </p>
       </div>
 
-      <!-- Right column for sign-in form -->
-      <div class="col-12 col-md-6 px-4 py-5 left-signin-form">
-        <div class="card-title text-center border-bottom">
-          <h2 class="p-3 mt-2 bolder">Welcome Back!</h2>
-        </div>
-
-        <!-- Display Error Message if Present -->
-        <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
-          {{ errorMessage }}
-        </div>
-
-        <!-- Sign-In Form -->
-        <form
-          [formGroup]="signinForm"
-          (ngSubmit)="signin(); signinForm.reset()"
-        >
-          <!-- email -->
-          <div class="form-floating my-4">
-            <input
-              type="text"
-              class="form-control"
-              id="email"
-              formControlName="email"
-              placeholder="name@example.com"
-            />
-            <label for="email" class="form-label">Email address</label>
-          </div>
-
-          <!-- validation for email -->
-          <div
-            *ngIf="
-              signinForm.controls['email'].touched &&
-              signinForm.controls['email'].hasError('required')
-            "
-          >
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              Email is required.
-              <input
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              />
-            </div>
-          </div>
-
-          <div
-            *ngIf="
-              signinForm.controls['email'].touched &&
-              signinForm.controls['email'].hasError('email')
-            "
-          >
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              Please enter a valid email address.
-              <input
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              />
-            </div>
-          </div>
-          <!-- end email error handling -->
-
-          <!-- password -->
-          <div class="form-floating mb-4">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              formControlName="password"
-              placeholder="Password"
-            />
-            <label for="password" class="form-label">Password</label>
-          </div>
-
-          <!-- password validation -->
-          <div
-            *ngIf="
-              signinForm.controls['password'].touched &&
-              signinForm.controls['password'].hasError('required')
-            "
-          >
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              Password is required.
-              <input
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              />
-            </div>
-          </div>
-
-          <div
-            *ngIf="
-              signinForm.controls['password'].touched &&
-              signinForm.controls['password'].hasError('pattern')
-            "
-          >
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              The password must be at least 8 characters in long and contain at
-              least one uppercase letter, one lowercase letter, and one number.
-              <input
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              />
-            </div>
-          </div>
-          <!-- end password error handling -->
-
-          <!-- /////////////////////////////////////////// -->
-          <!-- Sign-in button with loading spinner -->
-          <div class="d-grid">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="!signinForm.valid"
-            >
-              <span *ngIf="!isLoading">Sign in</span>
-
-              <div *ngIf="isLoading">
-                <span
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                Loading...
-              </div>
-            </button>
-          </div>
-        </form>
-
-        <!-- Link to return to home page -->
+      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
         <div
-          class="pt-3 d-flex flex-md-row flex-column justify-content-between link-container"
-        >
-          <a routerLink="/" class="text-dark text-underline-hover">Return</a>
-          <a
-            routerLink="/security/register"
-            class="text-dark text-underline-hover"
-            >Don't have an account? Register here.</a
-          >
-          <a
-            routerLink="/security/forgot-password"
-            class="text-dark text-underline-hover"
-            >Forgot your password? Reset it here.</a
-          >
+          id="radius-shape-1"
+          class="position-absolute rounded-circle shadow-5-strong"
+        ></div>
+        <div
+          id="radius-shape-2"
+          class="position-absolute shadow-5-strong"
+        ></div>
+
+        <div class="card bg-glass">
+          <div class="card-title text-center border-bottom">
+            <h2 class="p-3 mt-2 bolder">Welcome Back!</h2>
+          </div>
+          <div class="card-body px-4 py-5 px-md-5">
+            <!-- Display Error Message if Present -->
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </div>
+            <!-- Sign-In Form -->
+            <form
+              [formGroup]="signinForm"
+              (ngSubmit)="signin(); signinForm.reset()"
+            >
+              <!-- email -->
+              <div class="form-floating my-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="email"
+                  formControlName="email"
+                  placeholder="name@example.com"
+                />
+                <label for="email" class="form-label">Email address</label>
+              </div>
+
+              <!-- validation for email -->
+              <div
+                *ngIf="
+                  signinForm.controls['email'].touched &&
+                  signinForm.controls['email'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  Email is required.
+                  <input
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  />
+                </div>
+              </div>
+
+              <div
+                *ngIf="
+                  signinForm.controls['email'].touched &&
+                  signinForm.controls['email'].hasError('email')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  Please enter a valid email address.
+                  <input
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  />
+                </div>
+              </div>
+              <!-- end email error handling -->
+
+              <!-- password -->
+              <div class="form-floating mb-4">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  formControlName="password"
+                  placeholder="Password"
+                />
+                <label for="password" class="form-label">Password</label>
+              </div>
+
+              <!-- password validation -->
+              <div
+                *ngIf="
+                  signinForm.controls['password'].touched &&
+                  signinForm.controls['password'].hasError('required')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  Password is required.
+                  <input
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  />
+                </div>
+              </div>
+
+              <div
+                *ngIf="
+                  signinForm.controls['password'].touched &&
+                  signinForm.controls['password'].hasError('pattern')
+                "
+              >
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  The password must be at least 8 characters in long and contain
+                  at least one uppercase letter, one lowercase letter, and one
+                  number.
+                  <input
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  />
+                </div>
+              </div>
+              <!-- end password error handling -->
+
+              <a
+                routerLink="/security/forgot-password"
+                class="text-dark text-underline-hover  text-decoration-none "
+                >Forgot your password? Reset.</a
+              >
+              <!-- Sign-in button with loading spinner -->
+              <div class="d-grid">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="!signinForm.valid"
+                >
+                  <span *ngIf="!isLoading">Sign in</span>
+
+                  <div *ngIf="isLoading">
+                    <span
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Loading...
+                  </div>
+                </button>
+              </div>
+            </form>
+
+            <!-- Link to return to home page -->
+            <div
+              class="pt-3 d-flex flex-md-row flex-column justify-content-between link-container"
+            >
+              <a routerLink="/" class="text-dark text-underline-hover text-decoration-none"
+                >Return</a
+              >
+              <a
+                routerLink="/security/register"
+                class="text-dark text-underline-hover text-decoration-none"
+                >Don't have an account? Register.</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
