@@ -1,3 +1,10 @@
+/**
+ * Title: faq.component.ts
+ * Author: Erin Brady
+ * Date: 9/23/23
+ * Description: FAQ page logic
+*/
+
 import { Component } from '@angular/core';
 
 @Component({
