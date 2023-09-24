@@ -3,6 +3,7 @@
  * Author: Erin Brady
  * Date: 9/22/23
  * Description: Registration page logic
+ * Stepper code implemented from https: //codepen.io/Aricati/pen/xxVdxGa
 */
 
 import { Component, ElementRef, ViewChild } from '@angular/core';
