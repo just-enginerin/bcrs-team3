@@ -177,14 +177,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful signin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+            "description": "Successful signin"
           },
           "400": {
             "description": "Bad Request"
@@ -234,9 +227,11 @@
     },
     "/api/security/users/{email}/reset-password": {
       "delete": {
-        "summary": "Reset User Password",
-        "tags": ["Security"],
-        "description": "This API endpoint allows resetting a user's password. An email containing the reset instructions will be sent to the user.",
+        "summary": "resetPassword",
+        "description": "Change the user's password.",
+        "tags": [
+          "Security"
+        ],
         "parameters": [
           {
             "name": "email",
@@ -359,7 +354,8 @@
               },
               "password": {
                 "type": "string",
-                "example": "s3cret"
+                "example": "Password01",
+                "description": "The password must be at least 8 characters in long and contain at least one uppercase letter, one lowercase letter, and one number."
               },
               "role": {
                 "type": "string",
@@ -383,9 +379,6 @@
                 "type": "string"
               },
               "lastName": {
-                "type": "string"
-              },
-              "password": {
                 "type": "string"
               },
               "phoneNumber": {

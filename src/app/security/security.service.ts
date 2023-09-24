@@ -19,7 +19,11 @@ import { RegisterViewModel } from './register-view-model';
 export class SecurityService {
   constructor(private http: HttpClient) {}
 
-  // retrieve user information by ID from the API
+  /**
+   * @description retrieve user information by ID from the API
+   * @param userId
+   * @returns user
+   */
   findUserById(userId: number) {
     return this.http.get('/api/users/' + userId);
   }
@@ -35,6 +39,7 @@ export class SecurityService {
    * @description Returns the signin method
    * @param email
    * @param password
+   * @returns
    */
   signin(email: string, password: string) {
     return this.http.post('/api/security/signin', {
@@ -86,6 +91,6 @@ export class SecurityService {
    * @returns type any Observable
    */
   changePassword(email: string, password: string): Observable<any> {
-    return this.http.post('/api/security/users/' + email + '/reset-password', {password});
+    return this.http.delete('/api/security/users/' + email + '/reset-password', { body: { password } });
   }
 }

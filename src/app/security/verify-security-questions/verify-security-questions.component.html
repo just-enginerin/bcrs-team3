@@ -1,1 +1,200 @@
-<p>verify-security-questions works!</p>
+<!--
+  Title: verify-security-questions.component.html
+  Author: Richard Krasso
+  Date: 9/23/23
+  Edit: William Egge
+  Description: Verify security questions page HTML
+ -->
+
+<!-- Main Container for Security Questions Verification Page -->
+<div>
+  <div>
+    <div>
+      <div>
+        <!-- Start of Security Questions Form -->
+        <form
+          [formGroup]="securityQuestionsForm"
+          (ngSubmit)="verifySecurityQuestions()"
+        >
+          <!-- Section to Display Error Messages -->
+          <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <!-- Grouping of Security Questions -->
+          <fieldset class="mb-3 form-group">
+            <legend>Security Questions</legend>
+
+            <!-- First Security Question Section -->
+            <div class="row">
+              <div class="col-md-12">
+                <!-- Loading Spinner for Labels -->
+                <div *ngIf="isLoadingLabels">
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Loading...
+                </div>
+
+                <!-- Label and Input for First Security Question -->
+                <label *ngIf="!isLoadingLabels" for="q1" class="form-label">
+                  {{ question1 }}
+                </label>
+                <input
+                  type="text"
+                  formControlName="answer1"
+                  class="form-control"
+                />
+
+                <!-- Validation Error Message for First Security Question -->
+                <div
+                  *ngIf="
+                    securityQuestionsForm.controls['answer1'].invalid &&
+                    (securityQuestionsForm.controls['answer1'].dirty ||
+                      securityQuestionsForm.controls['answer1'].touched)
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Answer is required.
+                    <input
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Second Security Question Section -->
+            <div class="row">
+              <div class="col-md-12">
+                <!-- Loading Spinner for Labels -->
+                <div *ngIf="isLoadingLabels">
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Loading...
+                </div>
+
+                <!-- Label and Input for Second Security Question -->
+                <label *ngIf="!isLoadingLabels" for="q2" class="form-label">
+                  {{ question2 }}
+                </label>
+                <input
+                  type="text"
+                  formControlName="answer2"
+                  class="form-control"
+                />
+
+                <!-- Validation Error Message for Second Security Question -->
+                <div
+                  *ngIf="
+                    securityQuestionsForm.controls['answer2'].invalid &&
+                    (securityQuestionsForm.controls['answer2'].dirty ||
+                      securityQuestionsForm.controls['answer2'].touched)
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Answer is required.
+                    <input
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Third Security Question Section -->
+            <div class="row">
+              <div class="col-md-12">
+                <!-- Loading Spinner for Labels -->
+                <div *ngIf="isLoadingLabels">
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Loading...
+                </div>
+
+                <!-- Label and Input for Third Security Question -->
+                <label *ngIf="!isLoadingLabels" for="q3" class="form-label">
+                  {{ question3 }}
+                </label>
+                <input
+                  type="text"
+                  formControlName="answer3"
+                  class="form-control"
+                />
+
+                <!-- Validation Error Message for Third Security Question -->
+                <div
+                  *ngIf="
+                    securityQuestionsForm.controls['answer3'].invalid &&
+                    (securityQuestionsForm.controls['answer3'].dirty ||
+                      securityQuestionsForm.controls['answer3'].touched)
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Answer is required.
+                    <input
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Button Section for Form Submission -->
+          <div class="d-grid">
+            <!-- Submit Button with Conditional Loading Spinner -->
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!securityQuestionsForm.valid"
+            >
+              <span *ngIf="!isLoadingSubmit">Verify Security Questions</span>
+              <div *ngIf="isLoadingSubmit">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Loading...
+              </div>
+            </button>
+          </div>
+        </form>
+
+        <!-- Return Link to Forgot Password Page -->
+        <a
+          routerLink="/security/forgot-password"
+          class="text-dark text-underline-hover pt-3"
+          >Return</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
