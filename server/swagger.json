@@ -231,7 +231,7 @@
         "description": "Change the user's password.",
         "tags": [
           "Security"
-        ]
+        ],
         "parameters": [
           {
             "name": "email",
