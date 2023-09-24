@@ -23,9 +23,6 @@ export interface NewUser {
   lastName: string
   email: string
   password: string
-  phoneNumber: string
   isDisabled: boolean
-  language: string
-  address: string
   role: string
 }

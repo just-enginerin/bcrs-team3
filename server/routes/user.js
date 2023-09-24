@@ -19,13 +19,18 @@ const newUserSchema = {
     firstName: { type: "string" },
     lastName: { type: "string" },
     email: { type: "string" },
-    phoneNumber: { type: "string" },
-    address: { type: "string" },
+    password: { type: "string" },
     isDisabled: { type: "boolean" },
     role: { type: "string" },
-    language: { type: "string" },
   },
-  required: ["firstName", "lastName", "email", "isDisabled", "role"],
+  required: [
+    "firstName",
+    "lastName",
+    "email",
+    "password",
+    "isDisabled",
+    "role",
+  ],
   additionalProperties: false,
 };
 
@@ -170,9 +175,6 @@ router.post("/", (req, res, next) => {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
-        phoneNumber: user.phoneNumber,
-        address: user.address,
-        language: user.language,
         isDisabled: user.isDisabled,
         role: user.role,
       };
