@@ -17,7 +17,11 @@ import { Observable } from 'rxjs';
 export class SecurityService {
   constructor(private http: HttpClient) {}
 
-  // retrieve user information by ID from the API
+  /**
+   * @description retrieve user information by ID from the API
+   * @param userId
+   * @returns user
+   */
   findUserById(userId: number) {
     return this.http.get('/api/users/' + userId);
   }
@@ -26,6 +30,7 @@ export class SecurityService {
    * @description Returns the signin method
    * @param email
    * @param password
+   * @returns
    */
   signin(email: string, password: string) {
     return this.http.post('/api/security/signin', {

@@ -1,28 +1,32 @@
 <!--
   Title: verify-email.component.html
-  Author: William Egge
-  Date: 9/20/23
-  Description: Forgot password page HTML
--->
+  Author: Richard Krasso
+  Date: 9/23/23
+  Edit: William Egge
+  Description: verify email page HTML
+ -->
 
+<!-- Main Container for Verify Email Page -->
 <div class="verify-email-page">
   <div class="container" style="min-height: 600px">
+    <!-- Row and Center Alignment for Form -->
     <div class="row justify-content-center mt-5 h-100">
       <div class="">
-        <!-- Email
-           Form -->
+        <!-- Start of Email Verification Form -->
         <form [formGroup]="emailForm" (ngSubmit)="verifyEmail()">
-
-          <!-- Display Error Message if Present -->
+          <!-- Error Message Display -->
           <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
             {{ errorMessage }}
           </div>
 
+          <!-- Fieldset for Employee Information -->
           <fieldset class="mb-3 form-group">
             <legend>Employee Information</legend>
 
+            <!-- Row Container for Input Fields -->
             <div class="row">
               <div class="col-md-12">
+                <!-- Email Input Field -->
                 <label class="form-label" for="email">Email:</label>
                 <input
                   class="form-control"
@@ -33,58 +37,42 @@
                   required
                 />
 
-                <!-- validation errors -->
+                <!-- Email Validation Error Message -->
                 <div
-                *ngIf="
-                  emailForm.controls['email'].touched &&
-                  emailForm.controls['email'].hasError('email')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
+                  *ngIf="
+                    emailForm.controls['email'].touched &&
+                    emailForm.controls['email'].hasError('email')
+                  "
                 >
-                  Please enter a valid email address.
-                  <input
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  />
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Please enter a valid email address.
+                    <input
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    />
+                  </div>
                 </div>
-              </div>
-
-                <div
-                *ngIf="
-                  emailForm.controls['email'].touched &&
-                  emailForm.controls['email'].hasError('email')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  Please enter a valid email address.
-                  <input
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  />
-                </div>
-              </div>
               </div>
             </div>
           </fieldset>
 
+          <!-- Submit Button Container -->
           <div class="d-grid">
+            <!-- Submit Button with Loading Indicator -->
             <button
               type="submit"
               class="btn btn-primary"
               [disabled]="!emailForm.valid"
             >
+              <!-- Text Displayed when not Loading -->
               <span *ngIf="!isLoading">Sign in</span>
 
+              <!-- Loading Spinner -->
               <div *ngIf="isLoading">
                 <span
                   class="spinner-border spinner-border-sm"
@@ -96,12 +84,15 @@
             </button>
           </div>
         </form>
+        <!-- End of Email Verification Form -->
+
+        <!-- Return to Sign-in Link -->
+        <a
+          routerLink="/security/signin"
+          class="text-dark text-underline-hover pt-3"
+          >Return</a
+        >
       </div>
-      <a
-        routerLink="/security/signin"
-        class="text-dark text-underline-hover pt-3"
-        >Return</a
-      >
     </div>
   </div>
 </div>
