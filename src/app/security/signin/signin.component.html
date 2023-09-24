@@ -1,6 +1,7 @@
 <!--
   Title: signin.component.html
   Author: William Egge
+  Modified By: Yakut Ahmedin
   Date: 9/14/23
   Description: Sign in page HTML
 -->
@@ -105,7 +106,7 @@
               <!-- end email error handling -->
 
               <!-- password -->
-              <div class="form-floating mb-4">
+              <div class="form-floating ">
                 <input
                   type="password"
                   class="form-control"
@@ -115,7 +116,11 @@
                 />
                 <label for="password" class="form-label">Password</label>
               </div>
-
+              <a
+                routerLink="/security/forgot-password"
+                class="text-dark text-underline-hover text-decoration-none "
+                >Forgot your password?<span class="text-primary"> Reset.</span></a
+              >
               <!-- password validation -->
               <div
                 *ngIf="
@@ -160,13 +165,8 @@
               </div>
               <!-- end password error handling -->
 
-              <a
-                routerLink="/security/forgot-password"
-                class="text-dark text-underline-hover  text-decoration-none "
-                >Forgot your password? Reset.</a
-              >
               <!-- Sign-in button with loading spinner -->
-              <div class="d-grid">
+              <div class="d-grid mt-4">
                 <button
                   type="submit"
                   class="btn btn-primary"
@@ -190,12 +190,14 @@
             <div
               class="pt-3 d-flex flex-md-row flex-column justify-content-between link-container"
             >
-              <a routerLink="/" class="text-dark text-underline-hover text-decoration-none"
+              <a
+                routerLink="/"
+                class="text-primary text-underline-hover text-decoration-none"
                 >Return</a
               >
               <a
                 routerLink="/security/register"
-                class="text-dark text-underline-hover text-decoration-none"
+                class="text-primary text-underline-hover text-decoration-none"
                 >Don't have an account? Register.</a
               >
             </div>
