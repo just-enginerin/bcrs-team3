@@ -82,6 +82,6 @@ export class SecurityService {
    * @returns type any Observable
    */
   changePassword(email: string, password: string): Observable<any> {
-    return this.http.post('/api/security/users/' + email + '/reset-password', {password});
+    return this.http.delete('/api/security/users/' + email + '/reset-password', { body: { password } });
   }
 }

@@ -161,23 +161,20 @@
         </form>
 
         <!-- Link to return to home page -->
-        <div class="pt-3" style="display: flex; justify-content: space-between">
+        <div
+          class="pt-3 d-flex flex-md-row flex-column justify-content-between link-container"
+        >
           <a routerLink="/" class="text-dark text-underline-hover">Return</a>
           <a
             routerLink="/security/register"
             class="text-dark text-underline-hover"
+            >Don't have an account? Register here.</a
           >
-            Don't have an account? Register here.
-          </a>
           <a
             routerLink="/security/forgot-password"
             class="text-dark text-underline-hover"
+            >Forgot your password? Reset it here.</a
           >
-            Forgot your password? Reset it here.
-          </a>
-
-          <!-- remove when testing is compleat -->
-          <a routerLink="security/verify-security-questions">skip to verify security questions</a>
         </div>
       </div>
     </div>
