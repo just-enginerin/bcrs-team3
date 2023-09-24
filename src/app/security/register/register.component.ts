@@ -20,7 +20,7 @@ import { RegisterViewModel } from '../register-view-model';
 
 export class RegisterComponent {
 
-  // Stepper functionality
+  // Stepper UI components
 
   // Stepper form stages
   @ViewChild('Form1', { static: false }) form1?: ElementRef;
@@ -43,13 +43,46 @@ export class RegisterComponent {
   //Stepper Progress bar
   @ViewChild('progress', { static: false }) progress?: ElementRef;
 
+  // End of Stepper UI Components
+
+  securityQuestions: string[]
+  qArr1: string[]
+  qArr2: string[]
+  qArr3: string[]
+
+  user: RegisterViewModel
+  errorMessage: string
+  isLoading: boolean = false
+
+  // register form with validation
+  registerForm = this.fb.group({
+    firstName: [null, Validators.compose([Validators.required])],
+    lastName: [null, Validators.compose([Validators.required])],
+    email: [null, Validators.compose([Validators.required, Validators.email])],
+    password: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')])],
+    confirmPassword: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')])],
+    phoneNumber: [''],
+    address: [''],
+    language: [''],
+    question1: ['', Validators.compose([Validators.required])],
+    answer1: ['', Validators.compose([Validators.required])],
+    question2: ['', Validators.compose([Validators.required])],
+    answer2: ['', Validators.compose([Validators.required])],
+    question3: ['', Validators.compose([Validators.required])],
+    answer3: ['', Validators.compose([Validators.required])],
+  })
+
   // Stepper event handlers
   onNext1Click() {
-    console.log("form 1: ", this.form1)
-    console.log("form 2: ", this.form2)
-    console.log("progress: ", this.progress)
-    console.log("text 2: ", this.text2)
-    if (this.form1 && this.form2 && this.progress && this.text2) {
+    if (
+      this.form1 &&
+      this.form2 &&
+      this.progress &&
+      this.text2 &&
+      this.registerForm.get('password')?.valid &&
+      this.registerForm.get('confirmPassword')?.valid &&
+      (this.registerForm.get('password')?.value === this.registerForm.get('confirmPassword')?.value)
+    ) {
       this.form1.nativeElement.style.left = '-450px';
       this.form2.nativeElement.style.left = '40px';
       this.progress.nativeElement.style.width = '240px';
@@ -83,34 +116,6 @@ export class RegisterComponent {
       this.text3.nativeElement.style.color = '#333';
     }
   }
-
-  // End of Stepper functionality
-
-  securityQuestions: string[]
-  qArr1: string[]
-  qArr2: string[]
-  qArr3: string[]
-
-  user: RegisterViewModel
-  errorMessage: string
-  isLoading: boolean = false
-
-  // register form with validation
-  registerForm = this.fb.group({
-    firstName: [null, Validators.compose([Validators.required])],
-    lastName: [null, Validators.compose([Validators.required])],
-    email: [null, Validators.compose([Validators.required, Validators.email])],
-    password: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')])],
-    phoneNumber: [''],
-    address: [''],
-    language: [''],
-    question1: [null, Validators.compose([Validators.required])],
-    answer1: [null, Validators.compose([Validators.required])],
-    question2: [null, Validators.compose([Validators.required])],
-    answer2: [null, Validators.compose([Validators.required])],
-    question3: [null, Validators.compose([Validators.required])],
-    answer3: [null, Validators.compose([Validators.required])],
-  })
 
   constructor(
     private fb: FormBuilder,
