@@ -83,7 +83,7 @@
                   />
                 </div>
               </div>
-              
+
               <div
                 *ngIf="
                   signinForm.controls['email'].touched &&
@@ -106,7 +106,7 @@
               <!-- end email error handling -->
 
               <!-- password -->
-              <div class="form-floating ">
+              <div class="form-floating">
                 <input
                   type="password"
                   class="form-control"
@@ -117,9 +117,11 @@
                 <label for="password" class="form-label">Password</label>
               </div>
               <a
-                routerLink="/security/"
-                class="text-dark text-underline-hover text-decoration-none "
-                >Forgot your password?<span class="text-primary"> Reset.</span></a
+                routerLink="/security/forgot-password"
+                class="text-dark text-underline-hover text-decoration-none"
+                >Forgot your password?<span class="text-primary">
+                  Reset.</span
+                ></a
               >
               <!-- password validation -->
               <div
