@@ -305,7 +305,7 @@
       }
     },
     "/api/security/verify/users/{email}/security-questions": {
-      "get": {
+      "post": {
         "summary": "Verifiy user Security Questions",
         "description": "Verifiy user Security Questions",
         "tags": [
@@ -322,6 +322,16 @@
             "description": "Enter user email"
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SecurityQuestions"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "User details successfully retrieved"
@@ -556,29 +566,11 @@
                 "type": "string"
               },
               "isDisabled": {
-                "type": "boolean"
+                "type": "boolean",
+                "example": false
               },
               "language": {
                 "type": "string"
-              },
-              "selectedSecurityQuestions": {
-                "type": "array",
-                "minItems": 2,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "questionText": {
-                      "type": "string"
-                    },
-                    "answerText": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "questionText",
-                    "answerText"
-                  ]
-                }
               }
             }
           }
@@ -595,6 +587,27 @@
           "password"
         ],
         "additionalProperties": false
+      },
+      "SecurityQuestions": {
+        "type": "object",
+        "properties": {
+          "securityQuestions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "type": "string",
+                  "description": "The security question."
+                },
+                "answer": {
+                  "type": "string",
+                  "description": "The answer to the security question."
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

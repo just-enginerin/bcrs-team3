@@ -17,7 +17,7 @@ import { RegisterViewModel } from './register-view-model';
 })
 
 export class SecurityService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * @description retrieve user information by ID from the API
@@ -33,7 +33,7 @@ export class SecurityService {
    */
   register(user: RegisterViewModel) {
     return this.http.post('/api/security/register', { user })
-    }
+  }
 
   /**
    * @description Returns the signin method
@@ -48,11 +48,11 @@ export class SecurityService {
     });
   }
 
-/**
- * @description Returns the register method
- * @param email
- * @returns type any Observable
- */
+  /**
+   * @description Returns the register method
+   * @param email
+   * @returns type any Observable
+   */
   verifyEmail(email: string) {
     return this.http.post('/api/security/verify/users/' + email, {});
   }
