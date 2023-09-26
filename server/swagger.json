@@ -671,6 +671,15 @@
               "laborAmount": {
                 "type": "number"
               },
+              "lineItemTotal": {
+                "type": "number"
+              },
+              "invoiceTotal": {
+                "type": "number"
+              },
+              "orderDate": {
+                "type": "string"
+              },
               "lineItems": {
                 "type": "array",
                 "items": {

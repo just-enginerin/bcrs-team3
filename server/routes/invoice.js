@@ -34,6 +34,9 @@ const newInvoiceSchema = {
     customerEmail: { type: "string" },
     partsAmount: { type: "number" },
     laborAmount: { type: "number" },
+    lineItemTotal: { type: "number" },
+    invoiceTotal: { type: "number" },
+    orderDate: { type: "string" },
     lineItems: lineItemsSchema,
   },
   required: [
@@ -41,6 +44,9 @@ const newInvoiceSchema = {
     "customerEmail",
     "partsAmount",
     "laborAmount",
+    "lineItemTotal",
+    "invoiceTotal",
+    "orderDate",
     "lineItems",
   ],
   additionalProperties: false,
@@ -53,6 +59,7 @@ router.post("/:userId", async (req, res, next) => {
   try {
     const { invoice } = req.body;
     let { userId } = req.params;
+    
     userId = parseInt(userId, 10);
     console.log("invoice", invoice, userId);
 
@@ -67,19 +74,6 @@ router.post("/:userId", async (req, res, next) => {
       next(err);
       return;
     }
-
-    // Calculate lineItemTotal by summing up the prices of line items
-    const lineItemTotal = invoice.lineItems.reduce(
-      (total, item) => total + item.price,
-      0
-    );
-
-    // Calculate invoiceTotal by adding partsAmount, laborAmount, and lineItemTotal
-    const invoiceTotal =
-      invoice.partsAmount + invoice.laborAmount + lineItemTotal;
-
-    // Get the current date and time as the orderDate
-    const orderDate = new Date();
 
     mongo(async (db) => {
       const user = await db.collection("users").findOne({ userId });
@@ -109,10 +103,7 @@ router.post("/:userId", async (req, res, next) => {
 
       const newInvoice = {
         invoiceId: newInvoiceId, // Use the new invoiceId
-        userId: user.userId, // User Id who creates the invoice
-        orderDate, // Add orderDate
-        lineItemTotal, // Add lineItemTotal
-        invoiceTotal, // Add invoiceTotal
+        userId: user.userId, // User Id who create the invoice
         ...invoice,
       };
 
@@ -120,13 +111,12 @@ router.post("/:userId", async (req, res, next) => {
 
       const result = await db.collection("invoices").insertOne(newInvoice);
       console.log("MongoDb result: ", result);
-      res.send({ newInvoice });
+      res.send({ id: result.insertedId, userId, invoiceId: newInvoiceId });
     }, next);
   } catch (err) {
     console.log("err", err);
     next(err);
   }
 });
-
 
 module.exports = router;
