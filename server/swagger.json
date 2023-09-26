@@ -393,7 +393,7 @@
         }
       }
     },
-    "/api/invoices/{username}": {
+    "/api/invoices/{userId}": {
       "post": {
         "summary": "Create a new invoice",
         "description": "Create a new invoice",
@@ -402,7 +402,7 @@
         ],
         "parameters": [
           {
-            "name": "username",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -670,15 +670,6 @@
               },
               "laborAmount": {
                 "type": "number"
-              },
-              "lineItemTotal": {
-                "type": "number"
-              },
-              "invoiceTotal": {
-                "type": "number"
-              },
-              "orderDate": {
-                "type": "string"
               },
               "lineItems": {
                 "type": "array",

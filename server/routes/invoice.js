@@ -34,9 +34,6 @@ const newInvoiceSchema = {
     customerEmail: { type: "string" },
     partsAmount: { type: "number" },
     laborAmount: { type: "number" },
-    lineItemTotal: { type: "number" },
-    invoiceTotal: { type: "number" },
-    orderDate: { type: "string" },
     lineItems: lineItemsSchema,
   },
   required: [
@@ -44,9 +41,6 @@ const newInvoiceSchema = {
     "customerEmail",
     "partsAmount",
     "laborAmount",
-    "lineItemTotal",
-    "invoiceTotal",
-    "orderDate",
     "lineItems",
   ],
   additionalProperties: false,
@@ -73,6 +67,19 @@ router.post("/:userId", async (req, res, next) => {
       next(err);
       return;
     }
+
+    // Calculate lineItemTotal by summing up the prices of line items
+    const lineItemTotal = invoice.lineItems.reduce(
+      (total, item) => total + item.price,
+      0
+    );
+
+    // Calculate invoiceTotal by adding partsAmount, laborAmount, and lineItemTotal
+    const invoiceTotal =
+      invoice.partsAmount + invoice.laborAmount + lineItemTotal;
+
+    // Get the current date and time as the orderDate
+    const orderDate = new Date();
 
     mongo(async (db) => {
       const user = await db.collection("users").findOne({ userId });
@@ -102,7 +109,10 @@ router.post("/:userId", async (req, res, next) => {
 
       const newInvoice = {
         invoiceId: newInvoiceId, // Use the new invoiceId
-        userId: user.userId, // User Id who create the invoice
+        userId: user.userId, // User Id who creates the invoice
+        orderDate, // Add orderDate
+        lineItemTotal, // Add lineItemTotal
+        invoiceTotal, // Add invoiceTotal
         ...invoice,
       };
 
@@ -110,12 +120,69 @@ router.post("/:userId", async (req, res, next) => {
 
       const result = await db.collection("invoices").insertOne(newInvoice);
       console.log("MongoDb result: ", result);
-      res.send({ id: result.insertedId, userId, invoiceId: newInvoiceId });
+      res.send({ newInvoice });
     }, next);
   } catch (err) {
     console.log("err", err);
     next(err);
   }
 });
+
+
+
+/////////////-----just for testing purpose to see and remove unnecassary array------///////////////
+router.get("/", (req, res, next) => {
+  try {
+    mongo(async (db) => {
+      const invoices = await db
+        .collection("invoices")
+        .find()
+        .sort({ invoiceId: 1 })
+        .toArray(); // return as an array
+
+      console.log("invoice", invoices);
+
+      res.send(invoices);
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+router.delete("/:invoiceId", async (req, res, next) => {
+  try {
+    const { invoiceId } = req.params;
+    const parsedInvoiceId = parseInt(invoiceId, 10);
+
+    if (isNaN(parsedInvoiceId)) {
+      const err = new Error("Input must be a number");
+      err.status = 400;
+      console.log("err", err);
+      next(err);
+      return;
+    }
+
+    mongo(async (db) => {
+      //   Check if the invoice with the given invoiceId exists
+      const invoice = await db
+        .collection("invoices")
+        .findOne({ invoiceId: parsedInvoiceId });
+
+      if (!invoice) {
+        const err = new Error("Invoice not found");
+        err.status = 404;
+        throw err;
+      }
+
+      // Delete the invoice
+      await db.collection("invoices").deleteOne({ invoiceId: parsedInvoiceId });
+
+      res.status(200).json({ message: "Invoice deleted successfully" });
+    }, next);
+  } catch (err) {
+    next(err);
+  }
+});
+///////////////-----test file end here-----------//////////////////////////////
 
 module.exports = router;
