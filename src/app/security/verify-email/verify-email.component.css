@@ -5,19 +5,35 @@
   Description: verify email page styling
 */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .verify-email-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 50px 0;
-  min-height: 80vh;
+  width: 360px;
+  height: 80vh;
+  margin: 20px auto 0;
+  position: relative;
+  background: #fff;
+  border-radius: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px 5px;
+  margin: 5px 0;
+  border: 0;
+  border-bottom: 1px solid #999;
+  outline: none;
+  background: transparent;
 }
 
 .container {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   border-radius: 10px;
-  background-color: #f5f5f5;
 }
 
 .left-signin-txt h1 {
