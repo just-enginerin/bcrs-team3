@@ -105,7 +105,7 @@ router.post("/signin", (req, res, next) => {
     mongo(async (db) => {
       const user = await db
         .collection("users")
-        .findOne({ email: signin.email });
+        .findOne({ email: signin.email, isDisabled: false }); // only active user can be able to signin
 
       if (!user) {
         const err = new Error("Unauthorized");

@@ -322,6 +322,16 @@
             "description": "Enter user email"
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SecurityQuestions"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "User details successfully retrieved"
@@ -379,6 +389,50 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/invoices/{userId}": {
+      "post": {
+        "summary": "Create a new invoice",
+        "description": "Create a new invoice",
+        "tags": [
+          "Invoices"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Enter user nsme"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewInvoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invoice created successfully"
+          },
+          "400": {
+            "description": "Bad Request "
+          },
+          "404": {
+            "description": "User with the specified email not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
           }
         }
       }
@@ -556,29 +610,11 @@
                 "type": "string"
               },
               "isDisabled": {
-                "type": "boolean"
+                "type": "boolean",
+                "example": false
               },
               "language": {
                 "type": "string"
-              },
-              "selectedSecurityQuestions": {
-                "type": "array",
-                "minItems": 2,
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "questionText": {
-                      "type": "string"
-                    },
-                    "answerText": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "questionText",
-                    "answerText"
-                  ]
-                }
               }
             }
           }
@@ -595,6 +631,72 @@
           "password"
         ],
         "additionalProperties": false
+      },
+      "SecurityQuestions": {
+        "type": "object",
+        "properties": {
+          "securityQuestions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "type": "string",
+                  "description": "The security question."
+                },
+                "answer": {
+                  "type": "string",
+                  "description": "The answer to the security question."
+                }
+              }
+            }
+          }
+        }
+      },
+      "NewInvoice": {
+        "type": "object",
+        "properties": {
+          "invoice": {
+            "type": "object",
+            "properties": {
+              "customerFullName": {
+                "type": "string"
+              },
+              "customerEmail": {
+                "type": "string"
+              },
+              "partsAmount": {
+                "type": "number"
+              },
+              "laborAmount": {
+                "type": "number"
+              },
+              "lineItemTotal": {
+                "type": "number"
+              },
+              "invoiceTotal": {
+                "type": "number"
+              },
+              "orderDate": {
+                "type": "string"
+              },
+              "lineItems": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
