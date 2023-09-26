@@ -392,6 +392,50 @@
           }
         }
       }
+    },
+    "/api/invoices/{username}": {
+      "post": {
+        "summary": "Create a new invoice",
+        "description": "Create a new invoice",
+        "tags": [
+          "Invoices"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Enter user nsme"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewInvoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invoice created successfully"
+          },
+          "400": {
+            "description": "Bad Request "
+          },
+          "404": {
+            "description": "User with the specified email not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -603,6 +647,51 @@
                 "answer": {
                   "type": "string",
                   "description": "The answer to the security question."
+                }
+              }
+            }
+          }
+        }
+      },
+      "NewInvoice": {
+        "type": "object",
+        "properties": {
+          "invoice": {
+            "type": "object",
+            "properties": {
+              "customerFullName": {
+                "type": "string"
+              },
+              "customerEmail": {
+                "type": "string"
+              },
+              "partsAmount": {
+                "type": "number"
+              },
+              "laborAmount": {
+                "type": "number"
+              },
+              "lineItemTotal": {
+                "type": "number"
+              },
+              "invoiceTotal": {
+                "type": "number"
+              },
+              "orderDate": {
+                "type": "string"
+              },
+              "lineItems": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    }
+                  }
                 }
               }
             }
