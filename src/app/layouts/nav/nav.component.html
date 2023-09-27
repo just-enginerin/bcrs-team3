@@ -65,7 +65,7 @@
             class="nav-item"
             *ngIf="isSignedIn && sessionUser.role === 'admin'"
           >
-            <a routerLink="#" class="nav-link"
+            <a routerLink="/services/service-graph" class="nav-link"
               ><strong>Service Graph</strong>
             </a>
           </li>
@@ -76,7 +76,7 @@
           <li class="nav-item me-2" *ngIf="isSignedIn">
             <a
               class="nav-link action-button btn px-3"
-              routerLink="/service-repair"
+              routerLink="/services/service-repair"
             >
               New Service Request
             </a>

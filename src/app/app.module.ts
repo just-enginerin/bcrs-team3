@@ -21,7 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { FaqComponent } from './faq/faq.component';
-import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -35,7 +34,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     NotFoundComponent,
     EmployeeDirectoryComponent,
     FaqComponent,
-    ServiceRepairComponent
   ],
   imports: [
     BrowserModule,
