@@ -1,7 +1,7 @@
 /**
  * Title: invoice.ts
  * Author: Yakut Ahmedin
- * Date: 9/26/23
+ * Date: 9/25/23
  */
 
 export interface NewInvoice {

@@ -1,8 +1,16 @@
+/**
+ * Title: services-repair.component.ts
+ * Author: Professor Krasso
+ * Date: 9/25/23
+ * Updated by: Yakut Ahmedin
+*/
+
+// imports statements
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ServiceRepairService } from './service-repair.service';
-import { NewInvoice } from './invoice';
+import { ServicesService } from '../services.service';
+import { NewInvoice } from '../invoice';
 
 @Component({
   selector: 'app-service-repair',
@@ -31,7 +39,7 @@ export class ServiceRepairComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private invoiceService: ServiceRepairService
+    private invoiceService: ServicesService
   ) {
 
     this.errorMessage = '';
