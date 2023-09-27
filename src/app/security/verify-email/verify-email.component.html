@@ -6,91 +6,97 @@
   Description: verify email page HTML
  -->
 
-<!-- Main Container for Verify Email Page -->
-<div class="verify-email-page">
-    <!-- Row and Center Alignment for Form -->
-    <div class="row justify-content-center mt-5 h-100">
-      <div class="">
-        <!-- Start of Email Verification Form -->
-        <form [formGroup]="emailForm" (ngSubmit)="verifyEmail()">
-          <!-- Error Message Display -->
-          <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
-            {{ errorMessage }}
-          </div>
+<!-- Verify Email Page: Main Container -->
+<div class="container">
 
-          <!-- Fieldset for Employee Information -->
-          <fieldset class="mb-3 form-group">
-            <legend>Employee Information</legend>
+  <!-- Begin Email Verification Form -->
+  <form [formGroup]="emailForm" (ngSubmit)="verifyEmail()">
 
-            <!-- Row Container for Input Fields -->
-            <div class="row">
-              <div class="col-md-12">
-                <!-- Email Input Field -->
-                <label class="form-label" for="email">Email:</label>
-                <input
-                  class="form-control"
-                  formControlName="email"
-                  type="text"
-                  id="email"
-                  name="email"
-                  required
-                />
-
-                <!-- Email Validation Error Message -->
-                <div
-                  *ngIf="
-                    emailForm.controls['email'].touched &&
-                    emailForm.controls['email'].hasError('email')
-                  "
-                >
-                  <div
-                    class="alert alert-danger alert-dismissible fade show"
-                    role="alert"
-                  >
-                    Please enter a valid email address.
-                    <input
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="alert"
-                      aria-label="Close"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-
-          <!-- Submit Button Container -->
-          <div class="d-grid">
-            <!-- Submit Button with Loading Indicator -->
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="!emailForm.valid"
-            >
-              <!-- Text Displayed when not Loading -->
-              <span *ngIf="!isLoading">Verify email address</span>
-
-              <!-- Loading Spinner -->
-              <div *ngIf="isLoading">
-                <span
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                Loading...
-              </div>
-            </button>
-          </div>
-        </form>
-        <!-- End of Email Verification Form -->
-
-        <!-- Return to Sign-in Link -->
-        <a
-          routerLink="/security/signin"
-          class="text-dark text-underline-hover pt-3"
-          >Return</a
-        >
+    <!-- Display Error Message (if exists) -->
+    <div *ngIf="errorMessage" class="row">
+      <div class="class col-32">
+        <div class="alert alert-danger">
+          <!-- Error Message Content -->
+          {{ errorMessage }}
+        </div>
       </div>
     </div>
+
+    <!-- Spacer for UI -->
+    <br />
+    <br />
+    <br />
+
+    <!-- Employee Information Section -->
+    <fieldset class="form-group">
+      <h3>Employee Information</h3>
+
+      <!-- Spacer for UI -->
+      <br />
+      <br />
+      <br />
+
+      <!-- Input Fields: Row Container -->
+      <div class="row">
+        <div class="col-md-12">
+
+          <!-- Email Input -->
+          <input
+            type="text"
+            placeholder="Email"
+            formControlName="email"
+            name="email"
+            id="email"
+            required
+          />
+
+          <!-- Display Validation Error for Email -->
+          <div
+            class="warning"
+            *ngIf="
+              emailForm.controls['email'].touched &&
+              emailForm.controls['email'].hasError('email')
+            "
+          >
+            <div
+              class="alert-dismissible fade show"
+              role="alert"
+            >
+              <!-- Validation Error Content -->
+              Please enter a valid email address.
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Submit Button: Container -->
+    <div class="btn-box">
+
+      <!-- Submit Button (Enabled when form is valid) -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!emailForm.valid"
+      >
+        <!-- Display Text (When not loading) -->
+        <span *ngIf="!isLoading">Verify email address</span>
+
+        <!-- Loading Indicator (Spinner) -->
+        <div *ngIf="isLoading">
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <!-- Loading Text -->
+          Loading...
+        </div>
+      </button>
+    </div>
+
+    <!-- Navigation Link to Sign-in Page -->
+    <a routerLink="/security/signin">Return</a>
+  </form>
+  <!-- End of Email Verification Form -->
 </div>

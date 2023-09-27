@@ -5,72 +5,106 @@
   Description: verify email page styling
 */
 
+/* Reset default margin, padding and box-sizing for all elements */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.verify-email-page {
-  width: 360px;
-  height: 80vh;
-  margin: 20px auto 0;
-  position: relative;
-  background: #fff;
-  border-radius: 5px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px 5px;
-  margin: 5px 0;
-  border: 0;
-  border-bottom: 1px solid #999;
-  outline: none;
-  background: transparent;
-}
-
+/* Style the container */
 .container {
-  border-radius: 10px;
+  width: 360px; /* Set the width */
+  height: 80vh; /* Set the height to 80% of the viewport height */
+  margin: 20px auto 0; /* Center the element horizontally and set top margin */
+  position: relative; /* Set the position to relative */
+  background: #fff; /* Set the background color to white */
+  border-radius: 5px; /* Round the corners */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
-.left-signin-txt h1 {
-  color: var(--primary-color);
-  font-size: 2.5em;
+/* Style the h3 tags */
+h3 {
+  text-align: center; /* Center the text horizontally */
+  margin-bottom: 40px; /* Add bottom margin */
+  color: #777; /* Set the text color */
 }
 
-.left-signin-form {
-  border-radius: 10px;
+/* Style input and select fields */
+input,
+select {
+  width: 100%; /* Make the element take up the full width of its parent */
+  padding: 10px 5px; /* Add padding */
+  margin: 5px 0; /* Add vertical margin */
+  border: 0; /* Remove default border */
+  border-bottom: 1px solid #999; /* Add a bottom border */
+  outline: none; /* Remove the outline */
+  background: transparent; /* Set a transparent background */
 }
 
+/* Style card titles */
 .card-title {
-  color: var(--primary-color);
+  color: var(--primary-color); /* Set the text color using a CSS variable */
 }
 
+/* Make h2 within card-title bold */
 .card-title h2 {
   font-weight: bold;
 }
 
+/* Style for alert messages */
 .alert {
-  font-size: 0.9em;
-  margin-top: 10px;
+  font-size: 0.9em; /* Set the font size */
+  margin-top: 10px; /* Add top margin */
 }
 
+/* Style form controls */
 .form-control {
-  border-radius: 5px;
+  border-radius: 5px; /* Round the corners */
 }
 
+/* Style the button container */
+.btn-box {
+  width: 100%; /* Make it take up the full width of its parent */
+  margin: 30px auto; /* Center it horizontally and add vertical margin */
+  display: flex; /* Enable flexbox */
+  justify-content: center; /* Center items horizontally */
+  column-gap: 20%; /* Set the gap between columns */
+}
+
+/* Style primary buttons */
 .btn-primary {
-  background-color: var(--primary-color);
-  border: none;
+  background-color: var(
+    --primary-color
+  ); /* Set background color using a CSS variable */
+  border: none; /* Remove border */
 }
 
+/* Style for hover state of primary button */
 .btn-primary:hover {
-  background-color: var(--primary-highlight);
+  background-color: var(--primary-highlight); /* Change background on hover */
 }
 
+/* Style for text underline on hover */
 .text-underline-hover:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* General button styling */
+button {
+  width: 45%; /* Set the width */
+  padding: 8px; /* Add padding */
+}
+
+/* Style warning texts */
+.warning {
+  color: red; /* Set text color to red */
+  font-weight: 500; /* Set font weight */
+}
+
+/* Style anchor tags */
+a {
+  color: #555; /* Set text color */
+  text-decoration: none; /* Remove underline */
 }
