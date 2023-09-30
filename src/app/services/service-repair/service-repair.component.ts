@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   providers: [DatePipe],
 })
 
-export class ServiceRepairComponent implements OnInit {
+export class ServiceRepairComponent {
   // variables
   userId!: number;
   userName: string = '';
@@ -113,20 +113,20 @@ export class ServiceRepairComponent implements OnInit {
     this.invoice.push(invoice);
     console.log('Invoice Listing:', this.invoice);
 
-    this.invoiceService.createInvoice(this.userId, invoice).subscribe({
-      next: (res) => {
-        console.log('Invoice created successfully:', res);
-        this.successMessage = 'Invoice created successfully'
-        // this.router.navigate(['/services/invoice-summary'])
-      },
-      error: (err) => {
-        if (err.error.message) {
-          this.errorMessage = err.error.message;
-        } else {
-          this.errorMessage = 'Something went wrong, please contact the system admin.';
-        }
-      }
-    });
+    // this.invoiceService.createInvoice(this.userId, invoice).subscribe({
+    //   next: (res) => {
+    //     console.log('Invoice created successfully:', res);
+    //     this.successMessage = 'Invoice created successfully'
+    //     // this.router.navigate(['/services/invoice-summary'])
+    //   },
+    //   error: (err) => {
+    //     if (err.error.message) {
+    //       this.errorMessage = err.error.message;
+    //     } else {
+    //       this.errorMessage = 'Something went wrong, please contact the system admin.';
+    //     }
+    //   }
+    // });
 
     this.lineItems.forEach((item) => {
       item.checked = false;

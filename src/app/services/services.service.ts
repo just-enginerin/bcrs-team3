@@ -8,7 +8,11 @@
 // imports statements
 import { HttpClient } from '@angular/common/http';
 import { Invoice } from './invoice';
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root',
+})
 
 export class ServicesService {
 
