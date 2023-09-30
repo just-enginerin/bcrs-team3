@@ -55,6 +55,31 @@ const newInvoiceSchema = {
   additionalProperties: false,
 };
 
+
+
+/**
+ * getAllInvoices
+ */
+router.get("/", (req, res, next) => {
+  try {
+    mongo(async (db) => {
+      const invoices = await db
+        .collection("invoices")
+        .find()
+        .sort({ userId: 1 })
+        .toArray(); // return as an array
+
+      console.log("invoice", invoices);
+
+      res.send(invoices);
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+
+
 /**
  * createInvoices
  */
@@ -62,7 +87,7 @@ router.post("/:userId", async (req, res, next) => {
   try {
     const { invoice } = req.body;
     let { userId } = req.params;
-
+    
     userId = parseInt(userId, 10);
     console.log("invoice", invoice, userId);
 
@@ -121,80 +146,5 @@ router.post("/:userId", async (req, res, next) => {
     next(err);
   }
 });
-
-/////////////-----just for testing purpose to see and remove unnecassary array------///////////////
-router.get("/", (req, res, next) => {
-  try {
-    mongo(async (db) => {
-      const invoices = await db
-        .collection("invoices")
-        .find()
-        .sort({ invoiceId: 1 })
-        .toArray(); // return as an array
-
-      console.log("invoice", invoices);
-
-      res.send(invoices);
-    }, next);
-  } catch (err) {
-    console.log("err", err);
-    next(err);
-  }
-});
-
-router.delete("/:invoiceId", async (req, res, next) => {
-  try {
-    const { invoiceId } = req.params;
-    const parsedInvoiceId = parseInt(invoiceId, 10);
-
-    if (isNaN(parsedInvoiceId)) {
-      const err = new Error("Input must be a number");
-      err.status = 400;
-      console.log("err", err);
-      next(err);
-      return;
-    }
-
-    mongo(async (db) => {
-      //   Check if the invoice with the given invoiceId exists
-      const invoice = await db
-        .collection("invoices")
-        .findOne({ invoiceId: parsedInvoiceId });
-
-      if (!invoice) {
-        const err = new Error("Invoice not found");
-        err.status = 404;
-        throw err;
-      }
-
-      // Delete the invoice
-      await db.collection("invoices").deleteOne({ invoiceId: parsedInvoiceId });
-
-      res.status(200).json({ message: "Invoice deleted successfully" });
-    }, next);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/", (req, res, next) => {
-  try {
-    mongo(async (db) => {
-      const lineItems = await db
-        .collection("lineItems")
-        .find()
-        .sort({ lineItemsId: 1 })
-        .toArray(); // return as an array
-
-      console.log("lineItems", lineItems);
-
-      res.send(lineItems);
-    }, next);
-  } catch (err) {
-    console.log("err", err);
-    next(err);
-  }
-});
-///////////////-----test file end here-----------//////////////////////////////
 
 module.exports = router;
