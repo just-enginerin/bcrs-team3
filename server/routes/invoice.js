@@ -52,8 +52,6 @@ const newInvoiceSchema = {
   additionalProperties: false,
 };
 
-
-
 /**
  * getAllInvoices
  */
@@ -63,7 +61,7 @@ router.get("/", (req, res, next) => {
       const invoices = await db
         .collection("invoices")
         .find()
-        .sort({ userId: 1 })
+        .sort({ invoiceId: -1 })
         .toArray(); // return as an array
 
       console.log("invoice", invoices);
@@ -75,7 +73,6 @@ router.get("/", (req, res, next) => {
     next(err);
   }
 });
-
 
 /**
  * createInvoices
@@ -144,19 +141,52 @@ router.post("/:userId", async (req, res, next) => {
   }
 });
 
-
 /**
  * findPurchasesByService
  */
-router.get("/lineItems/:name", async (req, res, next) => {
-  try{
-    const
+router.get("/", async (req, res, next) => {
+  try {
+    // console.log("name", req.params.lineItems.name);
+    const name = req.query["lineItems.name"];
 
+    const nameValidation = typeof name;
+
+    if (nameValidation !== "string") {
+      const err = new Error("Bad Request");
+      err.status = 400;
+      err.message = "Invalid name";
+      console.log("Invalid name", err);
+      next(err);
+      return;
+    }
+
+    mongo(async (db) => {
+      const lineItems = await db
+        .collection("invoices")
+        .find({ "lineItems.name": name })
+        .toArray();
+
+      if (lineItems.length === 0) {
+        const err = new Error("Not Found");
+        err.status = 404;
+        console.log("No line items found with the specified name", err);
+        next(err);
+        return;
+      }
+
+      // Extract just the line items that match the name.
+      const matchingLineItems = invoices.flatMap((invoice) =>
+        invoice.lineItems.filter((item) => item.name === name)
+      );
+
+      console.log("Matching lineItems", matchingLineItems);
+
+      res.send(matchingLineItems);
+    }, next);
   } catch (err) {
     console.log("err", err);
     next(err);
   }
-})
-
+});
 
 module.exports = router;

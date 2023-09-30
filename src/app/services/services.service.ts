@@ -25,7 +25,7 @@ export class ServicesService {
     return this.http.post('/api/invoices/' + userId, { invoice });
   }
 
-  // findPurchasesByService(invoice: NewInvoice) {
-  //   return this.http.get('/api/invoices/service-graph');
-  // }
+  findPurchasesByService(invoice: NewInvoice) {
+    return this.http.get('/api/invoices');
+  }
 }
