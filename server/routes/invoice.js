@@ -52,6 +52,31 @@ const newInvoiceSchema = {
   additionalProperties: false,
 };
 
+
+
+/**
+ * getAllInvoices
+ */
+router.get("/", (req, res, next) => {
+  try {
+    mongo(async (db) => {
+      const invoices = await db
+        .collection("invoices")
+        .find()
+        .sort({ userId: 1 })
+        .toArray(); // return as an array
+
+      console.log("invoice", invoices);
+
+      res.send(invoices);
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+
+
 /**
  * createInvoices
  */
@@ -119,12 +144,18 @@ router.post("/:userId", async (req, res, next) => {
   }
 });
 
+
 /**
  * findPurchasesByService
  */
-router.get("", async (req, res, next) => {
+router.get("/lineItems/:name", async (req, res, next) => {
+  try{
+    const
 
-  
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
 })
 
 

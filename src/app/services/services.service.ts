@@ -16,6 +16,10 @@ import { NewInvoice } from '../services/invoice';
 export class ServicesService {
   constructor(private http: HttpClient) {}
 
+  getInvoices() {
+    return this.http.get('/api/invoices');
+  }
+
   // Function to create the service repair request
   createServiceRepair(invoice: NewInvoice, userId: number) {
     return this.http.post('/api/invoices/' + userId, { invoice });
