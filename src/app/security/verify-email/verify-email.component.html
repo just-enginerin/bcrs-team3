@@ -8,19 +8,8 @@
 
 <!-- Verify Email Page: Main Container -->
 <div class="container">
-
   <!-- Begin Email Verification Form -->
   <form [formGroup]="emailForm" (ngSubmit)="verifyEmail()">
-
-    <!-- Display Error Message (if exists) -->
-    <div *ngIf="errorMessage" class="row">
-      <div class="class col-32">
-        <div class="alert alert-danger">
-          <!-- Error Message Content -->
-          {{ errorMessage }}
-        </div>
-      </div>
-    </div>
 
     <!-- Spacer for UI -->
     <br />
@@ -36,10 +25,17 @@
       <br />
       <br />
 
+      <!-- Display Error Message (if exists) -->
+      <div *ngIf="errorMessage" class="row">
+        <div class="class col-32 warning">
+          <!-- Error Message Content -->
+          {{ errorMessage }}
+        </div>
+      </div>
+
       <!-- Input Fields: Row Container -->
       <div class="row">
         <div class="col-md-12">
-
           <!-- Email Input -->
           <input
             type="text"
@@ -58,10 +54,7 @@
               emailForm.controls['email'].hasError('email')
             "
           >
-            <div
-              class="alert-dismissible fade show"
-              role="alert"
-            >
+            <div class="alert-dismissible fade show" role="alert">
               <!-- Validation Error Content -->
               Please enter a valid email address.
             </div>
@@ -72,7 +65,6 @@
 
     <!-- Submit Button: Container -->
     <div class="btn-box">
-
       <!-- Submit Button (Enabled when form is valid) -->
       <button
         type="submit"

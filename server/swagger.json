@@ -408,7 +408,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Enter user nsme"
+            "description": "Enter user name"
           }
         ],
         "requestBody": {
@@ -436,6 +436,9 @@
           }
         }
       }
+    },
+    "/api/invoices/service-graph": {
+      "get": {}
     }
   },
   "components": {

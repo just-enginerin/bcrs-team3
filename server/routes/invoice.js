@@ -59,7 +59,7 @@ router.post("/:userId", async (req, res, next) => {
   try {
     const { invoice } = req.body;
     let { userId } = req.params;
-    
+
     userId = parseInt(userId, 10);
     console.log("invoice", invoice, userId);
 
@@ -118,5 +118,14 @@ router.post("/:userId", async (req, res, next) => {
     next(err);
   }
 });
+
+/**
+ * findPurchasesByService
+ */
+router.get("", async (req, res, next) => {
+
+  
+})
+
 
 module.exports = router;
