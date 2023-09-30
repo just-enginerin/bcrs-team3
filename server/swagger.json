@@ -685,11 +685,20 @@
                 "items": {
                   "type": "object",
                   "properties": {
+                    "id": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
                     "price": {
                       "type": "number"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    },
+                    "checked": {
+                      "type": "boolean"
                     }
                   }
                 }

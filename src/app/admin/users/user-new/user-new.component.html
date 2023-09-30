@@ -5,7 +5,7 @@
   Description: Employee Config page: Add New User HTML
 -->
 
-<div class="container-fluid pt-5" style="min-height: 72vh">
+<div class="container-fluid pt-5" style="min-height: 72vh" >
   <h1 class="text-center">Create New User!</h1>
 
   <div class="row justify-content-center pt-4">
@@ -26,248 +26,47 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-body">
-          <form [formGroup]="userForm" (ngSubmit)="createUser()">
-            <fieldset class="form-group">
-              <legend>User Information</legend>
-
-              <div class="mb-3">
-                <label for="txtFirstName">First Name:</label>
-                <input
-                  type="text"
-                  id="txtFirstName"
-                  class="form-control"
-                  formControlName="firstName"
-                  required
-                />
-              </div>
-
-              <!-- first name error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['firstName'].touched &&
-                  userForm.controls['firstName'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  First name is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end first name error handling -->
-
-              <div class="mb-3">
-                <label for="txtLastName">Last Name:</label>
-                <input
-                  type="text"
-                  id="txtLastName"
-                  class="form-control"
-                  formControlName="lastName"
-                  required
-                />
-              </div>
-
-              <!-- last name error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['lastName'].touched &&
-                  userForm.controls['lastName'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  Last name is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end last name error handling -->
-
-              <div class="mb-3">
-                <label for="txtEmail">Email:</label>
-                <input
-                  type="text"
-                  id="txtEmail"
-                  class="form-control"
-                  formControlName="email"
-                  required
-                />
-              </div>
-
-              <!-- email error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['email'].touched &&
-                  userForm.controls['email'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  Email is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-
-              <div
-                *ngIf="
-                  userForm.controls['email'].touched &&
-                  userForm.controls['email'].hasError('email')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  Please enter a valid email address.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- // end email error handling -->
-
-              <!-- password field -->
-              <div class="mb-3">
-                <label for="txtPassword">Password:</label>
-                <input
-                  type="text"
-                  id="txtPassword"
-                  class="form-control"
-                  formControlName="password"
-                  required
-                />
-              </div>
-
-              <!-- password error handling -->
-              <div
-                *ngIf="
-                  userForm.controls['password'].touched &&
-                  userForm.controls['password'].hasError('required')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  Password is required.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-
-              <div
-                *ngIf="
-                  userForm.controls['password'].touched &&
-                  userForm.controls['password'].hasError('pattern')
-                "
-              >
-                <div
-                  class="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  The password must be at least 8 characters long and contain at
-                  least one uppercase letter, one lowercase letter, and one
-                  number.
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <!-- end password error handling -->
-
-              <div class="d-flex gap-3">
-                <div class="mb-3">
-                  <label for="isDisabled">IsDisabled:</label><br />
-                  <select
-                    formControlName="isDisabled"
-                    name="isDisabled"
-                    id="isDisabled"
-                    class="form-select-sm"
-                  >
-                    <option [value]="false">Active</option>
-                    <option [value]="true">Inactive</option>
-                  </select>
-                </div>
-
-                <!-- isDisabled error handling -->
-                <div
-                  *ngIf="
-                    userForm.controls['isDisabled'].touched &&
-                    userForm.controls['isDisabled'].hasError('required')
-                  "
-                >
-                  <div
-                    class="alert alert-danger alert-dismissible fade show"
-                    isDisabled="alert"
-                  >
-                    IsDisabled is required.
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="alert"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                </div>
-                <!-- end isDisabled error handling -->
+      <div class="col-12">
+        <div
+          class="card border-info mb-3"
+          style="box-shadow: #00000029 0px 1px 4px"
+        >
+          <div
+            class="card-header d-flex align-items-center justify-content-between"
+          >
+            <div class="d-flex align-items-center">
+              <span class="material-icons text-info me-2">workspaces</span>
+              Add user inforamtion
+            </div>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="createUser()">
+              <fieldset class="form-group">
+                <legend>User Information</legend>
 
                 <div class="mb-3">
-                  <label for="role">Role:</label><br />
-                  <select
-                    formControlName="role"
-                    name="role"
-                    id="role"
-                    class="form-select-sm"
-                  >
-                    <option value="standard">Standard</option>
-                    <option value="admin">Admin</option>
-                  </select>
+                  <label for="txtFirstName">First Name:</label>
+                  <input
+                    type="text"
+                    id="txtFirstName"
+                    class="form-control"
+                    formControlName="firstName"
+                    required
+                  />
                 </div>
 
-                <!-- role error handling -->
+                <!-- first name error handling -->
                 <div
                   *ngIf="
-                    userForm.controls['role'].touched &&
-                    userForm.controls['role'].hasError('required')
+                    userForm.controls['firstName'].touched &&
+                    userForm.controls['firstName'].hasError('required')
                   "
                 >
                   <div
                     class="alert alert-danger alert-dismissible fade show"
                     role="alert"
                   >
-                    Role is required.
+                    First name is required.
                     <button
                       type="button"
                       class="btn-close"
@@ -276,20 +75,235 @@
                     ></button>
                   </div>
                 </div>
-                <!-- end role error handling -->
-              </div>
-            </fieldset>
+                <!-- end first name error handling -->
 
-            <input
-              type="submit"
-              id="submit"
-              value="Submit"
-              [disabled]="!userForm.valid"
-              class="action-button"
-            />
-          </form>
+                <div class="mb-3">
+                  <label for="txtLastName">Last Name:</label>
+                  <input
+                    type="text"
+                    id="txtLastName"
+                    class="form-control"
+                    formControlName="lastName"
+                    required
+                  />
+                </div>
+
+                <!-- last name error handling -->
+                <div
+                  *ngIf="
+                    userForm.controls['lastName'].touched &&
+                    userForm.controls['lastName'].hasError('required')
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Last name is required.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                </div>
+                <!-- end last name error handling -->
+
+                <div class="mb-3">
+                  <label for="txtEmail">Email:</label>
+                  <input
+                    type="text"
+                    id="txtEmail"
+                    class="form-control"
+                    formControlName="email"
+                    required
+                  />
+                </div>
+
+                <!-- email error handling -->
+                <div
+                  *ngIf="
+                    userForm.controls['email'].touched &&
+                    userForm.controls['email'].hasError('required')
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Email is required.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="
+                    userForm.controls['email'].touched &&
+                    userForm.controls['email'].hasError('email')
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Please enter a valid email address.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                </div>
+                <!-- // end email error handling -->
+
+                <!-- password field -->
+                <div class="mb-3">
+                  <label for="txtPassword">Password:</label>
+                  <input
+                    type="text"
+                    id="txtPassword"
+                    class="form-control"
+                    formControlName="password"
+                    required
+                  />
+                </div>
+
+                <!-- password error handling -->
+                <div
+                  *ngIf="
+                    userForm.controls['password'].touched &&
+                    userForm.controls['password'].hasError('required')
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    Password is required.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="
+                    userForm.controls['password'].touched &&
+                    userForm.controls['password'].hasError('pattern')
+                  "
+                >
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    The password must be at least 8 characters long and contain
+                    at least one uppercase letter, one lowercase letter, and one
+                    number.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                </div>
+                <!-- end password error handling -->
+
+                <div class="d-flex gap-3">
+                  <div class="mb-3">
+                    <label for="isDisabled">IsDisabled:</label><br />
+                    <select
+                      formControlName="isDisabled"
+                      name="isDisabled"
+                      id="isDisabled"
+                      class="form-select-sm"
+                    >
+                      <option [value]="false">Active</option>
+                      <option [value]="true">Inactive</option>
+                    </select>
+                  </div>
+
+                  <!-- isDisabled error handling -->
+                  <div
+                    *ngIf="
+                      userForm.controls['isDisabled'].touched &&
+                      userForm.controls['isDisabled'].hasError('required')
+                    "
+                  >
+                    <div
+                      class="alert alert-danger alert-dismissible fade show"
+                      isDisabled="alert"
+                    >
+                      IsDisabled is required.
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  </div>
+                  <!-- end isDisabled error handling -->
+
+                  <div class="mb-3">
+                    <label for="role">Role:</label><br />
+                    <select
+                      formControlName="role"
+                      name="role"
+                      id="role"
+                      class="form-select-sm"
+                    >
+                      <option value="standard">Standard</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+
+                  <!-- role error handling -->
+                  <div
+                    *ngIf="
+                      userForm.controls['role'].touched &&
+                      userForm.controls['role'].hasError('required')
+                    "
+                  >
+                    <div
+                      class="alert alert-danger alert-dismissible fade show"
+                      role="alert"
+                    >
+                      Role is required.
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  </div>
+                  <!-- end role error handling -->
+                </div>
+              </fieldset>
+
+              <input
+                type="submit"
+                id="submit"
+                value="Submit"
+                [disabled]="!userForm.valid"
+                class="action-button"
+              />
+            </form>
+          </div>
         </div>
       </div>
+
       <br />
       <a routerLink="/admin/users" class="text-underline-hover text-dark"
         >Return to User List</a

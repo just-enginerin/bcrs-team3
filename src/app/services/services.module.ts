@@ -8,6 +8,7 @@
 // imports statements
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ServicesRoutingModule } from './services-routing.module';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
@@ -23,7 +24,9 @@ import { ServiceGraphComponent } from './service-graph/service-graph.component';
   ],
   imports: [
     CommonModule,
-    ServicesRoutingModule
+    ServicesRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class ServicesModule { }
