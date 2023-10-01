@@ -12,6 +12,7 @@
 .nav-link:hover {
   background-color: var(--primary-highlight);
   animation: .1s ease-in-out;
+  cursor: pointer;
 }
 
 .nav-button-link button {
@@ -96,6 +97,6 @@ nav {
   }
 
   .action-button {
-    margin-top: 10px;
+    margin: 10px 0;
   }
 }
