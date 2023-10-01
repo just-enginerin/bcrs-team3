@@ -82,16 +82,24 @@ nav {
 
 /* Show avatar profile dropdown for wider screens */
 @media (min-width: 992px) {
-.nav-item.dropdown {
+  .nav-item.dropdown {
     width: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
+  .mobile-profile {
+    display: none;
+  }
 }
 
 /* Show standard list items for mobile */
 @media (max-width: 992px) {
+  .mobile-profile {
+    display: block;
+  }
+
   .nav-item.dropdown {
     display: none;
   }
