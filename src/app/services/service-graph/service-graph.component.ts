@@ -8,6 +8,7 @@
 
 // Import required Angular modules and custom services
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
@@ -16,25 +17,53 @@ Chart.register(...registerables);
   templateUrl: './service-graph.component.html',
   styleUrls: ['./service-graph.component.css'],
 })
-export class ServiceGraphComponent {
-  constructor() {}
+export class ServiceGraphComponent implements OnInit {
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
+  async fetchDataByServiceName(name: string): Promise<number> {
+    const url = `/api/invoices/find-purchases-by-service?lineItems.name=${name}`;
+    try {
+      const response = await this.http.get<any[]>(url).toPromise();
+
+      if (!response) {
+        return 0;
+      }
+
+      const totalQuantity = response.reduce((acc, cur) => acc + cur.quantity, 0);
+      return totalQuantity;
+    } catch (error) {
+      
+      // Log the error
+      console.error("API call failed: ", error);
+      return 0;  // Return 0 if API call fails
+    }
+  }
+
+
+  async ngOnInit(): Promise<void> {
+    const labels = [
+      'Password Reset',
+      'Spyware Removal',
+      'RAM Upgrade',
+      'Software Installation',
+      'PC Tune-up',
+      'Keyboard Cleaning',
+      'Disk Clean-up',
+    ];
+
+    // Fetch summed quantities for each service and store them in a new data array
+    const data = await Promise.all(
+      labels.map((label) => this.fetchDataByServiceName(label))
+    );
+
+    // Create the chart
     const serviceGraph = new Chart('bcrsServiceGraph', {
       type: 'doughnut',
       data: {
-        labels: [
-          'Password Reset',
-          'Spyware Removal',
-          'RAM Upgrade',
-          'Software Installation',
-          'PC Tune-up',
-          'Keyboard Cleaning',
-          'Disk Clean-up'
-        ],
+        labels: labels,
         datasets: [
           {
-            data: [8, 15, 12, 8, 10, 5, 5],
+            data: data,
             backgroundColor: [
               'hsla(300, 100%, 10%, 0.5)',
               'hsla(275, 100%, 20%, 0.5)',
