@@ -42,15 +42,17 @@ const newInvoiceSchema = {
     orderDate: { type: "string" },
     lineItems: lineItemsSchema,
   },
+  anyOf: [
+    { required: ["partsAmount"] },
+    { required: ["laborAmount"] },
+    { required: ["lineItems"] },
+  ],
   required: [
     "customerFullName",
     "customerEmail",
-    "partsAmount",
-    "laborAmount",
     "lineItemTotal",
     "invoiceTotal",
     "orderDate",
-    "lineItems",
   ],
   additionalProperties: false,
 };

@@ -39,7 +39,7 @@ export class ServiceRepairComponent {
 
   successMessage: string = '';
   isLoading: boolean = false;
-  errorMessage: string = '';
+  errorMessage: string | null = '';
 
   constructor(
     private fb: FormBuilder,
@@ -58,13 +58,9 @@ export class ServiceRepairComponent {
       { id: 3, name: "RAM Upgrade", price: 129.99, quantity: 0, checked: false },
       { id: 4, name: "Software Installation", price: 49.99, quantity: 0, checked: false },
       { id: 5, name: "PC Tune-up ", price: 89.99, quantity: 0, checked: false },
-      { id: 6, name: "Keyboard Cleaning", price: 45.00, quantity: 0, checked: false },
-      { id: 7, name: "Disk Clean-up", price: 129.99, quantity: 0, checked: false },
-      { id: 8, name: "Software Installation", price: 49.99, quantity: 0, checked: false },
-      { id: 9, name: "PC Tune-up ", price: 89.99, quantity: 0, checked: false },
-      { id: 10, name: "Keyboard Cleaning", price: 45.00, quantity: 0, checked: false },
-      { id: 10, name: "Disk Clean-up", price: 129.99, quantity: 0, checked: false },
+      { id: 6, name: "Keyboard Cleaning", price: 45.00, quantity: 0, checked: false }
     ]
+
   }
 
   ngOnInit() {
@@ -73,10 +69,10 @@ export class ServiceRepairComponent {
     }, 1000);
 
     this.invoiceForm = this.fb.group({
-      customerFullName: [null, Validators.required],
-      customerEmail: [null, [Validators.required, Validators.email]],
-      partsAmount: [null, [Validators.required, Validators.min(0)]],
-      laborAmount: [null, [Validators.required, Validators.min(0)]],
+      customerFullName: ['', Validators.required],
+      customerEmail: ['', [Validators.required, Validators.email]],
+      partsAmount: [0, [Validators.min(0)]],
+      laborAmount: [0, [Validators.min(0)]],
       lineItems: this.fb.array([]),
       lineItemTotal: [{ value: 0, disabled: true }],
       invoiceTotal: [{ value: 0, disabled: true }],
@@ -95,6 +91,7 @@ export class ServiceRepairComponent {
 
 
   createInvoice() {
+    this.isLoading = true
     const { customerFullName, customerEmail, partsAmount, laborAmount } = this.invoiceForm.value;
 
     console.log("The array for lineItemChecked", this.lineItemChecked);
@@ -113,26 +110,38 @@ export class ServiceRepairComponent {
     this.invoice.push(invoice);
     console.log('Invoice Listing:', this.invoice);
 
-    // this.invoiceService.createInvoice(this.userId, invoice).subscribe({
-    //   next: (res) => {
-    //     console.log('Invoice created successfully:', res);
-    //     this.successMessage = 'Invoice created successfully'
-    //     // this.router.navigate(['/services/invoice-summary'])
-    //   },
-    //   error: (err) => {
-    //     if (err.error.message) {
-    //       this.errorMessage = err.error.message;
-    //     } else {
-    //       this.errorMessage = 'Something went wrong, please contact the system admin.';
-    //     }
-    //   }
-    // });
+    if (partsAmount > 0 || laborAmount > 0 || this.lineItemChecked.length > 0) {
+      console.log("Form is valid");
 
-    this.lineItems.forEach((item) => {
-      item.checked = false;
-      item.quantity = 0;
-    });
+      this.invoiceService.createInvoice(this.userId, invoice).subscribe({
+        next: (res) => {
+          console.log('Invoice created successfully:', res);
 
+          this.isLoading = false
+          this.successMessage = 'Invoice created successfully'
+
+          this.router.navigate(['/services/invoice-summary'])
+        },
+        error: (err) => {
+          this.isLoading = false
+          if (err.error.message) {
+            this.errorMessage = err.error.message;
+          } else {
+            this.errorMessage = 'Something went wrong, please contact the system admin.';
+          }
+        }
+      });
+
+      this.lineItems.forEach((item) => {
+        item.checked = false;
+        item.quantity = 0;
+      });
+
+    } else {
+      console.log("Form is invalid");
+      this.errorMessage = "Form is invalid! at least one of the workspace and line Items form filled must be used";
+      this.isLoading = false
+    }
   }
 
   generateOrderDate(): string {
@@ -144,9 +153,10 @@ export class ServiceRepairComponent {
     return lineItems.reduce((total, item) => total + (item.price || 0), 0);
   }
 
+  // update the workspace total
   updateWorkspaceTotal() {
-    const partsAmount = this.invoiceForm.get('partsAmount')?.value;
-    const laborAmount = this.invoiceForm.get('laborAmount')?.value;
+    const partsAmount = this.invoiceForm.get('partsAmount')?.value || 0;
+    const laborAmount = this.invoiceForm.get('laborAmount')?.value || 0;
     this.workspaceTotal = partsAmount + laborAmount;
   }
 
@@ -223,5 +233,9 @@ export class ServiceRepairComponent {
       item.quantity++;
       this.updateLineItemTotal();
     }
+  }
+
+  clearInput(inputField: HTMLInputElement) {
+    inputField.value = ''; // Clear the input value
   }
 }

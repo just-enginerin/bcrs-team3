@@ -9,6 +9,7 @@
 // Import required Angular modules and custom services
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+
 Chart.register(...registerables);
 
 @Component({
@@ -17,9 +18,12 @@ Chart.register(...registerables);
   styleUrls: ['./service-graph.component.css'],
 })
 export class ServiceGraphComponent {
-  constructor() {}
+  constructor() {
+    
+  }
 
   ngOnInit(): void {
+
     const serviceGraph = new Chart('bcrsServiceGraph', {
       type: 'doughnut',
       data: {
@@ -58,4 +62,6 @@ export class ServiceGraphComponent {
       },
     });
   }
+
+
 }
