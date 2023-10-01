@@ -58,7 +58,8 @@ export class ServiceRepairComponent {
       { id: 3, name: "RAM Upgrade", price: 129.99, quantity: 0, checked: false },
       { id: 4, name: "Software Installation", price: 49.99, quantity: 0, checked: false },
       { id: 5, name: "PC Tune-up ", price: 89.99, quantity: 0, checked: false },
-      { id: 6, name: "Keyboard Cleaning", price: 45.00, quantity: 0, checked: false }
+      { id: 6, name: "Keyboard Cleaning", price: 45.00, quantity: 0, checked: false },
+      { id: 7, name: "Disk Clean-up", price: 129.99, quantity: 0, checked: false }
     ]
 
   }
