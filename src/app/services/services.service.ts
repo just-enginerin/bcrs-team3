@@ -7,25 +7,27 @@
 
 // imports statements
 import { HttpClient } from '@angular/common/http';
+import { Invoice } from './invoice';
 import { Injectable } from '@angular/core';
-import { NewInvoice } from '../services/invoice';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class ServicesService {
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
+
+  //  create  service invoice
+  createInvoice(userId: number, invoice: Invoice) {
+    return this.http.post('/api/invoices/' + userId, { invoice })
+  }
 
   getInvoices() {
     return this.http.get('/api/invoices');
   }
 
-  // Function to create the service repair request
-  createServiceRepair(invoice: NewInvoice, userId: number) {
-    return this.http.post('/api/invoices/' + userId, { invoice });
-  }
-
-  findPurchasesByService(invoice: NewInvoice) {
-    return this.http.get('/api/invoices');
+  findPurchasesByService(invoice: Invoice) {
+    return this.http.get('/api/invoices/find-purchases-by-service?lineItems.name=' + name);
   }
 }

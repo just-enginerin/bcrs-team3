@@ -5,12 +5,23 @@
   Description: Employee Config page: Update User HTML
 -->
 
-<div class="container-fluid pt-2" style="min-height: 72vh">
+<div class="container-fluid pt-2" style="min-height: 72vh" >
   <h1 class="text-center">Update User!</h1>
 
   <div class="row justify-content-center pt-4">
     <div class="col-sm-10 col-md-8 col-lg-6">
-      <div class="card">
+      <div
+      class="card border-info mb-3"
+      style="box-shadow: #00000029 0px 1px 4px"
+    >
+      <div
+        class="card-header d-flex align-items-center justify-content-between"
+      >
+        <div class="d-flex align-items-center">
+          <span class="material-icons text-info me-2">edit</span>
+          Edit user inforamtion
+        </div>
+      </div>
         <div class="card-body">
           <form [formGroup]="userForm" (ngSubmit)="updateUser()">
             <fieldset class="form-group">

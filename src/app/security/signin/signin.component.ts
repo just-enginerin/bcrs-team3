@@ -14,7 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 // the session user
 export interface SessionUser {
-  empId: number;
+  userId: number;
   firstName: string;
   lastName: string;
 }
@@ -62,13 +62,13 @@ export class SigninComponent {
 
 
     this.secService.signin(email, password).subscribe({
-      next: (employee: any) => {
-        console.log('Employee:', employee)
+      next: (user: any) => {
+        console.log('User:', user)
 
         const sessionCookie = {
-          fullName: `${employee.firstName} ${employee.lastName}`,
-          role: employee.role,
-          empId: employee.empId
+          fullName: `${user.firstName} ${user.lastName}`,
+          role: user.role,
+          userId: user.userId
         }
 
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1)

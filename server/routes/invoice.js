@@ -18,10 +18,13 @@ const lineItemsSchema = {
   items: {
     type: "object",
     properties: {
+      id: { type: "number" },
       name: { type: "string" },
       price: { type: "number" },
+      quantity: { type: "number" },
+      checked: { type: "boolean" },
     },
-    required: ["name", "price"],
+    required: ["name", "price", "quantity", "checked"],
     additionalProperties: false,
   },
 };
@@ -144,7 +147,7 @@ router.post("/:userId", async (req, res, next) => {
 /**
  * findPurchasesByService
  */
-router.get("/", async (req, res, next) => {
+router.get("/find-purchases-by-service", async (req, res, next) => {
   try {
     // console.log("name", req.params.lineItems.name);
     const name = req.query["lineItems.name"];
@@ -175,7 +178,7 @@ router.get("/", async (req, res, next) => {
       }
 
       // Extract just the line items that match the name.
-      const matchingLineItems = invoices.flatMap((invoice) =>
+      const matchingLineItems = lineItems.flatMap((invoice) =>
         invoice.lineItems.filter((item) => item.name === name)
       );
 

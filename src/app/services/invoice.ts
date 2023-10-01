@@ -4,7 +4,16 @@
  * Date: 9/25/23
  */
 
-export interface NewInvoice {
+export interface LineItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  checked: boolean;
+}
+
+
+export interface Invoice {
   customerFullName: string
   customerEmail: string
   partsAmount: number
@@ -12,8 +21,5 @@ export interface NewInvoice {
   lineItemTotal: number
   invoiceTotal: number
   orderDate: string
-  lineItems: {
-    name: string;
-    price: number;
-  }[];
+  lineItems: LineItem[];
 }
