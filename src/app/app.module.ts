@@ -23,6 +23,7 @@ import { EmployeeDirectoryComponent } from './employee-directory/employee-direct
 import { FaqComponent } from './faq/faq.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NotFoundComponent,
     EmployeeDirectoryComponent,
     FaqComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

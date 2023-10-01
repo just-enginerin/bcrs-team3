@@ -5,9 +5,12 @@
   Description: Navigation Bar component styling
 */
 
+.nav-link {
+  padding: 10px;
+}
+
 .nav-link:hover {
   background-color: var(--primary-highlight);
-  border-radius: 8px;
   animation: .1s ease-in-out;
 }
 
@@ -18,7 +21,7 @@
 }
 
 nav {
-  box-shadow: 0px 4px 2px 0px #0000001c; 
+  box-shadow: 0px 4px 2px 0px #0000001c;
   border-bottom: 3px solid var(--primary-color);
 }
 
@@ -66,12 +69,33 @@ nav {
 .dropdown-item,
 .user-name,
 .user-name:hover {
-  background: var(--primary-color) !important;
-  color: white !important;
+  /* background: var(--primary-color) !important; */
+  color: black !important;
 }
 
 .link:hover {
   cursor: pointer;
   background-color: var(--primary-highlight) !important;
   color: black !important;
+}
+
+/* Show avatar profile dropdown for wider screens */
+@media (min-width: 992px) {
+.nav-item.dropdown {
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Show standard list items for mobile */
+@media (max-width: 992px) {
+  .nav-item.dropdown {
+    display: none;
+  }
+
+  .action-button {
+    margin-top: 10px;
+  }
 }

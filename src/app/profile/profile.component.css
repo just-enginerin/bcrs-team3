@@ -1,0 +1,75 @@
+/**
+  Title: profile.component.css
+  Author: Erin Brady
+  Date: 9/28/23
+  Description: Profile page styling
+*/
+
+.container {
+  min-height: 78vh;
+}
+
+.row, .col {
+  display: flex;
+  align-items: center;
+}
+
+.row {
+  row-gap: 30px;
+  justify-content: center;
+}
+
+.col {
+  flex-direction: column;
+}
+
+.card {
+  width: 80%;
+}
+
+.last-signed-in {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+ul {
+  width: 90%;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 15px 0;
+  border-bottom: 1px solid lightgray;
+  text-align: left;
+}
+
+.button-group-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 300px;
+  margin: 30px auto;
+}
+
+.secondary-button, .action-button {
+  width: 130px;
+  height: 40px;
+}
+
+.secondary-button {
+  margin: 0 auto;
+}
+
+.form {
+  display: flex !important;
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: 7px;
+}
+
+@media (min-width: 768px) {
+  .col {
+    display: block;
+  }
+}

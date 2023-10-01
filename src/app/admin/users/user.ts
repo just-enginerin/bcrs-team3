@@ -16,6 +16,7 @@ export interface User {
   address: string
   password: string
   role: string
+  lastSignedIn: string
 }
 
 export interface NewUser {

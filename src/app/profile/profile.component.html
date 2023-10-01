@@ -1,0 +1,158 @@
+<!--
+  Title: profile.component.html
+  Author: Erin Brady
+  Date: 9/28/23
+  Description: Profile page HTML
+-->
+
+<!-- Alert messages / Edit Profile feedback messages -->
+<div class="container mt-5">
+  <div *ngIf="profileOnSaveSuccess && isAlertVisible">
+    <div class="alert show alert-success">
+      {{ profileOnSaveSuccess }}
+    </div>
+  </div>
+
+  <div *ngIf="profileOnSaveError && isAlertVisible">
+    <div class="alert show alert-error">
+      {{ profileOnSaveError }}
+    </div>
+  </div>
+  <!-- End of alert messages -->
+
+  <div class="row">
+    <!-- User card column -->
+    <div class="col col-md-4">
+      <div class="card">
+        <img
+          src="{{ this.sessionUser.avatar }}"
+          class="card-img-top"
+          alt="Profile Image"
+        />
+
+        <!-- Dynamic job title depending on user role -->
+        <div class="card-body">
+          <h5 class="card-title">{{ this.sessionUser.fullName }}</h5>
+          <p class="card-text" *ngIf="this.user.role === 'standard'">
+            IT Service Repair Technician
+          </p>
+          <p class="card-text" *ngIf="this.user.role === 'admin'">
+            IT Administrator
+          </p>
+          <p class="last-signed-in">
+            Last Signed In: {{ this.formatDate(this.user.lastSignedIn) }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- End of User card column -->
+
+    <!-- Profile info column -->
+
+    <!-- Read-only profile info -->
+    <div class="col col-md-8" *ngIf="!isEditMode">
+      <h3>Contact Information</h3>
+      <ul>
+        <li><b>Email:</b> {{ this.user.email }}</li>
+        <li><b>Phone:</b> {{ this.user.phoneNumber }}</li>
+        <li><b>Address:</b> {{ this.user.address }}</li>
+      </ul>
+
+      <br />
+
+      <h3>System Settings:</h3>
+      <ul>
+        <li><b>Language:</b> {{ this.user.language }}</li>
+        <li *ngIf="this.user.role === 'standard'">
+          <b>Privacy Settings:</b> Standard User
+        </li>
+        <li *ngIf="this.user.role === 'admin'">
+          <b>Privacy Settings:</b> Administrator
+        </li>
+      </ul>
+
+      <br />
+
+      <!-- Edit Profile button -->
+      <button class="secondary-button" (click)="toggleEditMode()">
+        Edit Profile
+      </button>
+
+      <br />
+    </div>
+    <!-- End of Read-only profile info -->
+
+    <!-- Edit Profile form -->
+    <div *ngIf="isEditMode" class="col col-md-8">
+      <form [formGroup]="profileForm" (ngSubmit)="saveChanges()">
+        <fieldset class="form-group">
+          <legend>Contact Information</legend>
+          <!-- Read-only Email -->
+          <ul>
+            <li><b>Email:</b> {{ this.user.email }}</li>
+          </ul>
+
+          <!-- Phone Number field -->
+          <div class="mb-3">
+            <label for="txtPhone"><b>Phone:</b></label>
+            <input
+              type="text"
+              id="txtPhone"
+              class="form-control"
+              formControlName="phoneNumber"
+            />
+          </div>
+
+          <!-- Address field -->
+          <div class="mb-3">
+            <label for="txtAddress"><b>Address:</b></label>
+            <input
+              type="text"
+              id="txtAddress"
+              class="form-control"
+              formControlName="address"
+            />
+          </div>
+
+          <br />
+
+          <h3>System Settings:</h3>
+
+          <!-- Language field -->
+          <div class="mb-3">
+            <label for="txtLanguage"><b>Language:</b></label>
+            <input
+              type="text"
+              id="txtLanguage"
+              class="form-control"
+              formControlName="language"
+            />
+          </div>
+
+          <!-- Read-only user role -->
+          <ul>
+            <li *ngIf="this.user.role === 'admin'">
+              <b>Privacy Settings:</b> Administrator
+            </li>
+          </ul>
+
+          <!-- Submit and Cancel buttons -->
+          <div class="button-group-container">
+            <!-- Save button only enabled if form values have been updated. -->
+            <input
+              type="submit"
+              id="submit"
+              value="Save Changes"
+              [disabled]="!isFormDirty()"
+              class="action-button"
+            />
+
+            <button class="secondary-button" (click)="toggleEditMode()">
+              Cancel
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

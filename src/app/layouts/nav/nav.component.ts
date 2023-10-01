@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 export interface SessionUser {
   fullName: string
   role: string
+  avatar: string
 }
 
 @Component({
@@ -25,7 +26,7 @@ export class NavComponent {
 
   constructor(private cookieService: CookieService) {
 
-    this.sessionUser = {} as SessionUser // Initialize appUser as an empty object 
+    this.sessionUser = {} as SessionUser // Initialize appUser as an empty object
 
     // Initialize isSignedIn based on the existence of a session_user cookie
     this.isSignedIn = this.cookieService.get('session_user') ? true : false

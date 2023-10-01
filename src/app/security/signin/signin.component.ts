@@ -68,7 +68,8 @@ export class SigninComponent {
         const sessionCookie = {
           fullName: `${user.firstName} ${user.lastName}`,
           role: user.role,
-          userId: user.userId
+          userId: user.userId,
+          avatar: this.randomAvatar()
         }
 
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1)
@@ -87,5 +88,26 @@ export class SigninComponent {
         }
       }
     })
+  }
+
+    // Generate the URL for a random user avatar
+  randomAvatar() {
+    const MIN = 1;
+    const MAX = 71;
+
+    // Generate a random integer between min and max (inclusive)
+    const randomIndex = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+
+    // Generate a random number (0 or 1)
+    const randomNum = Math.floor(Math.random() * 2);
+
+    // Use the random number to decide the gender
+    const randomGender = randomNum === 0 ? "men" : "women";
+
+    const randomLink = `https://randomuser.me/api/portraits/${randomGender}/${randomIndex}.jpg`
+
+    console.log("random avatar link:", randomLink)
+
+    return randomLink
   }
 }
