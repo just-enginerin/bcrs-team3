@@ -104,6 +104,12 @@
             </button>
           </li>
 
+          <li *ngIf="isSignedIn" class="nav-item mobile-profile">
+            <a (click)="signout()" class="nav-link mx-2">
+              <strong>Log Out</strong>
+            </a>
+          </li>
+
           <!--  user account dropdown for mobile -->
           <li *ngIf="isSignedIn" class="nav-item dropdown">
             <div
