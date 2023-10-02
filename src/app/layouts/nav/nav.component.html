@@ -79,11 +79,11 @@
             </a>
           </li>
 
-          <li class="nav-item mobile-profile">
+          <!-- <li class="nav-item mobile-profile">
             <a routerLink="/#" class="nav-link mx-2"
               ><strong>Invoices</strong>
             </a>
-          </li>
+          </li> -->
 
           <li class="nav-item me-2" *ngIf="isSignedIn">
             <a
@@ -144,9 +144,9 @@
                   My Profile</a
                 >
               </li>
-              <li *ngIf="sessionUser.role === 'admin'">
+              <!-- <li *ngIf="sessionUser.role === 'admin'">
                 <a routerLink="#" class="dropdown-item link">Invoices</a>
-              </li>
+              </li> -->
               <li>
                 <a (click)="signout()" class="dropdown-item link">Log Out</a>
               </li>

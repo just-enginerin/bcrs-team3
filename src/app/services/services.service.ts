@@ -27,7 +27,7 @@ export class ServicesService {
     return this.http.get('/api/invoices');
   }
 
-  getInvoiceById(invoiceId: number) {
+  getInvoiceById(invoiceId: any) {
     return this.http.get('api/invoices/' + invoiceId)
   }
 
