@@ -86,7 +86,7 @@ router.get("/", (req, res, next) => {
 });
 
 /** findInvoiceById */
-router.get("/:invoiceId", (req, res, next) => {
+router.get("/find/:invoiceId", (req, res, next) => {
   try {
     console.log("invoiceId", req.params.invoiceId);
 

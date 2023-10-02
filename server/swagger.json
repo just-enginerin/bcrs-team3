@@ -434,7 +434,7 @@
         }
       }
     },
-    "/api/invoices/{invoiceId}": {
+    "/api/invoices/find/{invoiceId}": {
       "get": {
         "summary": "findInvoiceById",
         "description": "Get an invoice by its ID",

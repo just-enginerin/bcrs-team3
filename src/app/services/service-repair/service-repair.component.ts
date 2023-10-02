@@ -125,7 +125,7 @@ export class ServiceRepairComponent {
           this.successMessage = 'Invoice created successfully'
 
           // Carry the Invoice ID to the Invoice Summary page
-          this.router.navigate(['/services/invoice-summary', {state: res.invoiceId}])
+          this.router.navigate(['/services/invoice-summary', { state: res.invoiceId, skipLocationChange: true }])
         },
         error: (err) => {
           this.isLoading = false
