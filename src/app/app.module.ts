@@ -21,6 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EmployeeDirectoryComponent } from './employee-directory/employee-directory.component';
 import { FaqComponent } from './faq/faq.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { FaqComponent } from './faq/faq.component';
     FooterComponent,
     NotFoundComponent,
     EmployeeDirectoryComponent,
-    FaqComponent
+    FaqComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,9 @@ import { FaqComponent } from './faq/faq.component';
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

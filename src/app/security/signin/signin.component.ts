@@ -3,6 +3,7 @@
  * Author: William Egge
  * Date: 9/16/23
  * Description: Sign In / User authentication logic
+ * Random User Generator API: https://randomuser.me/
 */
 
 // imports statements
@@ -11,13 +12,7 @@ import { SecurityService } from "./../security.service";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-
-// the session user
-export interface SessionUser {
-  empId: number;
-  firstName: string;
-  lastName: string;
-}
+import { SessionUser } from 'src/app/layouts/nav/nav.component';
 
 
 @Component({
@@ -62,13 +57,14 @@ export class SigninComponent {
 
 
     this.secService.signin(email, password).subscribe({
-      next: (employee: any) => {
-        console.log('Employee:', employee)
+      next: (user: any) => {
+        console.log('User:', user)
 
         const sessionCookie = {
-          fullName: `${employee.firstName} ${employee.lastName}`,
-          role: employee.role,
-          empId: employee.empId
+          fullName: `${user.firstName} ${user.lastName}`,
+          role: user.role,
+          userId: user.userId,
+          avatar: this.randomAvatar()
         }
 
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1)
@@ -87,5 +83,26 @@ export class SigninComponent {
         }
       }
     })
+  }
+
+    // Generate the URL for a random user avatar
+  randomAvatar() {
+    const MIN = 1;
+    const MAX = 71;
+
+    // Generate a random integer between min and max (inclusive)
+    const randomIndex = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+
+    // Generate a random number (0 or 1)
+    const randomNum = Math.floor(Math.random() * 2);
+
+    // Use the random number to decide the gender
+    const randomGender = randomNum === 0 ? "men" : "women";
+
+    const randomLink = `https://randomuser.me/api/portraits/${randomGender}/${randomIndex}.jpg`
+
+    console.log("random avatar link:", randomLink)
+
+    return randomLink
   }
 }

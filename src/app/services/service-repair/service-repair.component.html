@@ -1,0 +1,449 @@
+<!--
+ Title: services-repair.component.html
+ Author: Professor Krasso
+ Date: 9/25/23
+ Updated by: Yakut Ahmedin
+-->
+<section class="order-form my-4" style="min-height: 72vh">
+  <div class="container pt-4">
+    <div class="row">
+      <!-- Page Header -->
+      <div
+        class="d-block d-md-flex align-items-center justify-content-between pt-4"
+      >
+        <div class="">
+          <h2 class="mb-3">Create New Service Repair</h2>
+          <p class="mt-2">Add a new service invoice.</p>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <hr class="mt-1" />
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="row">
+          <div class="col-12">
+            <div class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div
+          class="toast align-items-center fade show erro position-fixed w-100"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          *ngIf="errorMessage"
+          style="z-index: 999; top: 80px"
+        >
+          <div class="toast-content col-12">
+            <div class="content-body d-flex align-items-center">
+              <div class="icon me-4">
+                <i class="fi fi-rr-cross-circle d-flex"></i>
+              </div>
+              <div class="d-flex justify-content-between w-100">
+                <div>
+                  <h5 class="fw-bold mb-1">Error</h5>
+                  <p class="text-muted mb-0">
+                    {{ errorMessage }}
+                  </p>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form [formGroup]="invoiceForm" (ngSubmit)="createInvoice()">
+          <fieldset class="form-group">
+            <div class="row">
+              <!-- customer info card start here -->
+              <div class="col-md-6 order-2 order-md-1">
+                <div
+                  class="card border-info mb-3"
+                  style="box-shadow: #00000029 0px 1px 4px"
+                >
+                  <div class="card-header d-flex align-items-center">
+                    <span class="material-icons text-info me-2">face</span>
+                    Customer Information
+                  </div>
+
+                  <div class="card-body">
+                    <!-- Customer Full Name -->
+                    <div class="mb-3">
+                      <label
+                        for="txtCustomerFullName"
+                        class="form-label fw-bold"
+                        >Customer Full Name:</label
+                      >
+                      <input
+                        type="text"
+                        id="txtCustomerFullName"
+                        class="form-control"
+                        formControlName="customerFullName"
+                        required
+                      />
+                    </div>
+
+                    <!-- customer full name error handling -->
+                    <div
+                      *ngIf="
+                        invoiceForm.controls['customerFullName'].touched &&
+                        invoiceForm.controls['customerFullName'].hasError(
+                          'required'
+                        )
+                      "
+                    >
+                      <div
+                        class="alert alert-danger alert-dismissible fade show"
+                        role="alert"
+                      >
+                        customerFullName is required.
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                    </div>
+                    <!-- end customer full name error handling -->
+
+                    <!-- Customer Email -->
+                    <div class="mb-3">
+                      <label for="txtCustomerEmail" class="form-label fw-bold"
+                        >Customer Email:</label
+                      >
+                      <input
+                        type="email"
+                        id="txtCustomerEmail"
+                        formControlName="customerEmail"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+
+                    <!-- customer email error handling -->
+                    <div
+                      *ngIf="
+                        invoiceForm.controls['customerEmail'].touched &&
+                        invoiceForm.controls['customerEmail'].hasError(
+                          'required'
+                        )
+                      "
+                    >
+                      <div
+                        class="alert alert-danger alert-dismissible fade show"
+                        role="alert"
+                      >
+                        Email is required.
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                    </div>
+
+                    <div
+                      *ngIf="
+                        invoiceForm.controls['customerEmail'].touched &&
+                        invoiceForm.controls['customerEmail'].hasError(
+                          'customerEmail'
+                        )
+                      "
+                    >
+                      <div
+                        class="alert alert-danger alert-dismissible fade show"
+                        role="alert"
+                      >
+                        Please enter a valid email address.
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                    </div>
+                    <!-- end customer email error handling -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- service info card start here -->
+              <div class="col-md-6 order-1 order-md-2">
+                <div
+                  class="card border-info mb-3"
+                  style="box-shadow: #00000029 0px 1px 4px"
+                >
+                  <div class="card-header d-flex align-items-center">
+                    <span class="material-icons text-info me-2">info</span>
+                    Service Information
+                  </div>
+
+                  <div class="card-body">
+                    <!-- invoice Creater Full Name -->
+                    <div class="mb-1">
+                      <label for="txtUserFullName" class="form-label fw-bold"
+                        >Invoice Creater Name:
+                      </label>
+                      <span class="text-dark" y>
+                        {{ userName }}
+                      </span>
+                    </div>
+
+                    <!-- invoice Creater Date -->
+                    <div class=" ">
+                      <label for="txtUserFullName" class="form-label fw-bold"
+                        >Date:
+                      </label>
+                      <span class="text-dark"> {{ orderDate }}</span>
+                    </div>
+                    <!-- invoice Creater Date -->
+                    <div class="">
+                      <label
+                        for="txtCustomerFullName"
+                        class="form-label fw-bold"
+                        >Line Total:
+                      </label>
+                      <span class="text-dark">
+                        {{ lineItemTotal | currency : "USD" }}</span
+                      >
+                    </div>
+                    <div class="">
+                      <label for="txtWorkspaceTotal" class="form-label fw-bold"
+                        >Workspace Total:
+                      </label>
+                      <span class="text-dark">
+                        {{ workspaceTotal | currency : "USD" }}</span
+                      >
+                    </div>
+                    <!-- invoice Creater Date -->
+                    <div class="mb-2 text-end">
+                      <label
+                        for="txtCustomerFullName"
+                        class="form-label fw-bold"
+                        >Invoice Total:
+                      </label>
+                      <span class="text-dark">
+                        {{ invoiceTotal | currency : "USD" }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Line Item info card start here -->
+              <div class="col-12 order-3">
+                <div
+                  class="card border-info mb-3"
+                  style="box-shadow: #00000029 0px 1px 4px"
+                >
+                  <div
+                    class="card-header d-flex align-items-center justify-content-between"
+                  >
+                    <div class="d-flex align-items-center">
+                      <span class="material-icons text-info me-2"
+                        >workspaces</span
+                      >
+                      Workspace and Line Items
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="d-flex align-items-center pt-3">
+                      <span class="material-icons text-info me-2">add</span>
+                      <h5>Add Workspace</h5>
+                    </div>
+                    <hr />
+                    <div class="row rounded" style="background: #93d7f71e">
+                      <div class="col-md-6">
+                        <!-- Parts Amount -->
+                        <div class="mb-3">
+                          <label for="partsAmount" class="form-label fw-bold"
+                            >Parts Amount:</label
+                          >
+                          <input
+                            type="number"
+                            id="partsAmount"
+                            formControlName="partsAmount"
+                            class="form-control"
+                            placeholder="0"
+                            min="0"
+                            #partsInput
+                            (click)="clearInput(partsInput)"
+                          />
+                        </div>
+                      </div>
+
+                      <!-- Labor Amount -->
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label for="laborAmount" class="form-label fw-bold"
+                            >Labor Amount:</label
+                          >
+                          <input
+                            type="number"
+                            id="laborAmount"
+                            formControlName="laborAmount"
+                            class="form-control"
+                            placeholder="0"
+                            min="0"
+                            #laborInput
+                            (click)="clearInput(laborInput)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center pt-3">
+                      <span class="material-icons text-info me-2"
+                        >add_shopping_cart</span
+                      >
+                      <h5>Select Line Items</h5>
+                    </div>
+                    <div
+                      class="row px-4 pt-2 d-none d-md-flex align-items-center justify-content-between"
+                    >
+                      <span class="col-6 fw-bold">Item</span>
+                      <span class="col-3 fw-bold">Quantity</span>
+                      <span class="col-3 fw-bold text-end">Price</span>
+                    </div>
+
+                    <hr />
+
+                    <div *ngFor="let lineItem of lineItems; let i = index">
+                      <div
+                        class="row mx-2 my-2 font-size-large rounded align-items-center"
+                        style="font-size: large"
+                      >
+                        <div class="col-12 col-md-6 group p-3 rounded mb-2">
+                          <input
+                            type="checkbox"
+                            [checked]="lineItem.checked"
+                            [name]="lineItem.name"
+                            (change)="isItemChecked(lineItem)"
+                            class="me-2"
+                            id="cb1{{ i }}"
+                          />
+                          <label for="cb1{{ i }}" class="px-2">
+                            {{ lineItem.name }}</label
+                          >
+                        </div>
+
+                        <div class="col-6 col-md-3 d-flex">
+                          <div class="quantity">
+                            <button
+                              class="quantity__minus d-flex align-items-center justify-content-center fw-bold"
+                              (click)="decreaseQuantity($event, i, lineItem.id)"
+                              [disabled]="!lineItem.checked"
+                            >
+                              <span>-</span>
+                            </button>
+                            <input
+                              name="quantity"
+                              type="text"
+                              class="quantity__input"
+                              [value]="lineItem.quantity"
+                              [disabled]="!lineItem.checked"
+                            />
+                            <button
+                              class="quantity__plus d-flex align-items-center justify-content-center fw-bold"
+                              (click)="increaseQuantity($event, i, lineItem.id)"
+                              [disabled]="!lineItem.checked"
+                            >
+                              <span>+</span>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-3 text-end">
+                          {{ lineItem.price | currency : "USD" }}
+                        </div>
+                      </div>
+                      <hr class="my-2 d-block d-md-none" />
+                    </div>
+
+                    <hr class="my-4 d-none d-md-block" />
+
+                    <div class="row gy-2 px-3 mt-4">
+                      <div class="col-md-6 d-none d-md-block"></div>
+                      <div class="col-12 col-lg-6">
+                        <div
+                          class="d-flex align-items-center justify-content-between mb-2"
+                        >
+                          <span class="fw-bold text-xl">Line Item Total: </span>
+
+                          <span class="">{{
+                            lineItemTotal | currency : "USD"
+                          }}</span>
+                        </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between mb-2"
+                        >
+                          <span class="fw-bold">Workspace Total: </span>
+                          <span class="">{{
+                            workspaceTotal | currency : "USD"
+                          }}</span>
+                        </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between mb-2"
+                        >
+                          <span class="fw-bold">Tax: </span>
+                          <span class="p-0">{{ tax | currency : "USD" }}</span>
+                        </div>
+                        <div
+                          class="d-flex align-items-center justify-content-between mb-2"
+                          style="font-size: x-large"
+                        >
+                          <span class="fw-bold" style="font-size: larger"
+                            >Invoice Total:
+                          </span>
+                          <span class="p-0" style="font-size: larger">{{
+                            invoiceTotal | currency : "USD"
+                          }}</span>
+                        </div>
+                        <div class="mb-2">
+                          <button
+                            type="submit"
+                            [disabled]="!invoiceForm.valid"
+                            class="action-button px-5 py-3 w-100 my-4 d-flex justify-content-center"
+                          >
+                            <div *ngIf="isLoading">
+                              <span
+                                class="spinner-border spinner-border-sm"
+                                role="status"
+                                aria-hidden="true"
+                              ></span>
+                              Loading...
+                            </div>
+
+                            Create Invoice
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <br />
+        <br />
+        <br />
+        <br />
+      </div>
+    </div>
+  </div>
+</section>

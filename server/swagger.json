@@ -10,9 +10,7 @@
       "get": {
         "summary": "findAllUsers",
         "description": "Get all users",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "responses": {
           "200": {
             "description": "User details successfully retrieved"
@@ -31,9 +29,7 @@
       "post": {
         "summary": "createUser",
         "description": "Create a new User.",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "requestBody": {
           "required": true,
           "content": {
@@ -65,9 +61,7 @@
       "get": {
         "summary": "findUserById",
         "description": "Get all users",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -96,9 +90,7 @@
       },
       "put": {
         "summary": "Update User",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -139,9 +131,7 @@
       },
       "delete": {
         "summary": "Delete User",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "userId",
@@ -174,9 +164,7 @@
       "get": {
         "summary": "find Users security questions",
         "description": "find Selected Security Questions",
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "parameters": [
           {
             "name": "email",
@@ -207,9 +195,7 @@
     "/api/security/signin": {
       "post": {
         "summary": "Sign in as user",
-        "tags": [
-          "Security"
-        ],
+        "tags": ["Security"],
         "description": "Sign in a user by providing their email and password.",
         "requestBody": {
           "required": true,
@@ -240,9 +226,7 @@
     "/api/security/register": {
       "post": {
         "summary": "Register a new user",
-        "tags": [
-          "Security"
-        ],
+        "tags": ["Security"],
         "description": "Registers a new user with the provided information.",
         "requestBody": {
           "required": true,
@@ -274,9 +258,7 @@
       "post": {
         "summary": "Verifiy User",
         "description": "Verifiy User",
-        "tags": [
-          "Security"
-        ],
+        "tags": ["Security"],
         "parameters": [
           {
             "name": "email",
@@ -308,9 +290,7 @@
       "post": {
         "summary": "Verifiy user Security Questions",
         "description": "Verifiy user Security Questions",
-        "tags": [
-          "Security"
-        ],
+        "tags": ["Security"],
         "parameters": [
           {
             "name": "email",
@@ -352,9 +332,7 @@
       "delete": {
         "summary": "resetPassword",
         "description": "Change the user's password.",
-        "tags": [
-          "Security"
-        ],
+        "tags": ["Security"],
         "parameters": [
           {
             "name": "email",
@@ -392,6 +370,137 @@
           }
         }
       }
+    },
+    "/api/invoices": {
+      "get": {
+        "summary": "Find all invoices",
+        "description": "Get all invoices",
+        "tags": ["Invoices"],
+        "responses": {
+          "200": {
+            "description": "Invoice details successfully retrieved"
+          },
+          "400": {
+            "description": "Bad Request - Input must be a number"
+          },
+          "404": {
+            "description": "Invoice with the specified invoiceId not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
+    },
+    "/api/invoices/{userId}": {
+      "post": {
+        "summary": "Create a new invoice",
+        "description": "Create a new invoice",
+        "tags": ["Invoices"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Enter user name"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewInvoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invoice created successfully"
+          },
+          "400": {
+            "description": "Bad Request "
+          },
+          "404": {
+            "description": "User with the specified email not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
+    },
+    "/api/invoices/find/{invoiceId}": {
+      "get": {
+        "summary": "findInvoiceById",
+        "description": "Get an invoice by its ID",
+        "tags": ["Invoices"],
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the invoice"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice successfully retrieved"
+          },
+          "400": {
+            "description": "Bad Request - Invoice ID must be a number"
+          },
+          "404": {
+            "description": "Invoice with the specified invoiceId not found"
+          },
+          "500": {
+            "description": "Internal Server Error - Database connection issue"
+          }
+        }
+      }
+    },
+    "/api/invoices/find-purchases-by-service": {
+      "get": {
+        "summary": "Find Purchases by Service Name",
+        "description": "Returns an array of line items that match a given service name.",
+        "tags": ["Invoices"],
+        "parameters": [
+          {
+            "name": "lineItems.name",
+            "in": "query",
+            "description": "Name of the service",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of matching line items",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LineItem"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -406,10 +515,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "additionalProperties": false
       },
       "UserRegistration": {
@@ -451,10 +557,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "question",
-                    "answer"
-                  ]
+                  "required": ["question", "answer"]
                 }
               }
             }
@@ -583,9 +686,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "password"
-        ],
+        "required": ["password"],
         "additionalProperties": false
       },
       "SecurityQuestions": {
@@ -608,7 +709,84 @@
             }
           }
         }
+      },
+      "NewInvoice": {
+        "type": "object",
+        "properties": {
+          "invoice": {
+            "type": "object",
+            "properties": {
+              "customerFullName": {
+                "type": "string"
+              },
+              "customerEmail": {
+                "type": "string"
+              },
+              "partsAmount": {
+                "type": "number"
+              },
+              "laborAmount": {
+                "type": "number"
+              },
+              "lineItemTotal": {
+                "type": "number"
+              },
+              "invoiceTotal": {
+                "type": "number"
+              },
+              "orderDate": {
+                "type": "string"
+              },
+              "lineItems": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    },
+                    "checked": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
+    }
+  },
+  "definitions": {
+    "LineItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "checked": {
+          "type": "boolean"
+        }
+      },
+      "required": ["name", "price", "quantity", "checked"]
     }
   }
 }

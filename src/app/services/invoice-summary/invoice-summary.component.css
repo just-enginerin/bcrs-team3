@@ -1,0 +1,20 @@
+/*
+ Title: invoice-summary.component.css
+ Author: Erin Brady
+ Date: 9/30/23
+ Description: Invoice Summary styles
+*/
+
+.container-fluid {
+  width: 80vw;
+  margin: 30px auto;
+}
+
+p {
+  margin-bottom: .5rem;
+}
+
+#closing {
+  text-align: center;
+  margin-top: 20px;
+}

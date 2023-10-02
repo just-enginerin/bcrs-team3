@@ -11,7 +11,7 @@
   style="z-index: 999; top: 0"
 >
   <!-- Container wrapper -->
-  <div class="container" style="max-width: 1800px">
+  <div class="container" style="max-width: 1500px">
     <!-- Navbar brand -->
     <a class="navbar-brand me-2" href="/">
       <img
@@ -65,7 +65,7 @@
             class="nav-item"
             *ngIf="isSignedIn && sessionUser.role === 'admin'"
           >
-            <a routerLink="#" class="nav-link"
+            <a routerLink="/services/service-graph" class="nav-link"
               ><strong>Service Graph</strong>
             </a>
           </li>
@@ -73,10 +73,22 @@
             <a routerLink="/faq" class="nav-link mx-2"><strong>FAQ</strong> </a>
           </li>
 
+          <li class="nav-item mobile-profile">
+            <a routerLink="/profile" class="nav-link mx-2"
+              ><strong>My Profile</strong>
+            </a>
+          </li>
+
+          <!-- <li class="nav-item mobile-profile">
+            <a routerLink="/#" class="nav-link mx-2"
+              ><strong>Invoices</strong>
+            </a>
+          </li> -->
+
           <li class="nav-item me-2" *ngIf="isSignedIn">
             <a
               class="nav-link action-button btn px-3"
-              routerLink="/service-repair"
+              routerLink="/services/service-repair"
             >
               New Service Request
             </a>
@@ -92,35 +104,49 @@
             </button>
           </li>
 
-          <!--  user account -->
+          <li *ngIf="isSignedIn" class="nav-item mobile-profile">
+            <a (click)="signout()" class="nav-link mx-2">
+              <strong>Log Out</strong>
+            </a>
+          </li>
+
+          <!--  user account dropdown for mobile -->
           <li *ngIf="isSignedIn" class="nav-item dropdown">
-            <a
-              href="#"
-              class="nav-link d-flex align-items-center rounded mt-2 mt-lg-0 w-100"
+            <div
+              class="rounded-circle position-absolute"
+              width="50"
+              height="50"
+              style="
+                box-shadow: 5px 6px 6px 2px #e9ecef;
+                width: 50px;
+                height: 50px;
+                background-image: url({{ this.sessionUser.avatar }});
+                background-position: center;
+                background-size: 50px 50px;
+              "
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              style="border: 1px solid #00bcd4; width: 20px"
-            >
-              <span class="material-icons text-dark">person</span>
-            </a>
+            ></div>
 
             <ul
               id="dropdownMenu"
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdown"
             >
-              <li class="dropdown-item user-name">
+              <li class="dropdown-item user-name" disabled>
                 Hello, {{ sessionUser.fullName }}
               </li>
               <hr />
               <li>
-                <a routerLink="#" class="dropdown-item link"> My Profile</a>
+                <a routerLink="/profile" class="dropdown-item link">
+                  My Profile</a
+                >
               </li>
-              <li *ngIf="sessionUser.role === 'admin'">
-                <a routerLink="#" class="dropdown-item link">My Invoices</a>
-              </li>
+              <!-- <li *ngIf="sessionUser.role === 'admin'">
+                <a routerLink="#" class="dropdown-item link">Invoices</a>
+              </li> -->
               <li>
                 <a (click)="signout()" class="dropdown-item link">Log Out</a>
               </li>
