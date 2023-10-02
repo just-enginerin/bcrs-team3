@@ -107,8 +107,8 @@ export class ServiceRepairComponent {
       orderDate: this.generateOrderDate(),
       taxTotal: this.tax,
       workspaceTotal: this.workspaceTotal,
-      lineItemTotal: this.calculateLineItemTotal(this.lineItemChecked),
-      invoiceTotal: partsAmount + laborAmount + this.calculateLineItemTotal(this.lineItemChecked),
+      lineItemTotal: this.lineItemTotal,
+      invoiceTotal: this.invoiceTotal,
     };
 
     this.invoice.push(invoice);
