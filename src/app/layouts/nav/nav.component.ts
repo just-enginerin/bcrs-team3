@@ -11,7 +11,8 @@ import { CookieService } from 'ngx-cookie-service';
 export interface SessionUser {
   fullName: string
   role: string
-  avatar: string
+  avatar: string,
+  userId: number
 }
 
 @Component({

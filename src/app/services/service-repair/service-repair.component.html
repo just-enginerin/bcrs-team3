@@ -1,4 +1,4 @@
-<!-- 
+<!--
  Title: services-repair.component.html
  Author: Professor Krasso
  Date: 9/25/23
@@ -15,16 +15,6 @@
           <h2 class="mb-3">Create New Service Repair</h2>
           <p class="mt-2">Add a new service invoice.</p>
         </div>
-
-        <!-- "Add Employee" Button -->
-        <button
-          class="d-flex py-2 border-info"
-          routerLink="/services/invoice-summary"
-          style="border-radius: 8px"
-        >
-          <span class="material-icons border fw-bold me-2"> print </span>
-          Preview Invoice
-        </button>
       </div>
 
       <div class="col-12">
@@ -41,12 +31,12 @@
 
         <!-- Error Message -->
         <div
-          class="toast align-items-center fade show erro  position-fixed w-100"
+          class="toast align-items-center fade show erro position-fixed w-100"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"
           *ngIf="errorMessage"
-          style="z-index: 999;top: 80px;"
+          style="z-index: 999; top: 80px"
         >
           <div class="toast-content col-12">
             <div class="content-body d-flex align-items-center">

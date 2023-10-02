@@ -33,11 +33,14 @@ const lineItemsSchema = {
 const newInvoiceSchema = {
   type: "object",
   properties: {
+    userId: { type: "number" },
     customerFullName: { type: "string" },
     customerEmail: { type: "string" },
     partsAmount: { type: "number" },
     laborAmount: { type: "number" },
     lineItemTotal: { type: "number" },
+    taxTotal: { type: "number" },
+    workspaceTotal: { type: "number" },
     invoiceTotal: { type: "number" },
     orderDate: { type: "string" },
     lineItems: lineItemsSchema,
@@ -48,9 +51,12 @@ const newInvoiceSchema = {
     { required: ["lineItems"] },
   ],
   required: [
+    "userId",
     "customerFullName",
     "customerEmail",
     "lineItemTotal",
+    "taxTotal",
+    "workspaceTotal",
     "invoiceTotal",
     "orderDate",
   ],
@@ -72,6 +78,61 @@ router.get("/", (req, res, next) => {
       console.log("invoice", invoices);
 
       res.send(invoices);
+    }, next);
+  } catch (err) {
+    console.log("err", err);
+    next(err);
+  }
+});
+
+/** findInvoiceById */
+router.get("/:invoiceId", (req, res, next) => {
+  try {
+    console.log("invoiceId", req.params.invoiceId);
+
+    let { invoiceId } = req.params; // get the userId from the req.params object
+    invoiceId = parseInt(invoiceId, 10); // try determine if the userId is a numerical value
+
+    if (isNaN(invoiceId)) {
+      const err = new Error("Invoice ID must be a number");
+      err.status = 400;
+      console.log("err", err);
+      next(err);
+      return;
+    }
+
+    mongo(async (db) => {
+      const invoice = await db.collection("invoices").findOne(
+        { invoiceId },
+        {
+          projection: {
+            userId: 1,
+            invoiceId: 1,
+            customerFullName: 1,
+            customerEmail: 1,
+            partsAmount: 1,
+            laborAmount: 1,
+            lineItemTotal: 1,
+            taxTotal: 1,
+            workspaceTotal: 1,
+            invoiceTotal: 1,
+            orderDate: 1,
+            lineItems: 1,
+          },
+        }
+      ); // find user by ID
+
+      if (!invoice) {
+        const err = new Error(
+          "Unable to find invoice with invoiceId " + invoiceId
+        );
+        err.status = 404;
+        console.log("err", err);
+        next(err);
+        return;
+      }
+
+      res.send(invoice);
     }, next);
   } catch (err) {
     console.log("err", err);

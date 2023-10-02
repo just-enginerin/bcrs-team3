@@ -11,13 +11,7 @@ import { SecurityService } from "./../security.service";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-
-// the session user
-export interface SessionUser {
-  userId: number;
-  firstName: string;
-  lastName: string;
-}
+import { SessionUser } from 'src/app/layouts/nav/nav.component';
 
 
 @Component({

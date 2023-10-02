@@ -14,12 +14,16 @@ export interface LineItem {
 
 
 export interface Invoice {
+  userId: number
   customerFullName: string
   customerEmail: string
   partsAmount: number
   laborAmount: number
   lineItemTotal: number
+  workspaceTotal: number
+  taxTotal: number
   invoiceTotal: number
   orderDate: string
   lineItems: LineItem[];
 }
+

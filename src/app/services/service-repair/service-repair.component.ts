@@ -98,12 +98,15 @@ export class ServiceRepairComponent {
     console.log("The array for lineItemChecked", this.lineItemChecked);
 
     const invoice: Invoice = {
+      userId: this.userId,
       customerFullName,
       customerEmail,
       partsAmount,
       laborAmount,
       lineItems: this.lineItemChecked,
       orderDate: this.generateOrderDate(),
+      taxTotal: this.tax,
+      workspaceTotal: this.workspaceTotal,
       lineItemTotal: this.calculateLineItemTotal(this.lineItemChecked),
       invoiceTotal: partsAmount + laborAmount + this.calculateLineItemTotal(this.lineItemChecked),
     };
@@ -115,13 +118,14 @@ export class ServiceRepairComponent {
       console.log("Form is valid");
 
       this.invoiceService.createInvoice(this.userId, invoice).subscribe({
-        next: (res) => {
+        next: (res: any) => {
           console.log('Invoice created successfully:', res);
 
           this.isLoading = false
           this.successMessage = 'Invoice created successfully'
 
-          this.router.navigate(['/services/invoice-summary'])
+          // Carry the Invoice ID to the Invoice Summary page
+          this.router.navigate(['/services/invoice-summary', {state: res.invoiceId}])
         },
         error: (err) => {
           this.isLoading = false
@@ -185,7 +189,7 @@ export class ServiceRepairComponent {
   }
 
   isItemChecked(lineItem: LineItem) {
-    console.log("liit", lineItem);
+    console.log("line item: ", lineItem);
     lineItem.checked = !lineItem.checked;
 
     if (lineItem.checked) {
@@ -206,7 +210,7 @@ export class ServiceRepairComponent {
     this.lineItemTotal = this.lineItemChecked.reduce((total, item) => (total + item.price), 0);
 
     console.log("is Checked", this.lineItemChecked);
-    console.log("lito", this.lineItemTotal);
+    console.log("line item total: ", this.lineItemTotal);
     this.updateLineItemTotal();
     this.calculateTax();
     return lineItem.checked;
@@ -216,7 +220,7 @@ export class ServiceRepairComponent {
   decreaseQuantity(event: Event, index: number, id: number) {
     event.preventDefault();
     const item = this.lineItemChecked.find((lineItem) => lineItem.id === id);
-    console.log("dec item", item);
+    console.log("decrease item quantity: ", item);
 
     if (item && item.quantity > 0) {
       item.quantity--;
@@ -228,7 +232,7 @@ export class ServiceRepairComponent {
   increaseQuantity(event: Event, index: number, id: number) {
     event.preventDefault();
     const item = this.lineItemChecked.find((lineItem) => lineItem.id === id);
-    console.log("inc item", item);
+    console.log("increase item quantity: ", item);
 
     if (item) {
       item.quantity++;

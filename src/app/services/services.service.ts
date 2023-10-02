@@ -27,6 +27,10 @@ export class ServicesService {
     return this.http.get('/api/invoices');
   }
 
+  getInvoiceById(invoiceId: number) {
+    return this.http.get('api/invoices/' + invoiceId)
+  }
+
   findPurchasesByService(invoice: Invoice) {
     return this.http.get('/api/invoices/find-purchases-by-service?lineItems.name=' + name);
   }

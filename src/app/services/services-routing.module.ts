@@ -12,6 +12,7 @@ import { ServicesComponent } from './services.component';
 import { ServiceRepairComponent } from './service-repair/service-repair.component';
 import { ServiceGraphComponent } from './service-graph/service-graph.component';
 import { authGuard } from '../shared/auth.guard';
+import { InvoiceSummaryComponent } from './invoice-summary/invoice-summary.component';
 
 
 const routes: Routes = [{
@@ -21,12 +22,17 @@ const routes: Routes = [{
     {
       path: 'service-repair',
       component: ServiceRepairComponent,
-      title: 'Bcrs-team3: Service-Repair'
+      title: 'BCRS: Service-Repair'
+    },
+    {
+      path: 'invoice-summary',
+      component: InvoiceSummaryComponent,
+      title: 'BCRS: Invoice Summary'
     },
     {
       path: 'service-graph',
       component: ServiceGraphComponent,
-      title: 'Bcrs-team3: Service-Graph'
+      title: 'BCRS: Service-Graph'
     }
   ],
   canActivate: [authGuard]

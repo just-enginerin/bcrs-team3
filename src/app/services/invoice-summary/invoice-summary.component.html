@@ -1,0 +1,106 @@
+<!--
+ Title: invoice-summary.component.html
+ Author: Erin Brady
+ Date: 9/30/23
+ Description: Invoice Summary HTML
+-->
+
+<div class="container-fluid">
+  <!-- "Print Invoice" Button -->
+  <button
+    class="d-flex py-2 border-info"
+    routerLink="/admin/users/new"
+    style="border-radius: 8px"
+    (click)="printPage()"
+  >
+    <span class="material-icons border fw-bold me-2"> print </span>
+    Print Invoice
+  </button>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h1>Invoice Summary</h1>
+    </div>
+
+    <div class="col-md-4 grouped-text">
+      <h6>Bob's Computer Repair Shop</h6>
+      <p>1000 Galvin Rd S</p>
+      <p>Bellevue, NE 68005</p>
+    </div>
+    <hr />
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <p><b>INVOICE NO.</b> {{ invoiceId }}</p>
+    </div>
+
+    <div class="col-md-4" *ngIf="invoice?.orderDate">
+      <p><b>ORDER DATE</b> {{ invoice.orderDate }}</p>
+    </div>
+
+    <div class="col-md-4" *ngIf="user?.userId === invoice?.userId">
+      <p><b>ASSIGNED EMPLOYEE</b> {{ user.fullName }}</p>
+    </div>
+    <hr />
+  </div>
+
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Service ID</th>
+          <th scope="col">Service Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Display line items -->
+        <tr *ngFor="let lineItem of invoice.lineItems">
+          <th scope="row">{{ lineItem.id }}</th>
+          <td>{{ lineItem.name }}</td>
+          <td>{{ lineItem.quantity }}</td>
+          <td>{{ (lineItem.price * lineItem.quantity).toFixed(2) }}</td>
+        </tr>
+
+        <!-- Display totals -->
+        <tr>
+          <td></td>
+          <td></td>
+          <th scope="row">Line Item Total:</th>
+          <td>{{ invoice?.lineItemTotal?.toFixed(2) }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <th scope="row">Workspace Total:</th>
+          <td>{{ invoice?.workspaceTotal?.toFixed(2) }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <th scope="row">Taxes:</th>
+          <td>{{ invoice?.taxTotal?.toFixed(2) }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <th scope="row">Grand Total:</th>
+          <td>{{ invoice?.invoiceTotal?.toFixed(2) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row grouped-text">
+    <p>Make all checks payable to <i>Bob's Computer Repair Shop.</i></p>
+    <p>Payment is due at device pickup.</p>
+    <p>
+      If you have any questions regarding this invoice, contact Bob Smith |
+      1.200.345.6789 | bob@bcrs.com
+    </p>
+    <h3 id="closing">THANK YOU FOR YOUR BUSINESS!</h3>
+  </div>
+</div>
