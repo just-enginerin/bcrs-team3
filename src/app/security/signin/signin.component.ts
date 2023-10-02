@@ -3,6 +3,7 @@
  * Author: William Egge
  * Date: 9/16/23
  * Description: Sign In / User authentication logic
+ * Random User Generator API: https://randomuser.me/
 */
 
 // imports statements
