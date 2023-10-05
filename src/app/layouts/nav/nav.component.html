@@ -70,7 +70,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/faq" class="nav-link mx-2 rounded"><strong>FAQ</strong> </a>
+            <a routerLink="/faq" class="nav-link mx-2 rounded"
+              ><strong>FAQ</strong>
+            </a>
           </li>
 
           <li class="nav-item mobile-profile">
@@ -92,6 +94,15 @@
             >
               New Service Request
             </a>
+          </li>
+
+          <li *ngIf="!isSignedIn" class="nav-item me-2">
+            <button
+              class="btn text-dark border-info"
+              routerLink="/security/register"
+            >
+              Register
+            </button>
           </li>
 
           <li *ngIf="!isSignedIn" class="nav-item">
