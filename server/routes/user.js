@@ -219,16 +219,16 @@ router.delete("/:userId", (req, res, next) => {
 
       console.log("adminCount,", adminCount, adminRole.role);
 
-     // Check if the user to be deleted is an admin
-     if (adminRole && adminRole.role === "admin") {
-      if (adminCount === 1) {
-        const err = new Error("Cannot change the status of last admin user");
-        err.status = 400;
-        console.log("err", err);
-        next(err);
-        return;
+      // Check if the user to be deleted is an admin
+      if (adminRole && adminRole.role === "admin") {
+        if (adminCount === 1) {
+          const err = new Error("Cannot change the status of last admin user");
+          err.status = 400;
+          console.log("err", err);
+          next(err);
+          return;
+        }
       }
-    }
 
       const result = await db.collection("users").updateOne(
         { userId: parsedUserId },

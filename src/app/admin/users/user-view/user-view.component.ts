@@ -124,6 +124,6 @@ export class UserViewComponent {
     setTimeout(() => {
       this.successMessage = ''
       this.errorMessage = ''
-    }, 3000)
+    }, 5000)
   }
 }

@@ -68,9 +68,8 @@ export class SigninComponent {
         }
 
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1)
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/'
         this.isLoading = false
-        this.router.navigate([returnUrl])
+        this.router.navigate(["/services/service-repair"])
       },
       error: (err) => {
         this.isLoading = false
