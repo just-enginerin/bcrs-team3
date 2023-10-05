@@ -281,8 +281,6 @@
                             class="form-control"
                             placeholder="0"
                             min="0"
-                            #partsInput
-                            (click)="clearInput(partsInput)"
                           />
                         </div>
                       </div>
@@ -300,8 +298,6 @@
                             class="form-control"
                             placeholder="0"
                             min="0"
-                            #laborInput
-                            (click)="clearInput(laborInput)"
                           />
                         </div>
                       </div>
@@ -323,6 +319,7 @@
 
                     <hr />
 
+                    <!-- Line item array start here -->
                     <div *ngFor="let lineItem of lineItems; let i = index">
                       <div
                         class="row mx-2 my-2 font-size-large rounded align-items-center"
@@ -356,7 +353,7 @@
                               type="text"
                               class="quantity__input"
                               [value]="lineItem.quantity"
-                              [disabled]="!lineItem.checked"
+                              [disabled]="true"
                             />
                             <button
                               class="quantity__plus d-flex align-items-center justify-content-center fw-bold"
@@ -428,7 +425,7 @@
                               Loading...
                             </div>
 
-                            Create Invoice
+                            Create Invoice 
                           </button>
                         </div>
                       </div>

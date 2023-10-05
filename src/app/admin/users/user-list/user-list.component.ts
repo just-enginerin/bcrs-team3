@@ -70,9 +70,19 @@ export class UserListComponent {
         this.hideAlert()
       },
       error: (err) => {
-        this.errorMessage = err.message
-        console.error(err)
-        this.hideAlert() // Hide the error message after a delay
+        if (err.status === 400) {
+          // Parse the error response to get the error message
+          const errorResponse = err.error;
+          if (errorResponse && errorResponse.message) {
+            this.errorMessage = errorResponse.message;
+          } else {
+            this.errorMessage = 'Bad Request: Something went wrong.';
+          }
+        } else {
+          this.errorMessage = 'An error occurred while processing your request.';
+        }
+        console.error(err);
+        this.hideAlert(); // Hide the error message after a delay
       }
     })
   }
