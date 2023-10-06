@@ -97,7 +97,9 @@ export class ServiceRepairComponent {
     console.log("The array for lineItemChecked", this.lineItemChecked);
     // Check if partsAmount and laborAmount are zero or not and assign 0 if needed
     const partsAmount = this.invoiceForm.value.partsAmount === null ? 0 : this.invoiceForm.value.partsAmount;
-    const laborAmount = this.invoiceForm.value.laborAmount === null ? 0 : this.invoiceForm.value.laborAmount;
+    const laborHour = this.invoiceForm.value.laborAmount === null ? 0 : this.invoiceForm.value.laborAmount;
+
+    const laborAmount = laborHour * 50
 
     if (partsAmount > 0 || laborAmount > 0 || this.lineItemChecked.length > 0) {
       console.log("Form is valid");
@@ -165,8 +167,8 @@ export class ServiceRepairComponent {
   // update the workspace total
   updateWorkspaceTotal() {
     const partsAmount = this.invoiceForm.get('partsAmount')?.value || 0;
-    const laborAmount = this.invoiceForm.get('laborAmount')?.value || 0;
-    this.workspaceTotal = partsAmount + laborAmount;
+    const laborHour = this.invoiceForm.get('laborAmount')?.value || 0;
+    this.workspaceTotal = partsAmount + (laborHour * 50);
   }
 
   // Function to update the line item total

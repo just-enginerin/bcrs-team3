@@ -69,7 +69,7 @@ export class SigninComponent {
 
         this.cookieService.set('session_user', JSON.stringify(sessionCookie), 1)
         this.isLoading = false
-        this.router.navigate(["/services/service-repair"])
+        this.router.navigate(["/services/service-repair"]);';'
       },
       error: (err) => {
         this.isLoading = false
