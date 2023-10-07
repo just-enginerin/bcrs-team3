@@ -209,6 +209,27 @@ router.delete("/:userId", (req, res, next) => {
 
     console.log("che", userId, parsedUserId);
     mongo(async (db) => {
+      // Prevent delete if there's only one admin
+      const adminCount = await db
+        .collection("users")
+        .countDocuments({ role: "admin" });
+      const adminRole = await db
+        .collection("users")
+        .findOne({ userId: parsedUserId });
+
+      console.log("adminCount,", adminCount, adminRole.role);
+
+      // Check if the user to be deleted is an admin
+      if (adminRole && adminRole.role === "admin") {
+        if (adminCount === 1) {
+          const err = new Error("Cannot change the status of last admin user");
+          err.status = 400;
+          console.log("err", err);
+          next(err);
+          return;
+        }
+      }
+
       const result = await db.collection("users").updateOne(
         { userId: parsedUserId },
         { $set: { isDisabled: true } } // Set isDisabled to true
@@ -263,6 +284,27 @@ router.put("/:userId", (req, res, next) => {
     }
 
     mongo(async (db) => {
+      // Prevent update role and status if there's only one admin
+      const adminCount = await db
+        .collection("users")
+        .countDocuments({ role: "admin" });
+      const adminRole = await db
+        .collection("users")
+        .findOne({ userId: userId });
+
+      console.log("adminCount,", adminCount, "adminRole", adminRole.role);
+
+      if (adminCount === 1 && adminRole.role === "admin") {
+        if (user.role !== "admin" || user.isDisabled === true) {
+          const err = new Error(
+            "Cannot change the role or status of the last admin user"
+          );
+          err.status = 400;
+          console.log("err", err);
+          next(err);
+          return;
+        }
+      }
       const result = await db.collection("users").updateOne(
         { userId: userId },
         {
@@ -290,7 +332,7 @@ router.put("/:userId", (req, res, next) => {
         return;
       }
 
-      res.status(201).send(user);
+      res.status(201).send(result);
     });
   } catch (err) {
     console.log("err", err);

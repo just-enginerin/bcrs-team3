@@ -21,6 +21,10 @@ export class UserViewComponent {
   userId!: string // define the userId variable
   user: User // define the user variable
 
+  successMessage: string
+  errorMessage: string
+  isLoading: boolean
+
   // define the userForm variable and assign it to the FormGroup
   userForm: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
@@ -38,11 +42,17 @@ export class UserViewComponent {
     private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
+
+
   ) {
 
     this.user = {} as User // initialize the user model
     let l__id = this.route.snapshot.paramMap.get('userId') || '' // get the userId from the route
     this.userId = l__id; // Keep userId as a string
+
+    this.successMessage = ''
+    this.errorMessage = ''
+    this.isLoading = true
 
     console.log(this.userId) // log the userId to the console
 
@@ -87,11 +97,33 @@ export class UserViewComponent {
     this.userService.updateUser(this.userId, user).subscribe({
       next: (res) => {
         console.log(res)
+        this.successMessage = 'User status changed successfully'
+        this.hideAlert()
         this.router.navigate(['/admin/users']) // redirect to the user list page
       },
       error: (err) => {
-        console.error(err) // log the error to the console
+        if (err.status === 400) {
+          // Parse the error response to get the error message
+          const errorResponse = err.error;
+          if (errorResponse && errorResponse.message) {
+            this.errorMessage = errorResponse.message;
+          } else {
+            this.errorMessage = 'Bad Request: Something went wrong.';
+          }
+        } else {
+          this.errorMessage = 'An error occurred while processing your request.';
+        }
+        console.error(err);
+        this.hideAlert(); // Hide the error message after a delay
       }
     })
+  }
+
+  //  hide success and error messages after a delay
+  hideAlert() {
+    setTimeout(() => {
+      this.successMessage = ''
+      this.errorMessage = ''
+    }, 5000)
   }
 }

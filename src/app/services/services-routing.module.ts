@@ -13,6 +13,7 @@ import { ServiceRepairComponent } from './service-repair/service-repair.componen
 import { ServiceGraphComponent } from './service-graph/service-graph.component';
 import { authGuard } from '../shared/auth.guard';
 import { InvoiceSummaryComponent } from './invoice-summary/invoice-summary.component';
+import { roleGuard } from '../shared/role.guard';
 
 
 const routes: Routes = [{
@@ -22,20 +23,22 @@ const routes: Routes = [{
     {
       path: 'service-repair',
       component: ServiceRepairComponent,
-      title: 'BCRS: Service-Repair'
+      title: 'BCRS: Service-Repair',
+      canActivate: [authGuard]
     },
     {
       path: 'invoice-summary',
       component: InvoiceSummaryComponent,
-      title: 'BCRS: Invoice Summary'
+      title: 'BCRS: Invoice Summary',
+      canActivate: [authGuard]
     },
     {
       path: 'service-graph',
       component: ServiceGraphComponent,
-      title: 'BCRS: Service-Graph'
+      title: 'BCRS: Service-Graph',
+      canActivate: [authGuard, roleGuard]
     }
   ],
-  canActivate: [authGuard]
 }];
 
 @NgModule({

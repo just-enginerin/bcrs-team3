@@ -52,12 +52,12 @@
             class="nav-item"
             *ngIf="isSignedIn && sessionUser.role === 'admin'"
           >
-            <a routerLink="/admin/users" class="nav-link"
+            <a routerLink="/admin/users" class="nav-link rounded"
               ><strong>Employee Configuration</strong>
             </a>
           </li>
           <li class="nav-item" *ngIf="isSignedIn">
-            <a routerLink="/employees-directory" class="nav-link"
+            <a routerLink="/employees-directory" class="nav-link rounded"
               ><strong>Employee Directory</strong></a
             >
           </li>
@@ -65,12 +65,14 @@
             class="nav-item"
             *ngIf="isSignedIn && sessionUser.role === 'admin'"
           >
-            <a routerLink="/services/service-graph" class="nav-link"
+            <a routerLink="/services/service-graph" class="nav-link rounded"
               ><strong>Service Graph</strong>
             </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/faq" class="nav-link mx-2"><strong>FAQ</strong> </a>
+            <a routerLink="/faq" class="nav-link mx-2 rounded"
+              ><strong>FAQ</strong>
+            </a>
           </li>
 
           <li class="nav-item mobile-profile">
@@ -94,7 +96,16 @@
             </a>
           </li>
 
-          <li *ngIf="!isSignedIn" class="nav-item">
+          <li *ngIf="!isSignedIn" class="nav-item ms-2">
+            <button
+              class="btn btn-outline-info"
+              routerLink="/security/register"
+            >
+              Register
+            </button>
+          </li>
+
+          <li *ngIf="!isSignedIn" class="nav-item ms-2">
             <button
               mat-raised-button
               class="action-button"

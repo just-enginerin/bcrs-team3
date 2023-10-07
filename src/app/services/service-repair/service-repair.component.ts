@@ -72,11 +72,11 @@ export class ServiceRepairComponent {
     this.invoiceForm = this.fb.group({
       customerFullName: ['', Validators.required],
       customerEmail: ['', [Validators.required, Validators.email]],
-      partsAmount: [0, [Validators.min(0)]],
-      laborAmount: [0, [Validators.min(0)]],
+      partsAmount: [null, [Validators.min(0)]],
+      laborAmount: [null, [Validators.min(0)]],
       lineItems: this.fb.array([]),
       lineItemTotal: [{ value: 0, disabled: true }],
-      invoiceTotal: [{ value: 0, disabled: true }],
+      invoiceTotal: [{ value: 0, disabled: true }, [Validators.min(1)]],
     });
 
     // Call isItemChecked for each line item to initialize the lineItemChecked array
@@ -90,64 +90,70 @@ export class ServiceRepairComponent {
     });
   }
 
-
   createInvoice() {
-    this.isLoading = true
-    const { customerFullName, customerEmail, partsAmount, laborAmount } = this.invoiceForm.value;
+    this.isLoading = true;
+    const { customerFullName, customerEmail } = this.invoiceForm.value;
 
     console.log("The array for lineItemChecked", this.lineItemChecked);
+    // Check if partsAmount and laborAmount are zero or not and assign 0 if needed
+    const partsAmount = this.invoiceForm.value.partsAmount === null ? 0 : this.invoiceForm.value.partsAmount;
+    const laborHour = this.invoiceForm.value.laborAmount === null ? 0 : this.invoiceForm.value.laborAmount;
 
-    const invoice: Invoice = {
-      userId: this.userId,
-      customerFullName,
-      customerEmail,
-      partsAmount,
-      laborAmount,
-      lineItems: this.lineItemChecked,
-      orderDate: this.generateOrderDate(),
-      taxTotal: this.tax,
-      workspaceTotal: this.workspaceTotal,
-      lineItemTotal: this.lineItemTotal,
-      invoiceTotal: this.invoiceTotal,
-    };
-
-    this.invoice.push(invoice);
-    console.log('Invoice Listing:', this.invoice);
+    const laborAmount = laborHour * 50
 
     if (partsAmount > 0 || laborAmount > 0 || this.lineItemChecked.length > 0) {
       console.log("Form is valid");
+
+      const invoice: Invoice = {
+        userId: this.userId,
+        customerFullName,
+        customerEmail,
+        partsAmount,
+        laborAmount,
+        lineItems: this.lineItemChecked,
+        orderDate: this.generateOrderDate(),
+        taxTotal: this.tax,
+        workspaceTotal: this.workspaceTotal,
+        lineItemTotal: this.lineItemTotal,
+        invoiceTotal: this.invoiceTotal,
+      };
+
+      this.invoice.push(invoice);
+      console.log('Invoice Listing:', this.invoice);
 
       this.invoiceService.createInvoice(this.userId, invoice).subscribe({
         next: (res: any) => {
           console.log('Invoice created successfully:', res);
 
-          this.isLoading = false
-          this.successMessage = 'Invoice created successfully'
+          this.isLoading = false;
+          this.successMessage = 'Invoice created successfully';
 
           // Carry the Invoice ID to the Invoice Summary page
-          this.router.navigate(['/services/invoice-summary', { state: res.invoiceId, skipLocationChange: true }])
+          this.router.navigate(['/services/invoice-summary', { state: res.invoiceId }], {
+            skipLocationChange: true,
+          });
         },
         error: (err) => {
-          this.isLoading = false
+          this.isLoading = false;
           if (err.error.message) {
             this.errorMessage = err.error.message;
           } else {
             this.errorMessage = 'Something went wrong, please contact the system admin.';
           }
-        }
+        },
       });
 
       this.lineItems.forEach((item) => {
         item.checked = false;
         item.quantity = 0;
       });
-
     } else {
       console.log("Form is invalid");
-      this.errorMessage = "Form is invalid! at least one of the workspace and line Items form filled must be used";
-      this.isLoading = false
+      this.errorMessage = "Form is invalid! At least one of the workspace and line Items must be filled out or used.";
+      this.isLoading = false;
     }
   }
+
 
   generateOrderDate(): string {
     const now = new Date();
@@ -161,8 +167,8 @@ export class ServiceRepairComponent {
   // update the workspace total
   updateWorkspaceTotal() {
     const partsAmount = this.invoiceForm.get('partsAmount')?.value || 0;
-    const laborAmount = this.invoiceForm.get('laborAmount')?.value || 0;
-    this.workspaceTotal = partsAmount + laborAmount;
+    const laborHour = this.invoiceForm.get('laborAmount')?.value || 0;
+    this.workspaceTotal = partsAmount + (laborHour * 50);
   }
 
   // Function to update the line item total
@@ -222,7 +228,11 @@ export class ServiceRepairComponent {
     const item = this.lineItemChecked.find((lineItem) => lineItem.id === id);
     console.log("decrease item quantity: ", item);
 
-    if (item && item.quantity > 0) {
+    if (item && item.quantity > 1) {
+      item.quantity--;
+      this.updateLineItemTotal();
+    } else if (item && item.quantity == 1) {
+      item.checked = false
       item.quantity--;
       this.updateLineItemTotal();
     }
@@ -238,9 +248,5 @@ export class ServiceRepairComponent {
       item.quantity++;
       this.updateLineItemTotal();
     }
-  }
-
-  clearInput(inputField: HTMLInputElement) {
-    inputField.value = ''; // Clear the input value
   }
 }
