@@ -34,11 +34,11 @@
       <p><b>INVOICE NO.</b> {{ invoiceId }}</p>
     </div>
 
-    <div class="col-md-4" *ngIf="invoice?.orderDate">
+    <div class="col-md-4" *ngIf="invoice.orderDate">
       <p><b>ORDER DATE</b> {{ invoice.orderDate }}</p>
     </div>
 
-    <div class="col-md-4" *ngIf="user?.userId === invoice?.userId">
+    <div class="col-md-4" *ngIf="user.userId === invoice.userId">
       <p><b>ASSIGNED EMPLOYEE</b> {{ user.fullName }}</p>
     </div>
     <hr />
@@ -69,25 +69,25 @@
           <td></td>
           <td></td>
           <th scope="row">Line Item Total:</th>
-          <td>{{ invoice?.lineItemTotal?.toFixed(2) }}</td>
+          <td>{{ invoice.lineItemTotal.toFixed(2) }}</td>
         </tr>
         <tr>
           <td></td>
           <td></td>
           <th scope="row">Workspace Total:</th>
-          <td>{{ invoice?.workspaceTotal?.toFixed(2) }}</td>
+          <td>{{ invoice.workspaceTotal.toFixed(2) }}</td>
         </tr>
         <tr>
           <td></td>
           <td></td>
           <th scope="row">Taxes:</th>
-          <td>{{ invoice?.taxTotal?.toFixed(2) }}</td>
+          <td>{{ invoice.taxTotal.toFixed(2) }}</td>
         </tr>
         <tr>
           <td></td>
           <td></td>
           <th scope="row">Grand Total:</th>
-          <td>{{ invoice?.invoiceTotal?.toFixed(2) }}</td>
+          <td>{{ invoice.invoiceTotal.toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>
